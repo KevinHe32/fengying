@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wshop.dao.RecipeMapper" >
+  <resultMap id="BaseResultMap" type="com.wshop.entity.Recipe" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="color_number" property="colorNumber" jdbcType="VARCHAR" />
+    <result column="material" property="material" jdbcType="VARCHAR" />
+    <result column="color_material_name1" property="colorMaterialName1" jdbcType="VARCHAR" />
+    <result column="base_recipe1" property="baseRecipe1" jdbcType="DECIMAL" />
+    <result column="color_material_name2" property="colorMaterialName2" jdbcType="VARCHAR" />
+    <result column="base_recipe2" property="baseRecipe2" jdbcType="DECIMAL" />
+    <result column="color_material_name3" property="colorMaterialName3" jdbcType="VARCHAR" />
+    <result column="base_recipe3" property="baseRecipe3" jdbcType="DECIMAL" />
+    <result column="color_material_name4" property="colorMaterialName4" jdbcType="VARCHAR" />
+    <result column="base_recipe4" property="baseRecipe4" jdbcType="DECIMAL" />
+    <result column="color_material_name5" property="colorMaterialName5" jdbcType="VARCHAR" />
+    <result column="base_recipe5" property="baseRecipe5" jdbcType="DECIMAL" />
+    <result column="color_material_name6" property="colorMaterialName6" jdbcType="VARCHAR" />
+    <result column="base_recipe6" property="baseRecipe6" jdbcType="DECIMAL" />
+    <result column="color_material_name7" property="colorMaterialName7" jdbcType="VARCHAR" />
+    <result column="base_recipe7" property="baseRecipe7" jdbcType="DECIMAL" />
+    <result column="color_material_name8" property="colorMaterialName8" jdbcType="VARCHAR" />
+    <result column="base_recipe8" property="baseRecipe8" jdbcType="DECIMAL" />
+    <result column="color_material_name9" property="colorMaterialName9" jdbcType="VARCHAR" />
+    <result column="base_recipe9" property="baseRecipe9" jdbcType="DECIMAL" />
+    <result column="color_material_name10" property="colorMaterialName10" jdbcType="VARCHAR" />
+    <result column="base_recipe10" property="baseRecipe10" jdbcType="DECIMAL" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, color_number, material, color_material_name1, base_recipe1, color_material_name2, 
+    base_recipe2, color_material_name3, base_recipe3, color_material_name4, base_recipe4, 
+    color_material_name5, base_recipe5, color_material_name6, base_recipe6, color_material_name7, 
+    base_recipe7, color_material_name8, base_recipe8, color_material_name9, base_recipe9, 
+    color_material_name10, base_recipe10, createtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from recipe
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from recipe
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wshop.entity.Recipe" >
+    insert into recipe (id, color_number, material, 
+      color_material_name1, base_recipe1, color_material_name2, 
+      base_recipe2, color_material_name3, base_recipe3, 
+      color_material_name4, base_recipe4, color_material_name5, 
+      base_recipe5, color_material_name6, base_recipe6, 
+      color_material_name7, base_recipe7, color_material_name8, 
+      base_recipe8, color_material_name9, base_recipe9, 
+      color_material_name10, base_recipe10, createtime
+      )
+    values (#{id,jdbcType=INTEGER}, #{colorNumber,jdbcType=VARCHAR}, #{material,jdbcType=VARCHAR}, 
+      #{colorMaterialName1,jdbcType=VARCHAR}, #{baseRecipe1,jdbcType=DECIMAL}, #{colorMaterialName2,jdbcType=VARCHAR}, 
+      #{baseRecipe2,jdbcType=DECIMAL}, #{colorMaterialName3,jdbcType=VARCHAR}, #{baseRecipe3,jdbcType=DECIMAL}, 
+      #{colorMaterialName4,jdbcType=VARCHAR}, #{baseRecipe4,jdbcType=DECIMAL}, #{colorMaterialName5,jdbcType=VARCHAR}, 
+      #{baseRecipe5,jdbcType=DECIMAL}, #{colorMaterialName6,jdbcType=VARCHAR}, #{baseRecipe6,jdbcType=DECIMAL}, 
+      #{colorMaterialName7,jdbcType=VARCHAR}, #{baseRecipe7,jdbcType=DECIMAL}, #{colorMaterialName8,jdbcType=VARCHAR}, 
+      #{baseRecipe8,jdbcType=DECIMAL}, #{colorMaterialName9,jdbcType=VARCHAR}, #{baseRecipe9,jdbcType=DECIMAL}, 
+      #{colorMaterialName10,jdbcType=VARCHAR}, #{baseRecipe10,jdbcType=DECIMAL}, #{createtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wshop.entity.Recipe" >
+    insert into recipe
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="colorNumber != null" >
+        color_number,
+      </if>
+      <if test="material != null" >
+        material,
+      </if>
+      <if test="colorMaterialName1 != null" >
+        color_material_name1,
+      </if>
+      <if test="baseRecipe1 != null" >
+        base_recipe1,
+      </if>
+      <if test="colorMaterialName2 != null" >
+        color_material_name2,
+      </if>
+      <if test="baseRecipe2 != null" >
+        base_recipe2,
+      </if>
+      <if test="colorMaterialName3 != null" >
+        color_material_name3,
+      </if>
+      <if test="baseRecipe3 != null" >
+        base_recipe3,
+      </if>
+      <if test="colorMaterialName4 != null" >
+        color_material_name4,
+      </if>
+      <if test="baseRecipe4 != null" >
+        base_recipe4,
+      </if>
+      <if test="colorMaterialName5 != null" >
+        color_material_name5,
+      </if>
+      <if test="baseRecipe5 != null" >
+        base_recipe5,
+      </if>
+      <if test="colorMaterialName6 != null" >
+        color_material_name6,
+      </if>
+      <if test="baseRecipe6 != null" >
+        base_recipe6,
+      </if>
+      <if test="colorMaterialName7 != null" >
+        color_material_name7,
+      </if>
+      <if test="baseRecipe7 != null" >
+        base_recipe7,
+      </if>
+      <if test="colorMaterialName8 != null" >
+        color_material_name8,
+      </if>
+      <if test="baseRecipe8 != null" >
+        base_recipe8,
+      </if>
+      <if test="colorMaterialName9 != null" >
+        color_material_name9,
+      </if>
+      <if test="baseRecipe9 != null" >
+        base_recipe9,
+      </if>
+      <if test="colorMaterialName10 != null" >
+        color_material_name10,
+      </if>
+      <if test="baseRecipe10 != null" >
+        base_recipe10,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="colorNumber != null" >
+        #{colorNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="material != null" >
+        #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="colorMaterialName1 != null" >
+        #{colorMaterialName1,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe1 != null" >
+        #{baseRecipe1,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName2 != null" >
+        #{colorMaterialName2,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe2 != null" >
+        #{baseRecipe2,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName3 != null" >
+        #{colorMaterialName3,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe3 != null" >
+        #{baseRecipe3,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName4 != null" >
+        #{colorMaterialName4,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe4 != null" >
+        #{baseRecipe4,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName5 != null" >
+        #{colorMaterialName5,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe5 != null" >
+        #{baseRecipe5,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName6 != null" >
+        #{colorMaterialName6,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe6 != null" >
+        #{baseRecipe6,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName7 != null" >
+        #{colorMaterialName7,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe7 != null" >
+        #{baseRecipe7,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName8 != null" >
+        #{colorMaterialName8,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe8 != null" >
+        #{baseRecipe8,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName9 != null" >
+        #{colorMaterialName9,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe9 != null" >
+        #{baseRecipe9,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName10 != null" >
+        #{colorMaterialName10,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe10 != null" >
+        #{baseRecipe10,jdbcType=DECIMAL},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wshop.entity.Recipe" >
+    update recipe
+    <set >
+      <if test="colorNumber != null" >
+        color_number = #{colorNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="material != null" >
+        material = #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="colorMaterialName1 != null" >
+        color_material_name1 = #{colorMaterialName1,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe1 != null" >
+        base_recipe1 = #{baseRecipe1,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName2 != null" >
+        color_material_name2 = #{colorMaterialName2,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe2 != null" >
+        base_recipe2 = #{baseRecipe2,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName3 != null" >
+        color_material_name3 = #{colorMaterialName3,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe3 != null" >
+        base_recipe3 = #{baseRecipe3,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName4 != null" >
+        color_material_name4 = #{colorMaterialName4,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe4 != null" >
+        base_recipe4 = #{baseRecipe4,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName5 != null" >
+        color_material_name5 = #{colorMaterialName5,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe5 != null" >
+        base_recipe5 = #{baseRecipe5,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName6 != null" >
+        color_material_name6 = #{colorMaterialName6,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe6 != null" >
+        base_recipe6 = #{baseRecipe6,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName7 != null" >
+        color_material_name7 = #{colorMaterialName7,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe7 != null" >
+        base_recipe7 = #{baseRecipe7,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName8 != null" >
+        color_material_name8 = #{colorMaterialName8,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe8 != null" >
+        base_recipe8 = #{baseRecipe8,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName9 != null" >
+        color_material_name9 = #{colorMaterialName9,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe9 != null" >
+        base_recipe9 = #{baseRecipe9,jdbcType=DECIMAL},
+      </if>
+      <if test="colorMaterialName10 != null" >
+        color_material_name10 = #{colorMaterialName10,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe10 != null" >
+        base_recipe10 = #{baseRecipe10,jdbcType=DECIMAL},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wshop.entity.Recipe" >
+    update recipe
+    set color_number = #{colorNumber,jdbcType=VARCHAR},
+      material = #{material,jdbcType=VARCHAR},
+      color_material_name1 = #{colorMaterialName1,jdbcType=VARCHAR},
+      base_recipe1 = #{baseRecipe1,jdbcType=DECIMAL},
+      color_material_name2 = #{colorMaterialName2,jdbcType=VARCHAR},
+      base_recipe2 = #{baseRecipe2,jdbcType=DECIMAL},
+      color_material_name3 = #{colorMaterialName3,jdbcType=VARCHAR},
+      base_recipe3 = #{baseRecipe3,jdbcType=DECIMAL},
+      color_material_name4 = #{colorMaterialName4,jdbcType=VARCHAR},
+      base_recipe4 = #{baseRecipe4,jdbcType=DECIMAL},
+      color_material_name5 = #{colorMaterialName5,jdbcType=VARCHAR},
+      base_recipe5 = #{baseRecipe5,jdbcType=DECIMAL},
+      color_material_name6 = #{colorMaterialName6,jdbcType=VARCHAR},
+      base_recipe6 = #{baseRecipe6,jdbcType=DECIMAL},
+      color_material_name7 = #{colorMaterialName7,jdbcType=VARCHAR},
+      base_recipe7 = #{baseRecipe7,jdbcType=DECIMAL},
+      color_material_name8 = #{colorMaterialName8,jdbcType=VARCHAR},
+      base_recipe8 = #{baseRecipe8,jdbcType=DECIMAL},
+      color_material_name9 = #{colorMaterialName9,jdbcType=VARCHAR},
+      base_recipe9 = #{baseRecipe9,jdbcType=DECIMAL},
+      color_material_name10 = #{colorMaterialName10,jdbcType=VARCHAR},
+      base_recipe10 = #{baseRecipe10,jdbcType=DECIMAL},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

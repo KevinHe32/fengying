@@ -1,0 +1,217 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <!--[if IE]>
+    <meta http-equiv="x-ua-compatible" content="IE=9"/><![endif]-->
+    <meta name="author" content="SuggeElson"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="application-name" content=""/>
+
+    <link th:href="@{/static/assets/css/icons.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/sprflat-theme/jquery.ui.all.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/plugins.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/main.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/custom.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/style.css}" rel="stylesheet"/>
+
+    <script th:src="@{/static/assets/js/jquery-2.0.3.min.js}"></script>
+
+    <script>
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            $(".btn-delete-recipe").bind("click",function(){
+                var id = $(this).attr("id");
+                var customerName = $(this).attr("value");
+                $("#inputName").val(customerName);
+                $("#id").val(id);
+            });
+            $(".btn-confirm-delete").bind("click",function(){
+                var id = $("#id").val();
+                var location = '/customer/delete_customer/'+id;
+                window.location.href= location;
+
+            });
+        });
+        /*]]>*/
+    </script>
+</head>
+
+<body>
+
+<body>
+<div th:replace="layout/header :: header"></div>
+<div th:replace="layout/nav :: nav"></div>
+
+<div id="content">
+   <div class="content-wrapper">
+       <h3>生产通知单列表
+           <small><ul id="crumb" class="breadcrumb">
+               <li><a href="#">首页</a></li>
+               <li class="active">生产通知单列表</li>
+           </ul></small>
+       </h3>
+
+        <div class="outlet">
+            <div class="row">
+                <div class="col-sm-3">
+                    <a href="/customer/add_customer/" class="btn btn-success">新增生产通知单</a>-
+                </div>
+                <div class="col-sm-9 pull-right" style="text-align:right;">
+                    <form class="form-inline" role="form" method="GET" action="/customer/list/">
+                        <div class="form-group">
+                            <input class="form-control" name="machineNumber" id="machineNumber" type="text"
+                                   th:value="${condition.machineNumber}"
+                                   placeholder="请输入机器编号"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="colorNumber" id="colorNumber" type="text"
+                                   th:value="${condition.colorNumber}"
+                                   placeholder="请输入色号"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">查询</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- End .row -->
+            <div class="row">
+                <!-- Start .row -->
+                <div class="col-lg-12 col-md-12 sortable-layout">
+                    <div class="panel panel-primary toggle panelMove panelClose panelRefresh">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><i class="im-bars"></i>客户列表</h4>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <td>#</td>
+                                        <td>客户姓名</td>
+                                        <td>客户编号</td>
+                                        <td>联系方式</td>
+                                        <td>联系邮箱</td>
+                                        <td>居住地址</td>
+                                        <td>创建时间</td>
+                                        <td>操作</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="record,status: ${recordList}" role="row">
+                                        <td th:text="${status.index + 1}"></td>
+                                        <td th:text="${record.customerName}? ${record.customerName} : '---'"></td>
+                                        <td th:text="${record.customerCodename}? ${record.customerCodename} : '---'"></td>
+                                        <td th:text="${record.tel}? ${record.tel} : '---'"></td>
+                                        <td th:text="${record.email}? ${record.email} : '---'"></td>
+                                        <td th:text="${record.address}? ${record.address} : '---'"></td>
+                                        <td th:text="${record.createtime}? ${#dates.format(record.createtime,'yyyy-MM-dd HH:mm:ss')} : '---'"></td>
+
+                                        <td>
+                                            <a th:href="'/customer/edit_customer/'+${record.id}" class="btn btn-success">编辑</a>
+                                            <!--<a onclick='deleteCategory(this)' class="btn btn-warning">删除</a>-->
+                                            <a data-toggle="modal" data-target="#myModal"
+                                               th:id="${record.id}" th:value="${record.customerName}"
+                                               class="btn btn-danger btn-delete-recipe">删除</a>
+                                        </td>
+                                    </tr>
+                                    <tr role="row"
+                                        th:style="'display:' +@{(${#lists.isEmpty(recordList)}? '' : 'none')} + ''">
+                                        <td colspan=10" style="text-align: center;">
+                                            <spam>
+                                                很抱歉，没有找到符合您条件的记录
+                                            </spam>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!--分页插件开始-->
+                            <div class="row">
+                                <div class="col-sm-11" style="text-align: right;">
+                                    <nav th:if="${recordSize >0}">
+                                        <ul class="pagination">
+                                            <li><a th:href="@{${'/customer/list'}(pageNum=0,pageSize=10,name=${condition.name},tel=${condition.tel})}"
+                                                   class="header-page">首页</a></li>
+                                            <li>
+                                                <a th:if="${not isFirstPage}"
+                                                   th:href="@{${'/customer/list'}(pageNum=${pageNum-1},pageSize=${pageSize},name=${condition.name},tel=${condition.tel})}"
+                                                   class="normal-page">上一页</a>
+                                                <a th:if="${isFirstPagee}" href="javascript:void(0);" class="normal-page"></a>
+                                            </li>
+                                            <li th:each="pageNo : ${#numbers.sequence(1, totalPages)}">
+                                                <a th:if="${pageNum eq pageNo}" class="active-page" href="javascript:void(0);">
+                                                    <span th:text="${pageNo}"></span>
+                                                </a>
+                                                <a th:if="${not (pageNum eq pageNo)}"
+                                                   th:href="@{${'/customer/list'}(pageNum=${pageNo},size=${pageSize},name=${condition.name},tel=${condition.tel})}"
+                                                   class="normal-page">
+                                                    <span th:text="${pageNo}"></span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a th:if="${not isLastPage}"
+                                                   th:href="@{${'/customer/list'}(pageNum=${pageNum+1},size=${pageSize},name=${condition.name},tel=${condition.tel})}"
+                                                   class="normal-page">下一页</a>
+                                                <a th:if="${isLastPage}" href="javascript:void(0);"
+                                                   class="normal-page"></a>
+                                            </li>
+                                            <li><a th:href="@{${'/customer/list'}(pageNum=${totalPages},size=${pageSize},name=${condition.name},tel=${condition.tel})}"
+                                                   class="footer-page">尾页</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="col-sm-1" style="padding-top: 25px;min-width: 40px;">
+                                    共&nbsp;<label th:text="${totalPages}"></label>&nbsp;页
+                                </div>
+                            </div>
+                            <!--分页插件结束-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    删除确认
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="customerForm" method="post">
+                    <div class="form-group">
+                        <label for="inputName" class="col-sm-3 control-label">客户姓名 </label>
+                        <div class="col-sm-8">
+                            <input type="text" style="background: lightgray;" class="form-control" id="inputName" name="inputName" placeholder="客户名">
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" id="id" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary btn-confirm-delete">删除</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script th:src="@{/static/assets/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
