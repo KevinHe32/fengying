@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wshop.dao.ColorMaterialUsedMapper" >
+  <resultMap id="BaseResultMap" type="com.wshop.entity.ColorMaterialUsed" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="id_match_color_work" property="idMatchColorWork" jdbcType="INTEGER" />
+    <result column="color_material" property="colorMaterial" jdbcType="VARCHAR" />
+    <result column="base_recipe" property="baseRecipe" jdbcType="DECIMAL" />
+    <result column="number" property="number" jdbcType="DECIMAL" />
+    <result column="produce_time" property="produceTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, id_match_color_work, color_material, base_recipe, number, produce_time
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from color_material_used
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from color_material_used
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.wshop.entity.ColorMaterialUsed" >
+    insert into color_material_used (id, id_match_color_work, color_material, 
+      base_recipe, number, produce_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{idMatchColorWork,jdbcType=INTEGER}, #{colorMaterial,jdbcType=VARCHAR}, 
+      #{baseRecipe,jdbcType=DECIMAL}, #{number,jdbcType=DECIMAL}, #{produceTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.wshop.entity.ColorMaterialUsed" >
+    insert into color_material_used
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="idMatchColorWork != null" >
+        id_match_color_work,
+      </if>
+      <if test="colorMaterial != null" >
+        color_material,
+      </if>
+      <if test="baseRecipe != null" >
+        base_recipe,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="produceTime != null" >
+        produce_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="idMatchColorWork != null" >
+        #{idMatchColorWork,jdbcType=INTEGER},
+      </if>
+      <if test="colorMaterial != null" >
+        #{colorMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe != null" >
+        #{baseRecipe,jdbcType=DECIMAL},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=DECIMAL},
+      </if>
+      <if test="produceTime != null" >
+        #{produceTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.wshop.entity.ColorMaterialUsed" >
+    update color_material_used
+    <set >
+      <if test="idMatchColorWork != null" >
+        id_match_color_work = #{idMatchColorWork,jdbcType=INTEGER},
+      </if>
+      <if test="colorMaterial != null" >
+        color_material = #{colorMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="baseRecipe != null" >
+        base_recipe = #{baseRecipe,jdbcType=DECIMAL},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=DECIMAL},
+      </if>
+      <if test="produceTime != null" >
+        produce_time = #{produceTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.wshop.entity.ColorMaterialUsed" >
+    update color_material_used
+    set id_match_color_work = #{idMatchColorWork,jdbcType=INTEGER},
+      color_material = #{colorMaterial,jdbcType=VARCHAR},
+      base_recipe = #{baseRecipe,jdbcType=DECIMAL},
+      number = #{number,jdbcType=DECIMAL},
+      produce_time = #{produceTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

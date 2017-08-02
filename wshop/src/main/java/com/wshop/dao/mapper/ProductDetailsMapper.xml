@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wshop.dao.ProductDetailsMapper" >
+  <resultMap id="BaseResultMap" type="com.wshop.entity.ProductDetails" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+    <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+    <result column="license_number" property="licenseNumber" jdbcType="VARCHAR" />
+    <result column="standard_number" property="standardNumber" jdbcType="VARCHAR" />
+    <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+    <result column="factory_address" property="factoryAddress" jdbcType="VARCHAR" />
+    <result column="factory_contact_number" property="factoryContactNumber" jdbcType="VARCHAR" />
+    <result column="burden_list" property="burdenList" jdbcType="VARCHAR" />
+    <result column="storage_method" property="storageMethod" jdbcType="VARCHAR" />
+    <result column="auality_period" property="aualityPeriod" jdbcType="VARCHAR" />
+    <result column="food_additives" property="foodAdditives" jdbcType="VARCHAR" />
+    <result column="place_origin" property="placeOrigin" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DOUBLE" />
+    <result column="package_method" property="packageMethod" jdbcType="VARCHAR" />
+    <result column="contain_sugar" property="containSugar" jdbcType="VARCHAR" />
+    <result column="quality" property="quality" jdbcType="VARCHAR" />
+    <result column="shape" property="shape" jdbcType="VARCHAR" />
+    <result column="color" property="color" jdbcType="VARCHAR" />
+    <result column="special_category" property="specialCategory" jdbcType="VARCHAR" />
+    <result column="adapt_object" property="adaptObject" jdbcType="VARCHAR" />
+    <result column="birthtime_start" property="birthtimeStart" jdbcType="VARCHAR" />
+    <result column="birthtime_end" property="birthtimeEnd" jdbcType="VARCHAR" />
+    <result column="technology" property="technology" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.wshop.entity.ProductDetails" >
+    insert into product_details (id, product_id, merchant_id, 
+      brand_name, license_number, standard_number, 
+      factory_name, factory_address, factory_contact_number, 
+      burden_list, storage_method, auality_period, 
+      food_additives, place_origin, weight, 
+      package_method, contain_sugar, quality, 
+      shape, color, special_category, 
+      adapt_object, birthtime_start, birthtime_end, 
+      technology)
+    values (#{id,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, 
+      #{brandName,jdbcType=VARCHAR}, #{licenseNumber,jdbcType=VARCHAR}, #{standardNumber,jdbcType=VARCHAR}, 
+      #{factoryName,jdbcType=VARCHAR}, #{factoryAddress,jdbcType=VARCHAR}, #{factoryContactNumber,jdbcType=VARCHAR}, 
+      #{burdenList,jdbcType=VARCHAR}, #{storageMethod,jdbcType=VARCHAR}, #{aualityPeriod,jdbcType=VARCHAR}, 
+      #{foodAdditives,jdbcType=VARCHAR}, #{placeOrigin,jdbcType=VARCHAR}, #{weight,jdbcType=DOUBLE}, 
+      #{packageMethod,jdbcType=VARCHAR}, #{containSugar,jdbcType=VARCHAR}, #{quality,jdbcType=VARCHAR}, 
+      #{shape,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, #{specialCategory,jdbcType=VARCHAR}, 
+      #{adaptObject,jdbcType=VARCHAR}, #{birthtimeStart,jdbcType=VARCHAR}, #{birthtimeEnd,jdbcType=VARCHAR},
+      #{technology,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.wshop.entity.ProductDetails" >
+    insert into product_details
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="merchantId != null" >
+        merchant_id,
+      </if>
+      <if test="brandName != null" >
+        brand_name,
+      </if>
+      <if test="licenseNumber != null" >
+        license_number,
+      </if>
+      <if test="standardNumber != null" >
+        standard_number,
+      </if>
+      <if test="factoryName != null" >
+        factory_name,
+      </if>
+      <if test="factoryAddress != null" >
+        factory_address,
+      </if>
+      <if test="factoryContactNumber != null" >
+        factory_contact_number,
+      </if>
+      <if test="burdenList != null" >
+        burden_list,
+      </if>
+      <if test="storageMethod != null" >
+        storage_method,
+      </if>
+      <if test="aualityPeriod != null" >
+        auality_period,
+      </if>
+      <if test="foodAdditives != null" >
+        food_additives,
+      </if>
+      <if test="placeOrigin != null" >
+        place_origin,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="packageMethod != null" >
+        package_method,
+      </if>
+      <if test="containSugar != null" >
+        contain_sugar,
+      </if>
+      <if test="quality != null" >
+        quality,
+      </if>
+      <if test="shape != null" >
+        shape,
+      </if>
+      <if test="color != null" >
+        color,
+      </if>
+      <if test="specialCategory != null" >
+        special_category,
+      </if>
+      <if test="adaptObject != null" >
+        adapt_object,
+      </if>
+      <if test="birthtimeStart != null" >
+        birthtime_start,
+      </if>
+      <if test="birthtimeEnd != null" >
+        birthtime_end,
+      </if>
+      <if test="technology != null" >
+        technology,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="brandName != null" >
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseNumber != null" >
+        #{licenseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="standardNumber != null" >
+        #{standardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryName != null" >
+        #{factoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryAddress != null" >
+        #{factoryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryContactNumber != null" >
+        #{factoryContactNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="burdenList != null" >
+        #{burdenList,jdbcType=VARCHAR},
+      </if>
+      <if test="storageMethod != null" >
+        #{storageMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="aualityPeriod != null" >
+        #{aualityPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="foodAdditives != null" >
+        #{foodAdditives,jdbcType=VARCHAR},
+      </if>
+      <if test="placeOrigin != null" >
+        #{placeOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="packageMethod != null" >
+        #{packageMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="containSugar != null" >
+        #{containSugar,jdbcType=VARCHAR},
+      </if>
+      <if test="quality != null" >
+        #{quality,jdbcType=VARCHAR},
+      </if>
+      <if test="shape != null" >
+        #{shape,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCategory != null" >
+        #{specialCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="adaptObject != null" >
+        #{adaptObject,jdbcType=VARCHAR},
+      </if>
+      <if test="birthtimeStart != null" >
+        #{birthtimeStart,jdbcType=VARCHAR},
+      </if>
+      <if test="birthtimeEnd != null" >
+        #{birthtimeEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="technology != null" >
+        #{technology,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from product_details
+    where product_id = #{id,jdbcType=INTEGER}
+  </select>
+</mapper>

@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+</head>
+
+<body>
+<div id="sidebar" th:fragment="nav">
+
+  <div class="sidebar-inner" th:if="${session.role == 'admin'}">
+    <ul id="sideNav" class="nav nav-pills nav-stacked">
+      <li><a href="/admin_user/admin_login" class="nav-parent-one">首页<i class="im-home"></i></a></li>
+      <li><a href="#" class="nav-parent-one">配方管理<i class="im-screen"></i></a></li>
+      <li><a href="/customer/list" class="nav-style">配方管理</a></li>
+
+      <li><a href="#" class="nav-parent-one">客户管理<i class="ec-users"></i></a></li>
+      <li><a href="/customer/list" class="nav-style"> 客户管理</a></li>
+
+      <li><a href="#" class="nav-parent-one">生产通知单管理<i class="ec-user"></i></a></li>
+      <li><a href="/order/list" class="nav-style">生产通知单管理 </a></li>
+
+      <li><a href="#" class="nav-parent-one"><i class="im-flag"></i> 配色作业制图管理</a></li>
+      <li><a href="/match_color_work/list/" class="nav-style"> 配色作业制图管理</a></li>
+    </ul>
+  </div>
+
+ <!-- <div class="sidebar-inner" th:if="${session.role == 'agent'}">
+    <ul id="sideNav" class="nav nav-pills nav-stacked">
+      <li><a href="/admin_user/admin_login" class="nav-parent-one">首页<i class="im-home"></i></a></li>
+      <li><a href="#" class="nav-parent-one">商品信息<i class="im-screen"></i></a></li>
+      <li><a href="/product/list" class="nav-style">商品列表 </a></li>
+      <li><a href="/product/outProductList" class="nav-style">下架商品 </a></li>
+
+      <li><a href="#" class="nav-parent-one">会员信息<i class="ec-users"></i></a></li>
+      <li><a href="/customer/list" class="nav-style"> 会员查询</a></li>
+
+      <li><a href="#" class="nav-parent-one">会员中心<i class="ec-user"></i></a></li>
+      <li><a href="#" class="nav-style">订单处理 </a></li>
+      <li><a href="#" class="nav-style">历史订单 </a></li>
+      <li><a href="#" class="nav-style">会员评价 </a></li>
+
+      <li><a href="#" class="nav-parent-one"><i class="im-flag"></i> 新闻活动</a></li>
+      <li><a href="#" class="nav-style">新闻资讯</a></li>
+      <li><a href="#" class="nav-style">活动查看</a></li>
+
+     &lt;!&ndash; <li><a href="#" class="nav-parent-one"><i class="br-star"></i> 积分管理</a></li>&ndash;&gt;
+    </ul>
+  </div>
+
+  <div class="sidebar-inner" th:if="${session.role == 'superadmin'}">
+    <ul id="sideNav" class="nav nav-pills nav-stacked">
+      <li><a href="/admin_user/admin_login" class="nav-parent-one">首页<i class="im-home"></i></a></li>
+      <li><a href="#" class="nav-parent-one"><i class="im-flag"></i> 商户列表</a></li>
+      <li><a href="#" class="nav-style"> 商户管理</a></li>
+      <li><a href="#" class="nav-style"> 商户审核</a></li>
+
+      <li><a href="#" class="nav-parent-one"><i class="en-feather"></i>权限系统</a></li>
+      <li><a href="/role/list" class="nav-style">角色管理</a></li>
+      <li><a href="#" class="nav-style">权限管理</a></li>
+      <li><a href="#" class="nav-style">用户管理</a></li>
+    </ul>
+  </div>
+-->
+</div>
+
+</body>
+</html>
