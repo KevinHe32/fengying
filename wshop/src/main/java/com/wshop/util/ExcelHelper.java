@@ -475,7 +475,7 @@ public class ExcelHelper {
                                 HSSFCell ccell = row2.createCell(i);
                                 ccell.setCellValue(pTitle);
                                 setTitleStyle(workbook, ccell, titleStyle);
-                                workbook.setRepeatingRowsAndColumns(workbook.getSheetIndex(sheet), 0, 0, i, i + j + 1);
+//                                workbook.setRepeatingRowsAndColumns(workbook.getSheetIndex(sheet), 0, 0, i, i + j + 1);
                             }
 
                         } else {
@@ -484,7 +484,7 @@ public class ExcelHelper {
                         }
                     } else {
                         HSSFCell cell = row.createCell(i);
-                        workbook.setRepeatingRowsAndColumns(workbook.getSheetIndex(sheet), i, i, 0, 1);
+//                        workbook.setRepeatingRowsAndColumns(workbook.getSheetIndex(sheet), i, i, 0, 1);
                         cell.setCellValue(title);
                         setTitleStyle(workbook, cell, titleStyle);
 

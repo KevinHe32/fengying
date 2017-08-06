@@ -1,6 +1,8 @@
 package com.wshop.dao;
 
 
+import com.github.pagehelper.Page;
+import com.wshop.dto.condition.RecipeCondition;
 import com.wshop.entity.Recipe;
 
 public interface RecipeMapper {
@@ -15,4 +17,6 @@ public interface RecipeMapper {
     int updateByPrimaryKeySelective(Recipe record);
 
     int updateByPrimaryKey(Recipe record);
+
+    Page<Recipe> selectAll(RecipeCondition condition);
 }

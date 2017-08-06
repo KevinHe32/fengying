@@ -317,4 +317,18 @@
       createtime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.wshop.dto.condition.RecipeCondition">
+    select
+    <include refid="Base_Column_List" />
+    from recipe
+    <where>
+      <if test="color_name != null and color_name != ''" >
+        color_name LIKE CONCAT('%',#{color_name},'%')
+      </if>
+      <if test="material != null and material != ''" >
+        and material=#{material}
+      </if>
+    </where>
+  </select>
 </mapper>
