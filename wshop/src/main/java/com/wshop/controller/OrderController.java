@@ -55,11 +55,11 @@ public class OrderController {
 	@RequestMapping(value = "/add_order", method = RequestMethod.GET)
 	public ModelAndView add_order(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("add_order");
+		mav.setViewName("order/order_add");
 		return mav;
 	}
 
-	@RequestMapping(value = "addOrder", method = RequestMethod.POST)
+	@RequestMapping(value = "/addOrder", method = RequestMethod.POST)
 	@ResponseBody
 	public Result addOrder(@ModelAttribute OrderModel model) {
 		Order order = model.orderFormToOrder(model);
@@ -72,18 +72,22 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/edit_order/{id}", method = RequestMethod.GET)
-	public String edit_order(@PathVariable("id") Integer id, Model model) {
+	public ModelAndView edit_order(@PathVariable("id") Integer id, Model model) {
+		ModelAndView mav = new ModelAndView();
 		Order order = null;
 		if(id != null){ 
 			order = orderService.selectByPrimaryKey(id);
 		}
-		model.addAttribute("order", order);
-		return "edit_order";
+		mav.addObject("record", order);
+		mav.setViewName("order/order_edit");
+		return mav;
 	}
 
 	@RequestMapping(value = "editOrder", method = RequestMethod.POST)
 	@ResponseBody
 	public Result editOrder(@ModelAttribute OrderModel model) {
+		ModelAndView mav = new ModelAndView();
+
 		Order order = model.orderFormToOrder(model);
 		order.setId(model.getId());
 		Integer result = orderService.editOrder(order);

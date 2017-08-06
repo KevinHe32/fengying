@@ -1,0 +1,294 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <!--[if IE]>
+    <meta http-equiv="x-ua-compatible" content="IE=9"/><![endif]-->
+    <meta name="author" content="SuggeElson"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="application-name" content=""/>
+
+    <link th:href="@{/static/assets/css/icons.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/sprflat-theme/jquery.ui.all.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/plugins.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/main.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/custom.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/upload-img.css}" rel="stylesheet"/>
+
+    <link th:href="@{/static/assets/bootstrapValidator/bootstrapValidator.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <script th:src="@{/static/assets/js/jquery-2.0.3.min.js}"></script>
+
+    <script>
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            $('#customerForm').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {},
+                fields: {
+                    inputName: {
+                        message: '客户姓名不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '客户姓名不能为空'
+                            }
+                        }
+                    },
+                    inputCustomerCode: {
+                        validators: {
+                            notEmpty: {
+                                message: '客户编号不能为空'
+                            }
+                        }
+                    },
+                    inputTel: {
+                        message: '联系方式不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '联系方式不能为空'
+                            }
+                        }
+                    },
+                    inputEmail: {
+                        message: '联系邮箱不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '联系邮箱不能为空'
+                            }
+                        }
+                    },
+                    inputAddress: {
+                        message: '居住地址不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '居住地址不能为空'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) { //点击提交之后
+                $("#submit_btn").attr('disabled', "true");
+                $.post("/customer/addCustomer/", $("#customerForm").serialize())
+                    .success(function (data) {
+                        if (data.code == '0') {
+                            $('#successModal').modal('show');
+                            $('#successModal').find('.operate-tip').html("新增【" + $("input[name='inputName']").val() + "】，操作成功！");
+                        } else {
+                            $("#submit_btn").removeAttr("disabled");
+                            $('#failureModal').modal('show');
+                            $('#failureModal').find('.operate-tip').html("新增【" + $("input[name='inputName']").val() + "】，操作失败！");
+                            return false;
+                        }
+                    })
+                    .error(function () {
+                        $('#failureModal').modal('show');
+                        $('#failureModal').find('.operate-tip').html("不可预知的异常，无法提交请求！");
+                        return false;
+                    });
+            });
+
+
+        });
+        /*]]>*/
+    </script>
+</head>
+
+<body>
+
+<body>
+<div th:replace="layout/header :: header"></div>
+<div th:replace="layout/nav :: nav"></div>
+
+<div id="content">
+    <div class="content-wrapper">
+        <h3>配色作业制图列表
+            <small>
+                <ul id="crumb" class="breadcrumb">
+                    <li>Home</li>
+                    <li class=""><a href="/match_color_work/list/">配色作业制图列表</a></li>
+                    <li class="active">添加配色作业制图</li>
+                </ul>
+            </small>
+        </h3>
+
+        <div class="outlet">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary toggle panelMove panelClose panelRefresh">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><i class="im-wand"></i> 添加配色作业制图</h4>
+                        </div>
+                        <form id="customerForm" method="post" class="form-horizontal form-wizard" role="form">
+                            <div class="panel-body">
+                                <div class="row row-two-col">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="control-label">色号： <span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="colorCode" name="colorCode" placeholder="色号">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="control-label">使用原料： <span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="material" name="material"  placeholder="使用原料">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="control-label">产品批号：</label>
+                                            <input type="text" class="form-control" id="productBatchNumber" name="productBatchNumber"  placeholder="产品批号">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row row-two-col">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="control-label">顾客名称：</label>
+                                            <input type="text" class="form-control" id="customer" name="customer" placeholder="顾客名称">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="control-label">顾客代号：</label>
+                                            <input type="text" class="form-control" id="customerCode" name="customerCode" placeholder="顾客代号">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="control-label">生产数量：</label>
+                                            <input type="text" class="form-control" id="number" name="number" placeholder="生产数量">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row row-two-col">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="control-label">生产机台：</label>
+                                            <input type="text" class="form-control" id="machineCode" name="machineCode" placeholder="生产机台">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="col-lg-8" style="padding-left: 0px !important;; padding-right: 0px !important;">
+                                            <div class="form-group">
+                                                <label class="control-label">尾数重量：</label>
+                                                <input type="text" class="form-control" id="weishuWeight" name="weishuWeight" placeholder="尾数重量">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4" style="padding-right: 0px !important;">
+                                            <div class="form-group">
+                                                <label class="control-label">方次：</label>
+                                                <input type="text" class="form-control" id="times" name="times" placeholder="方次">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="control-label">补正记录：</label>
+                                            <input type="text" class="form-control" id="buzhengWeight" name="buzhengWeight" placeholder="补正记录">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row row-two-col">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <td>色料名称</td>
+                                            <td>基本配方</td>
+                                            <td>尾数重量（kg）* 方次</td>
+                                            <td>补正记录重量（kg）* 方次</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!--<tr th:each="record,status: ${recordList}" role="row">
+                                            <td th:text="${status.index + 1}"></td>
+                                            <td th:text="${record.colorCode}? ${record.colorCode} : '-&#45;&#45;'"></td>
+                                            <td th:text="${record.productBatchNumber}? ${record.productBatchNumber} : '-&#45;&#45;'"></td>
+                                            <td th:text="${record.customer}? ${record.customer} : '-&#45;&#45;'"></td>
+                                            <td th:text="${record.material}? ${record.material} : '-&#45;&#45;'"></td>
+                                            <td th:text="${record.customer}? ${record.customer} : '-&#45;&#45;'"></td>
+                                            <td th:text="${record.number}? ${record.number} : '-&#45;&#45;'"></td>
+                                            <td th:text="${record.machineCode}? ${record.machineCode} : '-&#45;&#45;'"></td>
+                                            <td th:text="${record.weishuWeight}? ${record.weishuWeight}* ${record.times} : '-&#45;&#45;'"></td>
+                                            <td th:text="${record.buzhengWeight}? ${record.buzhengWeight}: '-&#45;&#45;'"></td>
+
+                                            <td>
+                                                <a th:href="'/match_color_work/edit_mcw/'+${record.id}" class="btn btn-success">编辑</a>
+                                                &lt;!&ndash;<a onclick='deleteCategory(this)' class="btn btn-warning">删除</a>&ndash;&gt;
+                                                <a data-toggle="modal" data-target="#myModal"
+                                                   th:id="${record.id}" th:value="${record.colorCode}"
+                                                   class="btn btn-danger btn-delete-recipe">删除</a>
+                                            </td>
+                                        </tr>-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="row" style="margin-top: 15px;">
+                                    <div class="form-group">
+                                        <div class="col-lg-12" style="text-align: center;">
+                                            <button class="btn btn-primary submit_btn">保存</button> &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a class="btn btn-default" href="/customer/list">取消</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="successModal" data-backdrop="static" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog-or">
+                <div class="modal-content panel-success">
+                    <div class="modal-header">
+                        <h4 id="myModalLabel" contenteditable="true">操作提示</h4>
+                    </div>
+                    <div class="modal-body warning-info-text">
+                        <i class="fa fa-check success-icon"></i>
+                        &nbsp;<span class="operate-tip"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/customer/list" class="btn btn-primary">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="failureModal" data-backdrop="static" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog-or">
+                <div class="modal-content panel-success">
+                    <div class="modal-header">
+                        <h4 id="myModalLabel" contenteditable="true">操作提示</h4>
+                    </div>
+                    <div class="modal-body warning-info-text">
+                        <i class="fa fa-times failure-icon"></i>
+                        &nbsp;<span class="operate-tip"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/customer/list" class="btn btn-primary">确定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+    </div>
+    <!-- End .content-wrapper -->
+    <div class="clearfix"></div>
+</div>
+
+
+<script th:src="@{/static/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/static/assets/bootstrapValidator/bootstrapValidator.min.js}"></script>
+
+</body>
+</html>

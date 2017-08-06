@@ -25,45 +25,45 @@ import java.util.*;
 @SuppressWarnings("all")
 public class ExcelHelper {
 
-    private static Logger logger = LoggerFactory.getLogger(ExcelHelper.class);
+   /* private static Logger logger = LoggerFactory.getLogger(ExcelHelper.class);
 
 
-    /**
+    *//**
      * 描述：读取Excel
      *
      * @param file File对象
      * @return 按sheet(工作表)来存放到Map, SheetName(工作表)名为key
-     */
+     *//*
     public static Map readExcel(File file) {
         return readExcel(file, null, null, false, null);
     }
 
-    /**
+    *//**
      * 描述：读取Excel
      *
      * @param file       File对象
      * @param fieldsName List中Map的键名，可为空，默认为列数索引（首列索引为0）
      * @return 按sheet(工作表)来存放到Map, SheetName(工作表)名为key
-     */
+     *//*
     public static Map readExcel(File file, String[] fieldsName) {
         return readExcel(file, null, fieldsName, false, null);
     }
 
 
-    /**
+    *//**
      * 描述：读取Excel
      *
      * @param file       File对象
      * @param fieldsName List中Map的键名，可为空，默认为列数索引（首列索引为0）
      * @param hasTitle   excel中是否有标题（如果有标题则去掉第一列数据）
      * @return 按sheet(工作表)来存放到Map, SheetName(工作表)名为key
-     */
+     *//*
     public static Map readExcel(File file, String[] fieldsName, boolean hasTitle) {
         return readExcel(file, null, fieldsName, hasTitle, null);
     }
 
 
-    /**
+    *//**
      * 描述：读取Excel
      *
      * @param file       File对象
@@ -71,13 +71,13 @@ public class ExcelHelper {
      * @param fieldsName List中Map的键名，可为空，默认为列数索引（首列索引为0）
      * @param hasTitle   excel中是否有标题（如果有标题则去掉第一列数据）
      * @return 按sheet(工作表)来存放到Map, SheetName(工作表)名为key
-     */
+     *//*
     public static Map readExcel(File file, int[] columnNum, String[] fieldsName, boolean hasTitle) {
         return readExcel(file, columnNum, fieldsName, hasTitle, null);
     }
 
 
-    /**
+    *//**
      * 描述：读取Excel
      *
      * @param file         File对象
@@ -86,7 +86,7 @@ public class ExcelHelper {
      * @param hasTitle     excel中是否有标题（如果有标题则去掉第一列数据）
      * @param dafaultValue 默认值（和fieldsName对应的值为空时，取默认值）
      * @return 按sheet(工作表)来存放到Map, SheetName(工作表)名为key
-     */
+     *//*
     public static Map readExcel(File file, int[] columnNum, String[] fieldsName, boolean hasTitle, Map dafaultValue) {
         if (file.isFile()) {
             Map map = null;
@@ -112,43 +112,43 @@ public class ExcelHelper {
     }
 
 
-    /**
+    *//**
      * 描述：读取Excel
      *
      * @param inputStream 输入流
      * @return 按sheet(工作表)来存放到Map, SheetName(工作表)名为key
-     */
+     *//*
     public static Map readExcel(FileInputStream inputStream) throws IOException {
         return readExcel(inputStream, null, null, false, null);
     }
 
 
-    /**
+    *//**
      * 描述：读取Excel
      *
      * @param inputStream 输入流
      * @param fieldsName  List中Map的键名，可为空，默认为列数索引（首列索引为0）
      * @return 按sheet(工作表)来存放到Map, SheetName(工作表)名为key
-     */
+     *//*
     public static Map readExcel(FileInputStream inputStream, String[] fieldsName) throws IOException {
         return readExcel(inputStream, null, fieldsName, false, null);
     }
 
 
-    /**
+    *//**
      * 描述：读取Excel
      *
      * @param inputStream 输入流
      * @param fieldsName  List中Map的键名，可为空，默认为列数索引（首列索引为0）
      * @param hasTitle    excel中是否有标题（如果有标题则去掉第一列数据）
      * @return 按sheet(工作表)来存放到Map, SheetName(工作表)名为key
-     */
+     *//*
     public static Map readExcel(FileInputStream inputStream, String[] fieldsName, boolean hasTitle) throws IOException {
         return readExcel(inputStream, null, fieldsName, hasTitle, null);
     }
 
 
-    /**
+    *//**
      * 描述：读取Excel
      *
      * @param inputStream 输入流
@@ -156,13 +156,13 @@ public class ExcelHelper {
      * @param fieldsName  List中Map的键名，可为空，默认为列数索引（首列索引为0）
      * @param hasTitle    excel中是否有标题（如果有标题则去掉第一列数据）
      * @return 按sheet(工作表)来存放到Map, SheetName(工作表)名为key
-     */
+     *//*
     public static Map readExcel(FileInputStream inputStream, int[] columnNum, String[] fieldsName, boolean hasTitle) throws IOException {
         return readExcel(inputStream, columnNum, fieldsName, hasTitle, null);
     }
 
 
-    /**
+    *//**
      * 描述：读取Excel
      *
      * @param inputStream  输入流
@@ -171,7 +171,7 @@ public class ExcelHelper {
      * @param hasTitle     excel中是否有标题（如果有标题则去掉第一列数据）
      * @param dafaultValue 默认值（和fieldsName对应的值为空时，取默认值）
      * @return 按sheet(工作表)来存放到Map, SheetName(工作表)名为key
-     */
+     *//*
     public static Map readExcel(FileInputStream inputStream, int[] columnNum, String[] fieldsName, boolean hasTitle, Map dafaultValue) throws IOException {
         if (inputStream == null) {
             return null;
@@ -241,12 +241,12 @@ public class ExcelHelper {
     }
 
 
-    /**
+    *//**
      * 读取Excel文件的内容,以ArrayList的方式返回每一行，具体
      * 每一行的内容也是一个ArrayList
      *
      * @param file Excel文件
-     */
+     *//*
     public static ArrayList readExcelToList(File file) {
         InputStream inputStream = null;
         try {
@@ -296,11 +296,11 @@ public class ExcelHelper {
     }
 
 
-    /**
+    *//**
      * 描述：获取所有的图片
      *
      * @param file File对象
-     */
+     *//*
     public static void readAllPictures(File file, String outDirectory) {
         if (!file.isFile()) {
             return;
@@ -324,11 +324,11 @@ public class ExcelHelper {
     }
 
 
-    /**
+    *//**
      * 描述：获取所有的图片
      *
      * @param outDirectory 输出目录
-     */
+     *//*
     public static void readAllPictures(FileInputStream inputStream, String outDirectory) throws IOException {
         if (inputStream == null) {
             return;
@@ -367,7 +367,7 @@ public class ExcelHelper {
     }
 
 
-    /**
+    *//**
      * 描述：生成Excel
      *
      * @param list          数据
@@ -376,7 +376,7 @@ public class ExcelHelper {
      * @param columnWidth   列宽
      * @param hasIndex      是否有序号
      * @return
-     */
+     *//*
     public static HSSFWorkbook createExcel(List list, String[] titles, String[] mappingFileds, int[] columnWidth, boolean hasIndex) {
         return createExcel(null, list, titles, mappingFileds, columnWidth, null, null, null, null, null, null, hasIndex, "序号");
     }
@@ -385,7 +385,7 @@ public class ExcelHelper {
         return createExcel(null, list, titles, mappingFileds, columnWidth, null, null, null, null, null, null, hasIndex, titleIndex);
     }
 
-    /**
+    *//**
      * 描述：生成Excel
      *
      * @param workbook      工作薄
@@ -394,13 +394,13 @@ public class ExcelHelper {
      * @param mappingFileds 标题对应字段名
      * @param columnWidth   列宽
      * @param hasIndex      是否有序号
-     */
+     *//*
     public static HSSFWorkbook createExcel(HSSFWorkbook workbook, List list, String[] titles, String[] mappingFileds, int[] columnWidth, boolean hasIndex) {
         return createExcel(workbook, list, titles, mappingFileds, columnWidth, null, null, null, null, null, null, hasIndex, "序号");
     }
 
 
-    /**
+    *//**
      * 描述：生成Excel
      *
      * @param workbook      工作薄
@@ -416,7 +416,7 @@ public class ExcelHelper {
      * @param otherStyle    其它样式
      * @param hasIndex      是否有序号
      * @param titleIndex    序号标题
-     */
+     *//*
     public static HSSFWorkbook createExcel(HSSFWorkbook workbook, List list, String[] titles, String[] mappingFileds, int[] columnWidth, HSSFCellStyle titleStyle, int[] rows,
                                            HSSFCellStyle[] rowsStyle, int[] column, HSSFCellStyle[] columnsStyle, HSSFCellStyle otherStyle, boolean hasIndex, String titleIndex) {
         if (hasIndex) {
@@ -564,12 +564,12 @@ public class ExcelHelper {
     }
 
 
-    /**
+    *//**
      * 描述：导出工作簿
      *
      * @param wb       要导出的excel工作簿
      * @param fileName 指定导出文件名
-     */
+     *//*
     public static void export(HttpServletRequest request, HttpServletResponse response, HSSFWorkbook wb, String fileName) {
         if (wb == null) {
             logger.error("excel工作簿不能为空！");
@@ -596,13 +596,13 @@ public class ExcelHelper {
     }
 
 
-    /**
+    *//**
      * 描述：设置title单元格样式
      *
      * @param workbook   工作目录
      * @param cell       单元格
      * @param titleStyle title样式
-     */
+     *//*
     private static void setTitleStyle(HSSFWorkbook workbook, HSSFCell cell, HSSFCellStyle titleStyle) {
         if (titleStyle == null) {
             HSSFCellStyle cellStyle = workbook.createCellStyle();// 建立新的cell样式
@@ -655,11 +655,11 @@ public class ExcelHelper {
     }
 
 
-    /**
+    *//**
      * 描述：获取单元格中的值
      *
      * @param cell EXCEL 单元格
-     */
+     *//*
     private static String getCellValue(HSSFCell cell) {
         String value = null;
         if (cell != null) {
@@ -681,5 +681,5 @@ public class ExcelHelper {
     public static void main(String[] args) {
 
     }
-
+*/
 }

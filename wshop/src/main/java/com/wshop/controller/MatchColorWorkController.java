@@ -1,9 +1,11 @@
 package com.wshop.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.wshop.dto.condition.MatchColorWorkCondition;
 import com.wshop.dto.model.MatchColorWorkModel;
 import com.wshop.entity.MatchColorWork;
+import com.wshop.entity.Order;
 import com.wshop.service.MatchColorWorkService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,28 +34,27 @@ public class MatchColorWorkController {
     private MatchColorWorkService matchColorWorkService;
 
     @RequestMapping("/list")
-    public String list(@ModelAttribute MatchColorWorkCondition condition, Model model, String language, HttpServletRequest request) {
-    	HttpSession session = request.getSession();
-        List<MatchColorWork> list_result = matchColorWorkService.selectAll(condition);
-        if(!StringUtils.isEmpty(list_result)){
-        	List<MatchColorWorkModel> list = new ArrayList<>();
-        	for(MatchColorWork matchColorWork : list_result){
-        		MatchColorWorkModel matchColorWorkModel = new MatchColorWorkModel();
-        		BeanUtils.copyProperties(matchColorWork, matchColorWorkModel);
-        		list.add(matchColorWorkModel);
-        	}
-        	model.addAttribute("list", list);
-        }else{
-        	model.addAttribute("list", new ArrayList<MatchColorWork>());
-        }
-        model.addAttribute("condition", condition);
-        return "match_color_work_list";
+    public ModelAndView list(@ModelAttribute MatchColorWorkCondition condition, Model model, String language, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+
+		PageInfo<MatchColorWorkModel> pageInfo = matchColorWorkService.selectAll(condition);
+		model.addAttribute("recordList", pageInfo.getList());
+		model.addAttribute("condition", condition);
+		mav.addObject("pageNum", pageInfo.getPageNum());
+		mav.addObject("pageSize", pageInfo.getPageSize());
+		mav.addObject("isFirstPage", pageInfo.isIsFirstPage());
+		mav.addObject("totalPages", pageInfo.getPages());
+		mav.addObject("isLastPage", pageInfo.isIsLastPage());
+		mav.addObject("condition", condition);
+		mav.addObject("recordSize", pageInfo.getList().size());
+		mav.setViewName("mcw/mcw_list");
+		return mav;
     }
     
-    @RequestMapping(value = "/add_match_color_work", method = RequestMethod.GET)
+    @RequestMapping(value = "/add_mcw", method = RequestMethod.GET)
     public ModelAndView add_match_color_work(HttpServletRequest request) {
     	ModelAndView mav = new ModelAndView();
-        mav.setViewName("add_match_color_work");
+        mav.setViewName("mcw/mcw_add");
 		return mav;
     }
     

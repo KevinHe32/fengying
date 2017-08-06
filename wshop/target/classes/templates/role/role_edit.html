@@ -1,0 +1,179 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <!--[if IE]>
+    <meta http-equiv="x-ua-compatible" content="IE=9"/><![endif]-->
+    <meta name="author" content="SuggeElson"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="application-name" content=""/>
+
+    <link th:href="@{/static/assets/css/icons.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/sprflat-theme/jquery.ui.all.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/plugins.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/main.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/custom.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/bootstrapValidator/bootstrapValidator.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <script th:src="@{/static/assets/js/jquery-2.0.3.min.js}"></script>
+
+    <script>
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            $('#roleForm').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {},
+                fields: {
+
+                    role: {
+                        message: 'The username is not valid',
+                        validators: {
+                            notEmpty: {
+                                message: '用户角色名称不能为空'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) { //点击提交之后
+                $("#submit_btn").attr('disabled', "true");
+                $.post("/role/editRole/", $("#roleForm").serialize())
+                    .success(function (data) {
+                        if (data.code == '0') {
+                            $('#successModal').modal('show');
+                            $('#successModal').find('.operate-tip').html("编辑角色:【" + $("input[name='role']").val() + "】，操作成功！");
+                        } else {
+                            $("#submit_btn").removeAttr("disabled");
+                            $('#failureModal').modal('show');
+                            $('#failureModal').find('.operate-tip').html("编辑角色:【" + $("input[name='role']").val() + "】，操作失败！");
+                            return false;
+                        }
+                    })
+                    .error(function () {
+                        $('#failureModal').modal('show');
+                        $('#failureModal').find('.operate-tip').html("不可预知的异常，无法提交请求！");
+                        return false;
+                    });
+            });
+
+        });
+        /*]]>*/
+    </script>
+</head>
+
+<body>
+<div th:replace="layout/header :: header"></div>
+<div th:replace="layout/nav :: nav"></div>
+
+<div id="content">
+    <div class="content-wrapper">
+        <h3>用户角色列表
+            <small>
+                <ul id="crumb" class="breadcrumb">
+                    <li>Home ></li>
+                    <li class=""><a href="/role/list/">用户角色列表</a> ></li>
+                    <li class="active">编辑用户角色</li>
+                </ul>
+            </small>
+        </h3>
+
+        <div class="outlet">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary toggle panelMove panelClose panelRefresh">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><i class="im-wand"></i>编辑用户角色</h4>
+                        </div>
+                        <form id="roleForm" method="post" class="form-horizontal form-wizard" role="form">
+                            <div class="panel-body">
+                                <div class="row form-row">
+                                    <div class="col-lg-6 col-lg-offset-3">
+                                        <div class="form-group">
+                                            <input type="hidden" class="form-control" name="id" id="id" th:value="${record.id}"/>
+                                            <label class="control-label">角色名称： <span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" name="role" id="role" th:value="${record.role}" placeholder="请输入用户角色"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-lg-6 col-lg-offset-3">
+                                        <div class="form-group">
+                                            <label class="control-label">角色描述：</label>
+                                            <textarea class="form-control" name="description" id="description" placeholder="请输入角色描述"
+                                                th:text="${record.description}"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-lg-6 col-lg-offset-3">
+                                        <div class="form-group">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="row" style="margin-top: 15px;">
+                                    <div class="form-group">
+                                        <div class="col-lg-12" style="text-align: center;">
+                                            <button class="btn btn-primary submit_btn">保存</button> &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a class="btn btn-default" href="/role/list">取消</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="successModal" data-backdrop="static" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog-or">
+                <div class="modal-content panel-success">
+                    <div class="modal-header">
+                        <h4 id="myModalLabel" contenteditable="true">操作提示</h4>
+                    </div>
+                    <div class="modal-body warning-info-text">
+                        <i class="fa fa-check success-icon"></i>
+                        &nbsp;<span class="operate-tip"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/role/list" class="btn btn-primary">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="failureModal" data-backdrop="static" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog-or">
+                <div class="modal-content panel-success">
+                    <div class="modal-header">
+                        <h4 id="myModalLabel" contenteditable="true">操作提示</h4>
+                    </div>
+                    <div class="modal-body warning-info-text">
+                        <i class="fa fa-times failure-icon"></i>
+                        &nbsp;<span class="operate-tip"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/role/list" class="btn btn-primary">确定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+    </div>
+    <!-- End .content-wrapper -->
+    <div class="clearfix"></div>
+</div>
+
+
+<script th:src="@{/static/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/static/assets/bootstrapValidator/bootstrapValidator.min.js}"></script>
+
+</body>
+</html>
