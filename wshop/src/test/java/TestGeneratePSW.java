@@ -15,6 +15,6 @@ public class TestGeneratePSW {
         Md5Hash md51 = new Md5Hash(new Md5Hash(psw));
         System.out.println("psw1:"+md51+",salt:"+md51.getSalt()+",times:"+md51.getIterations());
         return md51.toString();
-    }
+}
 
 }

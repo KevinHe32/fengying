@@ -323,8 +323,8 @@
     <include refid="Base_Column_List" />
     from recipe
     <where>
-      <if test="color_name != null and color_name != ''" >
-        color_name LIKE CONCAT('%',#{color_name},'%')
+      <if test="color_number != null and color_number != ''" >
+        color_number LIKE CONCAT('%',#{color_number},'%')
       </if>
       <if test="material != null and material != ''" >
         and material=#{material}

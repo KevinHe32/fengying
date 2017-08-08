@@ -1,22 +1,16 @@
 package com.wshop.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.wshop.dao.RecipeMapper;
-import com.wshop.dto.condition.CustomerCondition;
 import com.wshop.dto.condition.RecipeCondition;
-import com.wshop.dto.model.CustomerModel;
 import com.wshop.dto.model.RecipeModel;
-import com.wshop.entity.Customer;
 import com.wshop.entity.Recipe;
 import com.wshop.rest.Result;
 import com.wshop.rest.StatusCode;
-import com.wshop.service.CustomerService;
 import com.wshop.service.RecipeService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,9 +25,6 @@ import javax.servlet.http.HttpSession;
 @Api(description = "配方管理模块")
 @RequestMapping(value = "/recipe/")
 public class RecipeController {
-
-    @Autowired
-    private CustomerService customerService;
 
     @Autowired
     private RecipeService recipeService;

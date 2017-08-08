@@ -58,7 +58,7 @@ public class RecipeModel {
 
     private BigDecimal baseRecipe10;
 
-    private Date createtime;
+    private Date createtime = new Date();
 
     public RecipeModel() {
     }

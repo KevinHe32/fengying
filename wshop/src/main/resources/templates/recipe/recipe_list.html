@@ -57,7 +57,7 @@
         <div class="outlet">
             <div class="row">
                 <div class="col-sm-3">
-                    <a href="/customer/add_customer/" class="btn btn-success">新增配方</a>-
+                    <a href="/recipe/add_recipe/" class="btn btn-success">新增配方</a>-
                 </div>
                 <div class="col-sm-9 pull-right" style="text-align:right;">
                     <form class="form-inline" role="form" method="GET" action="/recipe/list/">
@@ -90,29 +90,38 @@
                                     <tr>
                                         <td>#</td>
                                         <td>色号名称</td>
-                                        <td>客户编号</td>
-                                        <td>联系方式</td>
-                                        <td>联系邮箱</td>
-                                        <td>居住地址</td>
-                                        <td>创建时间</td>
+                                        <td>使用原料</td>
+                                        <td>色料名称1</td>
+                                        <td>基本配方1</td>
+                                        <td>色料名称2</td>
+                                        <td>基本配方2</td>
+                                        <td>色料名称3</td>
+                                        <td>基本配方3</td>
+                                        <td>色料名称4</td>
+                                        <td>基本配方4</td>
                                         <td>操作</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr th:each="record,status: ${recordList}" role="row">
                                         <td th:text="${status.index + 1}"></td>
-                                        <td th:text="${record.customerName}? ${record.customerName} : '---'"></td>
-                                        <td th:text="${record.customerCodename}? ${record.customerCodename} : '---'"></td>
-                                        <td th:text="${record.tel}? ${record.tel} : '---'"></td>
-                                        <td th:text="${record.email}? ${record.email} : '---'"></td>
-                                        <td th:text="${record.address}? ${record.address} : '---'"></td>
+                                        <td th:text="${record.colorNumber}? ${record.colorNumber} : '---'"></td>
+                                        <td th:text="${record.material}? ${record.material} : '---'"></td>
+                                        <td th:text="${record.colorMaterialName1}? ${record.colorMaterialName1} : '---'"></td>
+                                        <td th:text="${record.baseRecipe1}? ${record.baseRecipe1} : '---'"></td>
+                                        <td th:text="${record.colorMaterialName2}? ${record.colorMaterialName2} : '---'"></td>
+                                        <td th:text="${record.baseRecipe2}? ${record.baseRecipe2} : '---'"></td>
+                                        <td th:text="${record.colorMaterialName3}? ${record.colorMaterialName3} : '---'"></td>
+                                        <td th:text="${record.baseRecipe3}? ${record.baseRecipe3} : '---'"></td>
+                                        <td th:text="${record.colorMaterialName4}? ${record.colorMaterialName4} : '---'"></td>
+                                        <td th:text="${record.baseRecipe4}? ${record.baseRecipe4    } : '---'"></td>
                                         <td th:text="${record.createtime}? ${#dates.format(record.createtime,'yyyy-MM-dd HH:mm:ss')} : '---'"></td>
 
                                         <td>
                                             <a th:href="'/customer/edit_customer/'+${record.id}" class="btn btn-success">编辑</a>
                                             <!--<a onclick='deleteCategory(this)' class="btn btn-warning">删除</a>-->
                                             <a data-toggle="modal" data-target="#myModal"
-                                               th:id="${record.id}" th:value="${record.customerName}"
+                                               th:id="${record.id}" th:value="${record.colorNumber}"
                                                class="btn btn-danger btn-delete-recipe">删除</a>
                                         </td>
                                     </tr>
@@ -132,11 +141,11 @@
                                 <div class="col-sm-11" style="text-align: right;">
                                     <nav th:if="${recordSize >0}">
                                         <ul class="pagination">
-                                            <li><a th:href="@{${'/customer/list'}(pageNum=0,pageSize=10,name=${condition.name},tel=${condition.tel})}"
+                                            <li><a th:href="@{${'/recipe/list'}(pageNum=0,pageSize=10,color_number=${condition.color_number},material=${condition.material})}"
                                                    class="header-page">首页</a></li>
                                             <li>
                                                 <a th:if="${not isFirstPage}"
-                                                   th:href="@{${'/customer/list'}(pageNum=${pageNum-1},pageSize=${pageSize},name=${condition.name},tel=${condition.tel})}"
+                                                   th:href="@{${'/recipe/list'}(pageNum=${pageNum-1},pageSize=${pageSize},color_number=${condition.color_number},material=${condition.material})}"
                                                    class="normal-page">上一页</a>
                                                 <a th:if="${isFirstPagee}" href="javascript:void(0);" class="normal-page"></a>
                                             </li>
@@ -145,19 +154,19 @@
                                                     <span th:text="${pageNo}"></span>
                                                 </a>
                                                 <a th:if="${not (pageNum eq pageNo)}"
-                                                   th:href="@{${'/customer/list'}(pageNum=${pageNo},size=${pageSize},name=${condition.name},tel=${condition.tel})}"
+                                                   th:href="@{${'/recipe/list'}(pageNum=${pageNo},size=${pageSize},color_number=${condition.color_number},material=${condition.material})}"
                                                    class="normal-page">
                                                     <span th:text="${pageNo}"></span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a th:if="${not isLastPage}"
-                                                   th:href="@{${'/customer/list'}(pageNum=${pageNum+1},size=${pageSize},name=${condition.name},tel=${condition.tel})}"
+                                                   th:href="@{${'/recipe/list'}(pageNum=${pageNum+1},size=${pageSize},color_number=${condition.color_number},material=${condition.material})}"
                                                    class="normal-page">下一页</a>
                                                 <a th:if="${isLastPage}" href="javascript:void(0);"
                                                    class="normal-page"></a>
                                             </li>
-                                            <li><a th:href="@{${'/customer/list'}(pageNum=${totalPages},size=${pageSize},name=${condition.name},tel=${condition.tel})}"
+                                            <li><a th:href="@{${'/recipe/list'}(pageNum=${totalPages},size=${pageSize},color_number=${condition.color_number},material=${condition.material})}"
                                                    class="footer-page">尾页</a></li>
                                         </ul>
                                     </nav>

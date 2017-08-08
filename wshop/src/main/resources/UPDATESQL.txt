@@ -1,0 +1,12 @@
+ALTER TABLE `recipe`
+MODIFY COLUMN `base_recipe1`  decimal(60,2) NULL DEFAULT NULL AFTER `color_material_name1`,
+MODIFY COLUMN `base_recipe2`  decimal(60,2) NULL DEFAULT NULL AFTER `color_material_name2`,
+MODIFY COLUMN `base_recipe3`  decimal(60,2) NULL DEFAULT NULL AFTER `color_material_name3`,
+MODIFY COLUMN `base_recipe4`  decimal(60,2) NULL DEFAULT NULL AFTER `color_material_name4`,
+MODIFY COLUMN `base_recipe5`  decimal(60,2) NULL DEFAULT NULL AFTER `color_material_name5`,
+MODIFY COLUMN `base_recipe6`  decimal(60,2) NULL DEFAULT NULL AFTER `color_material_name6`,
+MODIFY COLUMN `base_recipe7`  decimal(60,2) NULL DEFAULT NULL AFTER `color_material_name7`,
+MODIFY COLUMN `base_recipe8`  decimal(60,2) NULL DEFAULT NULL AFTER `color_material_name8`,
+MODIFY COLUMN `base_recipe9`  decimal(60,2) NULL DEFAULT NULL AFTER `color_material_name9`,
+MODIFY COLUMN `base_recipe10`  decimal(60,2) NULL DEFAULT NULL AFTER `color_material_name10`;
+

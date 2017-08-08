@@ -5,16 +5,16 @@ import io.swagger.annotations.ApiModel;
 @ApiModel
 public class RecipeCondition extends BaseCondition{
 
-    private String color_name;
+    private String color_number;
 
     private String material;
 
-    public String getColor_name() {
-        return color_name;
+    public String getColor_number() {
+        return color_number;
     }
 
-    public void setColor_name(String color_name) {
-        this.color_name = color_name;
+    public void setColor_number(String color_number) {
+        this.color_number = color_number;
     }
 
     public String getMaterial() {

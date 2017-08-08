@@ -1,0 +1,388 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <!--[if IE]>
+    <meta http-equiv="x-ua-compatible" content="IE=9"/><![endif]-->
+    <meta name="author" content="SuggeElson"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="application-name" content=""/>
+
+    <link th:href="@{/static/assets/css/icons.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/sprflat-theme/jquery.ui.all.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/plugins.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/main.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/custom.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/css/upload-img.css}" rel="stylesheet"/>
+
+    <link th:href="@{/static/assets/bootstrapValidator/bootstrapValidator.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <script th:src="@{/static/assets/js/jquery-2.0.3.min.js}"></script>
+
+    <script>
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            $('#customerForm').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {},
+                fields: {
+                    colorNumber: {
+                        message: '色号名称不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '色号名称不能为空'
+                            }
+                        }
+                    },
+                    material: {
+                        validators: {
+                            notEmpty: {
+                                message: '使用原料不能为空'
+                            }
+                        }
+                    },
+                    colorMaterialName1: {
+                        message: '色料名称1不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '色料名称1不能为空'
+                            }
+                        }
+                    },
+                    baseRecipe1: {
+                        message: '基本配方1不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '基本配方1不能为空'
+                            }
+                        }
+                    },
+                    colorMaterialName2: {
+                        message: '色料名称2不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '色料名称2不能为空'
+                            }
+                        }
+                    },
+                    baseRecipe2: {
+                        message: '基本配方2不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '基本配方2不能为空'
+                            }
+                        }
+                    },
+                    colorMaterialName3: {
+                        message: '色料名称3不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '色料名称3不能为空'
+                            }
+                        }
+                    },
+                    baseRecipe3: {
+                        message: '基本配方3不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '基本配方3不能为空'
+                            }
+                        }
+                    },
+                    colorMaterialName4: {
+                        message: '色料名称4不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '色料名称4不能为空'
+                            }
+                        }
+                    },
+                    baseRecipe4: {
+                        message: '基本配方4不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '基本配方4不能为空'
+                            }
+                        }
+                    }
+
+                }
+            }).on('success.form.bv', function (e) { //点击提交之后
+                $("#submit_btn").attr('disabled', "true");
+                $.post("/recipe/addRecipe/", $("#customerForm").serialize())
+                    .success(function (data) {
+                        if (data.code == '0') {
+                            $('#successModal').modal('show');
+                            $('#successModal').find('.operate-tip').html("新增【" + $("input[name='inputName']").val() + "】，操作成功！");
+                        } else {
+                            $("#submit_btn").removeAttr("disabled");
+                            $('#failureModal').modal('show');
+                            $('#failureModal').find('.operate-tip').html("新增【" + $("input[name='inputName']").val() + "】，操作失败！");
+                            return false;
+                        }
+                    })
+                    .error(function () {
+                        $('#failureModal').modal('show');
+                        $('#failureModal').find('.operate-tip').html("不可预知的异常，无法提交请求！");
+                        return false;
+                    });
+            });
+
+
+        });
+        /*]]>*/
+    </script>
+</head>
+
+<body>
+
+<body>
+<div th:replace="layout/header :: header"></div>
+<div th:replace="layout/nav :: nav"></div>
+
+<div id="content">
+    <div class="content-wrapper">
+        <h3>会员列表
+            <small>
+                <ul id="crumb" class="breadcrumb">
+                    <li>Home</li>
+                    <li class=""><a href="/recipe/list/">配方列表</a></li>
+                    <li class="active">添加配方</li>
+                </ul>
+            </small>
+        </h3>
+
+        <div class="outlet">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary toggle panelMove panelClose panelRefresh">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><i class="im-wand"></i> 添加配方</h4>
+                        </div>
+                        <form id="customerForm" method="post" class="form-horizontal form-wizard" role="form">
+                            <div class="panel-body">
+                                <div class="row row-two-col">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">色号名称： <span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="colorNumber" name="colorNumber" placeholder="色号名称">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">使用原料： <span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="material" name="material"  placeholder="使用原料">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row row-two-col">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">色料名称1：<span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="colorMaterialName1" name="colorMaterialName1" placeholder="色料名称1">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">基本配方1：<span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="baseRecipe1" name="baseRecipe1" placeholder="基本配方1">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row row-two-col">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">色料名称2：<span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="colorMaterialName2" name="colorMaterialName2" placeholder="色料名称2">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">基本配方2：<span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="baseRecipe2" name="baseRecipe2" placeholder="基本配方2">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row row-two-col">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">色料名称3：<span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="colorMaterialName3" name="colorMaterialName3" placeholder="色料名称3">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">基本配方1：<span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="baseRecipe3" name="baseRecipe3" placeholder="基本配方3">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row row-two-col">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">色料名称4：<span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="colorMaterialName4" name="colorMaterialName4" placeholder="色料名称4">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">基本配方4：<span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="baseRecipe4" name="baseRecipe4" placeholder="基本配方4">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row row-two-col">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">色料名称5：</label>
+                                            <input type="text" class="form-control" id="colorMaterialName5" name="colorMaterialName5" placeholder="色料名称5">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">基本配方5：</label>
+                                            <input type="text" class="form-control" id="baseRecipe5" name="baseRecipe5" placeholder="基本配方5">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row row-two-col">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">色料名称6：</label>
+                                            <input type="text" class="form-control" id="colorMaterialName6" name="colorMaterialName6" placeholder="色料名称6">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">基本配方6：</label>
+                                            <input type="text" class="form-control" id="baseRecipe6" name="baseRecipe6" placeholder="基本配方6">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row row-two-col">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">色料名称7：</label>
+                                            <input type="text" class="form-control" id="colorMaterialName7" name="colorMaterialName7" placeholder="色料名称7">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">基本配方7：</label>
+                                            <input type="text" class="form-control" id="baseRecipe7" name="baseRecipe7" placeholder="基本配方7">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row row-two-col">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">色料名称8：</label>
+                                            <input type="text" class="form-control" id="colorMaterialName8" name="colorMaterialName8" placeholder="色料名称8">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">基本配方8：</label>
+                                            <input type="text" class="form-control" id="baseRecipe8" name="baseRecipe8" placeholder="基本配方9">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row row-two-col">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">色料名称9：</label>
+                                            <input type="text" class="form-control" id="colorMaterialName9" name="colorMaterialName9" placeholder="色料名称9">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">基本配方9：</label>
+                                            <input type="text" class="form-control" id="baseRecipe9" name="baseRecipe9" placeholder="基本配方9">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row row-two-col">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">色料名称10：</label>
+                                            <input type="text" class="form-control" id="colorMaterialName10" name="colorMaterialName10" placeholder="色料名称10">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label">基本配方10：</label>
+                                            <input type="text" class="form-control" id="baseRecipe10" name="baseRecipe10" placeholder="基本配方10">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="panel-footer">
+                                <div class="row" style="margin-top: 15px;">
+                                    <div class="form-group">
+                                        <div class="col-lg-12" style="text-align: center;">
+                                            <button class="btn btn-primary submit_btn">保存</button> &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a class="btn btn-default" href="/recipe/list">取消</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="successModal" data-backdrop="static" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog-or">
+                <div class="modal-content panel-success">
+                    <div class="modal-header">
+                        <h4 id="myModalLabel" contenteditable="true">操作提示</h4>
+                    </div>
+                    <div class="modal-body warning-info-text">
+                        <i class="fa fa-check success-icon"></i>
+                        &nbsp;<span class="operate-tip"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/recipe/list" class="btn btn-primary">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="failureModal" data-backdrop="static" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog-or">
+                <div class="modal-content panel-success">
+                    <div class="modal-header">
+                        <h4 id="myModalLabel" contenteditable="true">操作提示</h4>
+                    </div>
+                    <div class="modal-body warning-info-text">
+                        <i class="fa fa-times failure-icon"></i>
+                        &nbsp;<span class="operate-tip"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/recipe/list" class="btn btn-primary">确定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+    </div>
+    <!-- End .content-wrapper -->
+    <div class="clearfix"></div>
+</div>
+
+
+<script th:src="@{/static/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/static/assets/bootstrapValidator/bootstrapValidator.min.js}"></script>
+
+</body>
+</html>
