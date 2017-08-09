@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.wshop.dto.model.OrderModel;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import org.apache.catalina.connector.Request;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -28,7 +29,9 @@ public class WordUtil {
             Configuration configuration = new Configuration();
             configuration.setDefaultEncoding("UTF-8");
             //ftl模板文件统一放至 com.lun.template 包下面
-            configuration.setDirectoryForTemplateLoading(new File("D:\\"));
+            String tempPath = Class.class.getClass().getResource("/").getPath();
+            System.out.println(tempPath);
+            configuration.setDirectoryForTemplateLoading(new File(tempPath+"\\"));
             //获取模板
             Template template = configuration.getTemplate(templateName);
             //输出文件
@@ -41,7 +44,6 @@ public class WordUtil {
             Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile),"UTF-8"));
             //生成文件
             template.process(dataMap, out);
-
             //关闭流
             out.flush();
             out.close();
@@ -70,7 +72,7 @@ public class WordUtil {
 
         /** 文件名称，唯一字符串 */
         Random r=new Random();
-        SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
+        SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd_HHmmss");
         StringBuffer sb=new StringBuffer();
         sb.append(sdf1.format(new Date()));
         sb.append("_");
@@ -84,7 +86,6 @@ public class WordUtil {
 
         //文件名称
        String fileName="用freemarker导出的Word文档.doc";
-
         /** 生成word */
         WordUtil.createWord(dataMap, "productorder.ftl", filePath, fileOnlyName);
 
