@@ -141,6 +141,8 @@ public class MatchColorWorkModel {
     public MatchColorWork toMatchColorWork(MatchColorWorkModel model){
 		MatchColorWork matchColorWork = new MatchColorWork();
 		BeanUtils.copyProperties(model, matchColorWork);
+        matchColorWork.setProduceTime(new Date());
+        matchColorWork.setCreatetime(new Date());
 		return matchColorWork;
 	}
 

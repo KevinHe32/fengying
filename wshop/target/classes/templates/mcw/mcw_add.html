@@ -25,61 +25,101 @@
     <script>
         /*<![CDATA[*/
         $(document).ready(function () {
-            $('#customerForm').bootstrapValidator({
+            $('#mcwForm').bootstrapValidator({
                 message: 'This value is not valid',
                 feedbackIcons: {},
                 fields: {
-                    inputName: {
-                        message: '客户姓名不能为空',
+                    colorCode: {
+                        message: '色号不能为空',
                         validators: {
                             notEmpty: {
-                                message: '客户姓名不能为空'
+                                message: '色号不能为空'
                             }
                         }
                     },
-                    inputCustomerCode: {
+                    material: {
                         validators: {
                             notEmpty: {
-                                message: '客户编号不能为空'
+                                message: '使用原料不能为空'
                             }
                         }
                     },
-                    inputTel: {
-                        message: '联系方式不能为空',
+                    productBatchNumber: {
+                        message: '产品批号不能为空',
                         validators: {
                             notEmpty: {
-                                message: '联系方式不能为空'
+                                message: '产品批号不能为空'
                             }
                         }
                     },
-                    inputEmail: {
-                        message: '联系邮箱不能为空',
+                    customer: {
+                        message: '顾客名称不能为空',
                         validators: {
                             notEmpty: {
-                                message: '联系邮箱不能为空'
+                                message: '顾客名称不能为空'
                             }
                         }
                     },
-                    inputAddress: {
-                        message: '居住地址不能为空',
+                    number: {
+                        message: '生产数量不能为空',
                         validators: {
                             notEmpty: {
-                                message: '居住地址不能为空'
-                            }
+                                message: '生产数量不能为空'
+                            },
+                            numeric: {message: '生产数量只能输入数字'}
+                        }
+                    },
+                    weishuWeight: {
+                        message: '尾数重量不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '尾数重量不能为空'
+                            },
+                            numeric: {message: '尾数重量只能输入数字'}
+                        }
+                    },
+                    times: {
+                        message: '方次不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '方次不能为空'
+                            },
+                            numeric: {message: '方次只能输入数字'}
+                        }
+                    },
+                    buzhengWeight: {
+                        message: '补正记录不能为空',
+                        validators: {
+                            notEmpty: {
+                                message: '补正记录不能为空'
+                            },
+                            numeric: {message: '补正记录只能输入数字'}
                         }
                     }
                 }
             }).on('success.form.bv', function (e) { //点击提交之后
+                $('.table-row').html("")
+
+                var weishuWeight = $('#weishuWeight').val()
+                var times = $('#times').val()
+                var buzhengWeight = $('#buzhengWeight').val()
+                var number = $('#number').val()
+
+                if(Number(weishuWeight) * Number(times) + Number(buzhengWeight) != Number(number)){
+                    $('.table-row').append("<div style='text-align:center;color:red;'>尾数重量 * 方次 + 补正重量 ！= 生产数量，请检查！</div>");
+                    return;
+                }
+
                 $("#submit_btn").attr('disabled', "true");
-                $.post("/customer/addCustomer/", $("#customerForm").serialize())
+                $.post("/match_color_work/addMatchColorWork/", $("#mcwForm").serialize())
                     .success(function (data) {
                         if (data.code == '0') {
                             $('#successModal').modal('show');
-                            $('#successModal').find('.operate-tip').html("新增【" + $("input[name='inputName']").val() + "】，操作成功！");
+                            $('#successModal').find('.operate-tip').html("新增配色作业制图成功，【色号：" + $("input[name='colorCode']").val() + "】，操作成功！");
                         } else {
                             $("#submit_btn").removeAttr("disabled");
                             $('#failureModal').modal('show');
-                            $('#failureModal').find('.operate-tip').html("新增【" + $("input[name='inputName']").val() + "】，操作失败！");
+                            $('#failureModal').find('.operate-tip').html("新增配色作业制图失败，【色号" + $("input[name='colorCode']").val() + "】，操作失败！");
                             return false;
                         }
                     })
@@ -90,6 +130,87 @@
                     });
             });
 
+            $('#colorCode, #material, #weishuWeight, #times, #buzhengWeight, #number').bind('change',function(){
+                $('.table-row').html("")
+            })
+            $('.btn-yulan').bind('click',function () {
+                $('.table-row').html("")
+
+                var colorCode = $('#colorCode').val()
+                var productBatchNumber = $('#productBatchNumber').val()
+                var weishuWeight = $('#weishuWeight').val()
+                var times = $('#times').val()
+                var buzhengWeight = $('#buzhengWeight').val()
+                var number = $('#number').val()
+                var material = $('#material').val()
+
+                if(colorCode == undefined || colorCode == ''){
+                    $('.table-row').append("<div style='text-align:center;color:red;'>色号不能为空，请检查！</div>");
+                    return;
+                }
+                if(material == undefined || material == ''){
+                    $('.table-row').append("<div style='text-align:center;color:red;'>使用原料不能为空，请检查！</div>");
+                    return;
+                }
+                if(weishuWeight == undefined || weishuWeight == ''){
+                    $('.table-row').append("<div style='text-align:center;color:red;'>尾数重量不能为空，请检查！</div>");
+                    return;
+                }
+                if(times == undefined || times == ''){
+                    $('.table-row').append("<div style='text-align:center;color:red;'>方次不能为空，请检查！</div>");
+                    return;
+                }
+                if(buzhengWeight == undefined || buzhengWeight == ''){
+                    $('.table-row').append("<div style='text-align:center;color:red;'>补正重量不能为空，请检查！</div>");
+                    return;
+                }
+
+                if(Number(weishuWeight) * Number(times) + Number(buzhengWeight) != Number(number)){
+                    $('.table-row').append("<div style='text-align:center;color:red;'>尾数重量 * 方次 + 补正重量 ！= 生产数量，请检查！</div>");
+                    return;
+                }
+
+                $.ajax({
+                    url: '/match_color_work/yulan',
+                    datatype: 'json',
+                    type: 'get',
+                    data:{
+                            colorCode: $('#colorCode').val(),
+                            material:$('#material').val(),
+                            productBatchNumber: $('#productBatchNumber').val(),
+                            weishuWeight: $('#weishuWeight').val(),
+                            times: $('#times').val(),
+                            buzhengWeight: $('#buzhengWeight').val()
+                    },
+                    success: function (data) {
+                       if(data.code == 0){
+                           var tableHeader = "<table class='table table-striped'>" +
+                               "<thead><tr><td>色料名称</td><td>基本配方</td>" +
+                               "<td>尾数重量（kg）* 方次</td>" +
+                               " <td>补正记录重量（kg）* 方次</td>" +
+                               "</tr>" +
+                               "</thead>" +
+                               "<tbody class='tbody'>";
+
+                           $('.table-row').append(tableHeader);
+                            for(var i = 0; i < data.dataList.length; i++){
+                                var rowItem = "<tr>" +
+                                                    "<td>"+data.dataList[i].colorNumber+"</td>" +
+                                                    "<td>"+data.dataList[i].material+"</td>" +
+                                                    "<td>"+data.dataList[i].weishuWeight+"</td>" +
+                                                    "<td>"+data.dataList[i].buzhengWeight+"</td></tr>";
+
+                                $('.table-row').find('.table').find(".tbody").append(rowItem);
+                            }
+
+                           var tableFooter = "</tbody></table>";
+                           $('.table-row').append(tableFooter);
+                       }else{
+                           $('.table-row').append("<div style='text-align:center;color:red;'>查询无匹配记录</div>");
+                       }
+                    }
+                });
+            })
 
         });
         /*]]>*/
@@ -121,7 +242,7 @@
                         <div class="panel-heading">
                             <h4 class="panel-title"><i class="im-wand"></i> 添加配色作业制图</h4>
                         </div>
-                        <form id="customerForm" method="post" class="form-horizontal form-wizard" role="form">
+                        <form id="mcwForm" method="post" class="form-horizontal form-wizard" role="form">
                             <div class="panel-body">
                                 <div class="row row-two-col">
                                     <div class="col-lg-4">
@@ -194,39 +315,14 @@
                                     </div>
                                 </div>
 
-                                <div class="row row-two-col">
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <td>色料名称</td>
-                                            <td>基本配方</td>
-                                            <td>尾数重量（kg）* 方次</td>
-                                            <td>补正记录重量（kg）* 方次</td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <!--<tr th:each="record,status: ${recordList}" role="row">
-                                            <td th:text="${status.index + 1}"></td>
-                                            <td th:text="${record.colorCode}? ${record.colorCode} : '-&#45;&#45;'"></td>
-                                            <td th:text="${record.productBatchNumber}? ${record.productBatchNumber} : '-&#45;&#45;'"></td>
-                                            <td th:text="${record.customer}? ${record.customer} : '-&#45;&#45;'"></td>
-                                            <td th:text="${record.material}? ${record.material} : '-&#45;&#45;'"></td>
-                                            <td th:text="${record.customer}? ${record.customer} : '-&#45;&#45;'"></td>
-                                            <td th:text="${record.number}? ${record.number} : '-&#45;&#45;'"></td>
-                                            <td th:text="${record.machineCode}? ${record.machineCode} : '-&#45;&#45;'"></td>
-                                            <td th:text="${record.weishuWeight}? ${record.weishuWeight}* ${record.times} : '-&#45;&#45;'"></td>
-                                            <td th:text="${record.buzhengWeight}? ${record.buzhengWeight}: '-&#45;&#45;'"></td>
+                                <div class="row row-two-col" style="text-align: right;">
+                                    <div class="col-lg-2 col-lg-offset-10">
+                                        <a class="btn btn-warning btn-yulan">预览</a>
+                                    </div>
+                                </div>
 
-                                            <td>
-                                                <a th:href="'/match_color_work/edit_mcw/'+${record.id}" class="btn btn-success">编辑</a>
-                                                &lt;!&ndash;<a onclick='deleteCategory(this)' class="btn btn-warning">删除</a>&ndash;&gt;
-                                                <a data-toggle="modal" data-target="#myModal"
-                                                   th:id="${record.id}" th:value="${record.colorCode}"
-                                                   class="btn btn-danger btn-delete-recipe">删除</a>
-                                            </td>
-                                        </tr>-->
-                                        </tbody>
-                                    </table>
+                                <div class="row row-two-col table-row">
+
                                 </div>
                             </div>
                             <div class="panel-footer">
@@ -234,7 +330,7 @@
                                     <div class="form-group">
                                         <div class="col-lg-12" style="text-align: center;">
                                             <button class="btn btn-primary submit_btn">保存</button> &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a class="btn btn-default" href="/customer/list">取消</a>
+                                            <a class="btn btn-default" href="/match_color_work/list">取消</a>
                                         </div>
                                     </div>
                                 </div>
@@ -257,7 +353,7 @@
                         &nbsp;<span class="operate-tip"></span>
                     </div>
                     <div class="modal-footer">
-                        <a href="/customer/list" class="btn btn-primary">确定</a>
+                        <a href="/match_color_work/list" class="btn btn-primary">确定</a>
                     </div>
                 </div>
             </div>
@@ -275,7 +371,7 @@
                         &nbsp;<span class="operate-tip"></span>
                     </div>
                     <div class="modal-footer">
-                        <a href="/customer/list" class="btn btn-primary">确定</a>
+                        <a href="/match_color_work/list" class="btn btn-primary">确定</a>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->

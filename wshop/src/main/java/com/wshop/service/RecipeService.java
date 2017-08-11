@@ -6,6 +6,7 @@ import com.wshop.dao.CustomerMapper;
 import com.wshop.dao.RecipeMapper;
 import com.wshop.dto.condition.CustomerCondition;
 import com.wshop.dto.condition.RecipeCondition;
+import com.wshop.dto.condition.RecipeQueryCondition;
 import com.wshop.entity.Customer;
 import com.wshop.entity.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,11 @@ public class RecipeService {
         List<Recipe> recipes = recipeMapper.selectAll(condition);
         PageInfo<Recipe> list = new PageInfo<Recipe>(recipes);
         return list;
+    }
+
+    public List<Recipe> selectAlls(RecipeQueryCondition condition){
+        List<Recipe> recipes = recipeMapper.selectByCondition(condition);
+        return recipes;
     }
 
     public Recipe selectByPrimaryKey(Integer id){

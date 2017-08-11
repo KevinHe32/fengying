@@ -331,4 +331,18 @@
       </if>
     </where>
   </select>
+
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.wshop.dto.condition.RecipeQueryCondition" >
+    select
+    <include refid="Base_Column_List" />
+    from recipe
+    <where>
+      <if test="colorNumber != null">
+        color_number = #{colorNumber, jdbcType=VARCHAR}
+      </if>
+      <if test="material != null and material != ''">
+        AND material LIKE CONCAT('%',#{material},'%')
+      </if>
+    </where>
+  </select>
 </mapper>

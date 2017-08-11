@@ -3,7 +3,10 @@ package com.wshop.dao;
 
 import com.github.pagehelper.Page;
 import com.wshop.dto.condition.RecipeCondition;
+import com.wshop.dto.condition.RecipeQueryCondition;
 import com.wshop.entity.Recipe;
+
+import java.util.List;
 
 public interface RecipeMapper {
     int deleteByPrimaryKey(Integer id);
@@ -19,4 +22,6 @@ public interface RecipeMapper {
     int updateByPrimaryKey(Recipe record);
 
     Page<Recipe> selectAll(RecipeCondition condition);
+
+    List<Recipe> selectByCondition(RecipeQueryCondition condition);
 }
