@@ -16,7 +16,7 @@ import java.util.*;
 public class HwpfTest {
     @Test
     public void testWrite() throws Exception {
-        String templatePath = "D:\\test.doc";
+        String templatePath = "e:\\test.doc";
         InputStream is = new FileInputStream(templatePath);
         HWPFDocument doc = new HWPFDocument(is);
 
@@ -30,7 +30,7 @@ public class HwpfTest {
 //        range.replaceText("${bananaAmt}", "200.00");
 //        range.replaceText("${totalAmt}", "300.00");
 
-        OutputStream os = new FileOutputStream("D:\\write.doc");
+        OutputStream os = new FileOutputStream("e:\\write.doc");
         //把doc输出到输出流中
         doc.write(os);
         this.closeStream(os);
@@ -47,7 +47,7 @@ public class HwpfTest {
             orderModel.setCodeNumber("RTS-001-100"+i);
             orderModel.setBatchNumber("FY-2017-00"+i);
             orderModel.setMaterial("好材料");
-            orderModel.setNumber(Double.valueOf(100*(i+1)));
+            //orderModel.setNumber(Double.valueOf(100*(i+1)));
             orderModel.setCustomer("顾客您好0"+i);
             orderModel.setPackage2("包装好好");
             orderModel.setCreatetime(new Date());

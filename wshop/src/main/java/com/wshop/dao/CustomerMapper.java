@@ -6,6 +6,8 @@ import com.wshop.dto.condition.CustomerCondition;
 import com.wshop.entity.Customer;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CustomerMapper {
     int deleteByPrimaryKey(Integer id);
@@ -21,4 +23,6 @@ public interface CustomerMapper {
     int updateByPrimaryKey(Customer record);
     
     Page<Customer> selectAll(CustomerCondition condition);
+
+    List<Customer> selectAllCustomer(CustomerCondition condition);
 }

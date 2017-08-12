@@ -17,22 +17,52 @@
     <link th:href="@{/static/assets/css/custom.css}" rel="stylesheet"/>
     <link th:href="@{/static/assets/css/style.css}" rel="stylesheet"/>
 
+    <link th:href="@{/static/assets/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/pickupdate/bootstrap-datetimepicker.min.css}" rel="stylesheet"/>
     <script th:src="@{/static/assets/js/jquery-2.0.3.min.js}"></script>
+    <script th:src="@{/static/assets/pickupdate/bootstrap-datetimepicker.min.js}"></script>
 
     <script>
         /*<![CDATA[*/
         $(document).ready(function () {
+            $('.birthtimeStartFilter').datetimepicker({
+                linkField:"birthtimeStart",
+                format: 'yyyy-mm-dd',
+                weekStart: 1,
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                pickerPosition:"bottom-left"
+            });
+
+            $('.birthtimeEndFilter').datetimepicker({
+                linkField:"birthtimeEnd",
+                format: 'yyyy-mm-dd',
+                weekStart: 1,
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                pickerPosition:"bottom-left"
+            });
+
             $(".btn-delete-recipe").bind("click",function(){
                 var id = $(this).attr("id");
-                var customerName = $(this).attr("value");
-                $("#inputName").val(customerName);
+                var name = $(this).attr("value");
+                $("#inputName").val(name);
                 $("#id").val(id);
             });
             $(".btn-confirm-delete").bind("click",function(){
                 var id = $("#id").val();
-                var location = '/customer/delete_customer/'+id;
+                var location = '/recipe/delete_recipe/'+id;
                 window.location.href= location;
-
             });
         });
         /*]]>*/
@@ -47,37 +77,68 @@
 
 <div id="content">
    <div class="content-wrapper">
-       <h3>配方管理列表
+       <h3>配方列表
            <small><ul id="crumb" class="breadcrumb">
                <li><a href="#">首页</a></li>
-               <li class="active">配方管理列表</li>
+               <li class="active">配方列表</li>
            </ul></small>
        </h3>
 
         <div class="outlet">
             <div class="row">
-                <div class="col-sm-3">
-                    <a href="/recipe/add_recipe/" class="btn btn-success">新增配方</a>-
-                </div>
-                <div class="col-sm-9 pull-right" style="text-align:right;">
-                    <form class="form-inline" role="form" method="GET" action="/recipe/list/">
-                        <div class="form-group">
-                            <input class="form-control" name="color_number" id="color_number" type="text"
-                                   th:value="${condition.color_number}"
-                                   placeholder="请输入色号名称"/>
+                <form class="form-inline" role="form" method="GET" action="/recipe/list/">
+                    <div class="col-sm-4">
+                        <a href="/recipe/add_recipe/" class="btn btn-success">新增配方</a>
+                    </div>
+
+                    <div class="col-sm-8 pull-right" style="text-align:right;">
+                        <div class="row">
+                            <div class="col-sm-2 col-sm-offset-3">
+                                <div class="form-group">
+                                    <input class="form-control" name="color_number" id="color_number" type="text"
+                                           th:value="${condition.color_number}"
+                                           placeholder="请输入色号名称"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <input class="form-control" name="material" id="material" type="text"
+                                           th:value="${condition.material}"
+                                           placeholder="请输入使用原料"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-2" style="padding-right: 0px;">
+                                <div class="form-group control-group">
+                                    <div class="input-group date form_datetime birthtimeStartFilter"
+                                         data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                        <input type="text" name="birthtimeStart"
+                                               class="form-control at-date" placeholder="创建开始时间" readonly=""
+                                               id="birthtimeStart" th:value="${condition.birthtimeStart3}">
+                                        <span class="input-group-addon my-input-group-addon" style="padding-left: 15px;"><i class="fa fa-calendar" style="cursor: pointer;"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2" style="padding-right: 0px;">
+                                <div class="form-group control-group">
+                                    <div class="input-group date form_datetime birthtimeEndFilter"
+                                         data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                        <input type="text" name="birthtimeEnd"
+                                               class="form-control at-date" placeholder="创建结束时间" readonly=""
+                                               id="birthtimeEnd" th:value="${condition.birthtimeEnd3}">
+                                        <span class="input-group-addon my-input-group-addon"><i class="fa fa-calendar" style="cursor: pointer;"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <button type="submit" class="btn btn-primary">查询</button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" name="material" id="material" type="text"
-                                   th:value="${condition.material}"
-                                   placeholder="请输入使用原料"/>
-                        </div>
-                        <button type="submit" class="btn btn-primary">查询</button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
 
             <!-- End .row -->
-            <div class="row">
+            <div class="row" style="padding-top: 20px;">
                 <!-- Start .row -->
                 <div class="col-lg-12 col-md-12 sortable-layout">
                     <div class="panel panel-primary toggle panelMove panelClose panelRefresh">
@@ -99,6 +160,7 @@
                                         <td>基本配方3</td>
                                         <td>色料名称4</td>
                                         <td>基本配方4</td>
+                                        <td>创建时间</td>
                                         <td>操作</td>
                                     </tr>
                                 </thead>
@@ -118,16 +180,16 @@
                                         <td th:text="${record.createtime}? ${#dates.format(record.createtime,'yyyy-MM-dd HH:mm:ss')} : '---'"></td>
 
                                         <td>
-                                            <a th:href="'/customer/edit_customer/'+${record.id}" class="btn btn-success">编辑</a>
-                                            <!--<a onclick='deleteCategory(this)' class="btn btn-warning">删除</a>-->
+                                            <a th:href="'/recipe/edit_recipe/'+${record.id}" class="btn btn-success">编辑</a>
                                             <a data-toggle="modal" data-target="#myModal"
                                                th:id="${record.id}" th:value="${record.colorNumber}"
                                                class="btn btn-danger btn-delete-recipe">删除</a>
+                                            <a th:href="'/recipe/show_recipe/'+${record.id}" class="btn btn-warning">详情</a>
                                         </td>
                                     </tr>
                                     <tr role="row"
                                         th:style="'display:' +@{(${#lists.isEmpty(recordList)}? '' : 'none')} + ''">
-                                        <td colspan=10" style="text-align: center;">
+                                        <td colspan=13" style="text-align: center;">
                                             <spam>
                                                 很抱歉，没有找到符合您条件的记录
                                             </spam>
@@ -141,11 +203,11 @@
                                 <div class="col-sm-11" style="text-align: right;">
                                     <nav th:if="${recordSize >0}">
                                         <ul class="pagination">
-                                            <li><a th:href="@{${'/recipe/list'}(pageNum=0,pageSize=10,color_number=${condition.color_number},material=${condition.material})}"
+                                            <li><a th:href="@{${'/recipe/list'}(pageNum=0,pageSize=10,color_number=${condition.color_number},material=${condition.material},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
                                                    class="header-page">首页</a></li>
                                             <li>
                                                 <a th:if="${not isFirstPage}"
-                                                   th:href="@{${'/recipe/list'}(pageNum=${pageNum-1},pageSize=${pageSize},color_number=${condition.color_number},material=${condition.material})}"
+                                                   th:href="@{${'/recipe/list'}(pageNum=${pageNum-1},pageSize=${pageSize},color_number=${condition.color_number},material=${condition.material},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
                                                    class="normal-page">上一页</a>
                                                 <a th:if="${isFirstPagee}" href="javascript:void(0);" class="normal-page"></a>
                                             </li>
@@ -154,19 +216,19 @@
                                                     <span th:text="${pageNo}"></span>
                                                 </a>
                                                 <a th:if="${not (pageNum eq pageNo)}"
-                                                   th:href="@{${'/recipe/list'}(pageNum=${pageNo},size=${pageSize},color_number=${condition.color_number},material=${condition.material})}"
+                                                   th:href="@{${'/recipe/list'}(pageNum=${pageNo},size=${pageSize},color_number=${condition.color_number},material=${condition.material},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
                                                    class="normal-page">
                                                     <span th:text="${pageNo}"></span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a th:if="${not isLastPage}"
-                                                   th:href="@{${'/recipe/list'}(pageNum=${pageNum+1},size=${pageSize},color_number=${condition.color_number},material=${condition.material})}"
+                                                   th:href="@{${'/recipe/list'}(pageNum=${pageNum+1},size=${pageSize},color_number=${condition.color_number},material=${condition.material},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
                                                    class="normal-page">下一页</a>
                                                 <a th:if="${isLastPage}" href="javascript:void(0);"
                                                    class="normal-page"></a>
                                             </li>
-                                            <li><a th:href="@{${'/recipe/list'}(pageNum=${totalPages},size=${pageSize},color_number=${condition.color_number},material=${condition.material})}"
+                                            <li><a th:href="@{${'/recipe/list'}(pageNum=${totalPages},size=${pageSize},color_number=${condition.color_number},material=${condition.material},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
                                                    class="footer-page">尾页</a></li>
                                         </ul>
                                     </nav>
@@ -203,9 +265,9 @@
             <div class="modal-body">
                 <form class="form-horizontal" role="form" id="customerForm" method="post">
                     <div class="form-group">
-                        <label for="inputName" class="col-sm-3 control-label">客户姓名 </label>
+                        <label for="inputName" class="col-sm-3 control-label">色号名称 </label>
                         <div class="col-sm-8">
-                            <input type="text" style="background: lightgray;" class="form-control" id="inputName" name="inputName" placeholder="客户名">
+                            <input type="text" class="form-control" id="inputName" name="inputName" placeholder="客户名">
                         </div>
                     </div>
                     <input type="hidden" name="id" id="id" />
@@ -214,7 +276,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                 </button>
-                <button type="button" class="btn btn-primary btn-confirm-delete">删除</button>
+                <button type="button" class="btn btn-danger btn-confirm-delete">删除</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->

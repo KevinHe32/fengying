@@ -20,7 +20,7 @@ public class MatchColorWorkModel {
 
     private String customerCode;
 
-    private Double number;
+    private Integer number;
 
     private String machineCode;
 
@@ -82,11 +82,11 @@ public class MatchColorWorkModel {
         this.customerCode = customerCode;
     }
 
-    public Double getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(Double number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

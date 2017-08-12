@@ -8,21 +8,25 @@
     <result column="code_number" property="codeNumber" jdbcType="VARCHAR" />
     <result column="batch_number" property="batchNumber" jdbcType="VARCHAR" />
     <result column="material" property="material" jdbcType="VARCHAR" />
-    <result column="number" property="number" jdbcType="DOUBLE" />
+    <result column="number" property="number" jdbcType="INTEGER" />
     <result column="customer" property="customer" jdbcType="VARCHAR" />
     <result column="package" property="package2" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
+
   <resultMap id="ResultMapWithBLOBs" type="com.wshop.entity.Order" extends="BaseResultMap" >
     <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
   </resultMap>
+
   <sql id="Base_Column_List" >
     id, machine_number, color_number, code_number, batch_number, material, number, customer, 
     package, createtime
   </sql>
+
   <sql id="Blob_Column_List" >
     remark
   </sql>
+
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -31,10 +35,12 @@
     from p_order
     where id = #{id,jdbcType=INTEGER}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from p_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.wshop.entity.Order" >
     insert into p_order (id, machine_number, color_number, 
       code_number, batch_number, material, 
@@ -42,9 +48,10 @@
       createtime, remark)
     values (#{id,jdbcType=INTEGER}, #{machineNumber,jdbcType=VARCHAR}, #{colorNumber,jdbcType=VARCHAR}, 
       #{codeNumber,jdbcType=VARCHAR}, #{batchNumber,jdbcType=VARCHAR}, #{material,jdbcType=VARCHAR}, 
-      #{number,jdbcType=DOUBLE}, #{customer,jdbcType=VARCHAR}, #{package,jdbcType=VARCHAR}, 
+      #{number,jdbcType=INTEGER}, #{customer,jdbcType=VARCHAR}, #{package,jdbcType=VARCHAR},
       #{createtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=LONGVARCHAR})
   </insert>
+
   <insert id="insertSelective" parameterType="com.wshop.entity.Order" >
     insert into p_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -102,7 +109,7 @@
         #{material,jdbcType=VARCHAR},
       </if>
       <if test="number != null" >
-        #{number,jdbcType=DOUBLE},
+        #{number,jdbcType=INTEGER},
       </if>
       <if test="customer != null" >
         #{customer,jdbcType=VARCHAR},
@@ -118,6 +125,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.wshop.entity.Order" >
     update p_order
     <set >
@@ -137,7 +145,7 @@
         material = #{material,jdbcType=VARCHAR},
       </if>
       <if test="number != null" >
-        number = #{number,jdbcType=DOUBLE},
+        number = #{number,jdbcType=INTEGER},
       </if>
       <if test="customer != null" >
         customer = #{customer,jdbcType=VARCHAR},
@@ -154,6 +162,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wshop.entity.Order" >
     update p_order
     set machine_number = #{machineNumber,jdbcType=VARCHAR},
@@ -161,13 +170,14 @@
       code_number = #{codeNumber,jdbcType=VARCHAR},
       batch_number = #{batchNumber,jdbcType=VARCHAR},
       material = #{material,jdbcType=VARCHAR},
-      number = #{number,jdbcType=DOUBLE},
+      number = #{number,jdbcType=INTEGER},
       customer = #{customer,jdbcType=VARCHAR},
       package = #{package,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.wshop.entity.Order" >
     update p_order
     set machine_number = #{machineNumber,jdbcType=VARCHAR},
@@ -175,13 +185,12 @@
       code_number = #{codeNumber,jdbcType=VARCHAR},
       batch_number = #{batchNumber,jdbcType=VARCHAR},
       material = #{material,jdbcType=VARCHAR},
-      number = #{number,jdbcType=DOUBLE},
+      number = #{number,jdbcType=INTEGER},
       customer = #{customer,jdbcType=VARCHAR},
       package = #{package,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
   
   <select id="selectAll" resultMap="BaseResultMap" parameterType="com.wshop.dto.condition.OrderCondition">
     select 
@@ -204,12 +213,47 @@
 	      and material=#{material}
 	    </if>
 		<if test="customer != null and customer != ''" >
-	       customer LIKE CONCAT('%',#{customer},'%')
+	      and customer LIKE CONCAT('%',#{customer},'%')
 	    </if>
 	    <if test="package2 != null and package2 != ''" >
 	      and package=#{package2}
 	    </if>
+        <if test="birthtimeStart !=null"><![CDATA[and createtime >= #{birthtimeStart} ]]> </if>
+        <if test="birthtimeEnd !=null"><![CDATA[and createtime <= #{birthtimeEnd} ]]> </if>
 	</where>
+    order by createtime desc
   </select>
-  
+
+  <select id="selectAllOrder" resultMap="BaseResultMap" parameterType="com.wshop.dto.condition.OrderCondition">
+    select
+    <include refid="Base_Column_List" />
+    from p_order
+    <where>
+      <if test="machineNumber != null and machineNumber != ''" >
+        and machine_number=#{machineNumber}
+      </if>
+      <if test="colorNumber != null and colorNumber != ''" >
+        and color_number=#{colorNumber}
+      </if>
+      <if test="codeNumber != null and codeNumber != ''" >
+        and code_number=#{codeNumber}
+      </if>
+      <if test="batchNumber != null and batchNumber != ''" >
+        and batch_number=#{batchNumber}
+      </if>
+      <if test="material != null and material != ''" >
+        and material=#{material}
+      </if>
+      <if test="customer != null and customer != ''" >
+        and customer LIKE CONCAT('%',#{customer},'%')
+      </if>
+      <if test="package2 != null and package2 != ''" >
+        and package=#{package2}
+      </if>
+      <if test="birthtimeStart !=null"><![CDATA[and createtime >= #{birthtimeStart} ]]> </if>
+      <if test="birthtimeEnd !=null"><![CDATA[and createtime <= #{birthtimeEnd} ]]> </if>
+    </where>
+    order by createtime desc
+  </select>
+
 </mapper>

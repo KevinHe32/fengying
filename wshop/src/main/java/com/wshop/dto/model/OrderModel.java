@@ -18,7 +18,7 @@ public class OrderModel {
 
     private String material;
 
-    private Double number;
+    private Integer number;
 
     private String customer;
 
@@ -76,11 +76,11 @@ public class OrderModel {
         this.material = material == null ? null : material.trim();
     }
 
-    public Double getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(Double number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

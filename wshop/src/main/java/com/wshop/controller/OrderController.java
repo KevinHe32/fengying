@@ -37,6 +37,10 @@ public class OrderController {
 	public ModelAndView list(@ModelAttribute OrderCondition condition, Model model, String language,
 					   HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
+		String startTime = condition.getBirthTimeStart2();
+		String endTime = condition.getBirthtimeEnd2();
+		condition.setBirthtimeStart3(startTime);
+		condition.setBirthtimeEnd3(endTime);
 
 		PageInfo<Order> pageInfo = orderService.selectAll(condition);
 		model.addAttribute("recordList", pageInfo.getList());

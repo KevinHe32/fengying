@@ -16,12 +16,43 @@
     <link th:href="@{/static/assets/css/main.css}" rel="stylesheet"/>
     <link th:href="@{/static/assets/css/custom.css}" rel="stylesheet"/>
     <link th:href="@{/static/assets/css/style.css}" rel="stylesheet"/>
-
+    <link th:href="@{/static/assets/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/pickupdate/bootstrap-datetimepicker.min.css}" rel="stylesheet"/>
     <script th:src="@{/static/assets/js/jquery-2.0.3.min.js}"></script>
+    <script th:src="@{/static/assets/pickupdate/bootstrap-datetimepicker.min.js}"></script>
 
     <script>
         /*<![CDATA[*/
         $(document).ready(function () {
+            $('.birthtimeStartFilter').datetimepicker({
+                linkField:"birthtimeStart",
+                format: 'yyyy-mm-dd',
+                weekStart: 1,
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                pickerPosition:"bottom-left"
+            });
+
+            $('.birthtimeEndFilter').datetimepicker({
+                linkField:"birthtimeEnd",
+                format: 'yyyy-mm-dd',
+                weekStart: 1,
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                pickerPosition:"bottom-left"
+            });
+
+
             $(".btn-delete-recipe").bind("click",function(){
                 var id = $(this).attr("id");
                 var value = $(this).attr("value");
@@ -55,55 +86,87 @@
        </h3>
 
         <div class="outlet">
-            <div class="row">
-                <div class="col-sm-2">
-                    <a href="/order/add_order/" class="btn btn-success">新增生产通知单</a>-
-                </div>
-                <div class="col-sm-10 pull-right" style="text-align:right;">
-                    <form class="form-inline" role="form" method="GET" action="/order/list/">
-                        <div class="form-group">
-                            <input class="form-control" name="machineNumber" id="machineNumber" type="text"
-                                   th:value="${condition.machineNumber}"
-                                   placeholder="请输入机器编号"/>
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" name="colorNumber" id="colorNumber" type="text"
-                                   th:value="${condition.colorNumber}"
-                                   placeholder="请输入色号"/>
-                        </div>
-
-                        <div class="form-group">
-                            <input class="form-control" name="codeNumber" id="codeNumber" type="text"
-                                   th:value="${condition.codeNumber}"
-                                   placeholder="请输入代号"/>
-                        </div>
-
-                        <div class="form-group">
-                            <input class="form-control" name="batchNumber" id="batchNumber" type="text"
-                                   th:value="${condition.batchNumber}"
-                                   placeholder="请输入批号"/>
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" name="customer" id="customer" type="text"
-                                   th:value="${condition.customer}"
-                                   placeholder="请输入客户"/>
-                        </div>
-
-                        <div class="form-group">
+            <form class="form-inline" role="form" method="GET" action="/order/list/">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <a href="/order/add_order/" class="btn btn-success">新增生产通知单</a>
+                    </div>
+                    <div class="col-sm-10 pull-right" style="text-align:right;">
+                            <div class="form-group">
+                                <input class="form-control" name="machineNumber" id="machineNumber" type="text"
+                                       th:value="${condition.machineNumber}"
+                                       placeholder="请输入机器编号"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="colorNumber" id="colorNumber" type="text"
+                                       th:value="${condition.colorNumber}"
+                                       placeholder="请输入色号"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="codeNumber" id="codeNumber" type="text"
+                                       th:value="${condition.codeNumber}"
+                                       placeholder="请输入代号"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="batchNumber" id="batchNumber" type="text"
+                                       th:value="${condition.batchNumber}"
+                                       placeholder="请输入批号"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="customer" id="customer" type="text"
+                                       th:value="${condition.customer}"
+                                       placeholder="请输入客户"/>
+                            </div>
+                            <div class="form-group">
                             <input class="form-control" name="material" id="material" type="text"
                                    th:value="${condition.material}"
                                    placeholder="请输入原料"/>
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" name="package2" id="package2" type="text"
-                                   th:value="${condition.package2}"
-                                   placeholder="请输入包装"/>
-                        </div>
-                        <button type="submit" class="btn btn-primary">查询</button>
-                    </form>
+                    </div>
                 </div>
-            </div>
+                <div class="row" style="padding-top: 10px;">
+                    <div class="col-sm-6 col-sm-offset-6">
+                        <div class="col-sm-3 col-sm-offset-2" style="padding-right: 0px;">
+                            <div class="form-group">
+                                <input class="form-control" name="package2" id="package2" type="text"
+                                       th:value="${condition.package2}"
+                                       placeholder="请输入包装"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" style="padding-left: 0px;">
+                            <div class="form-group">
+                                <div class="form-group control-group">
+                                    <div class="input-group date form_datetime birthtimeStartFilter"
+                                         data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                        <input type="text" name="birthtimeStart"
+                                               class="form-control at-date" placeholder="创建开始时间" readonly=""
+                                               id="birthtimeStart" th:value="${condition.birthtimeStart3}">
+                                        <span class="input-group-addon my-input-group-addon" style="padding-left: 15px;"><i class="fa fa-calendar" style="cursor: pointer;"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" style="padding-left: 0px;">
+                            <div class="form-group">
+                                <div class="form-group control-group">
+                                    <div class="input-group date form_datetime birthtimeEndFilter"
+                                         data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                        <input type="text" name="birthtimeEnd"
+                                               class="form-control at-date" placeholder="创建结束时间" readonly=""
+                                               id="birthtimeEnd" th:value="${condition.birthtimeEnd3}">
+                                        <span class="input-group-addon my-input-group-addon"><i class="fa fa-calendar" style="cursor: pointer;"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-1" style="padding-left: 0px;">
+                            <button type="submit" class="btn btn-primary">查询</button>
+                        </div>
 
+                    </div>
+
+                </div>
+            </form>
             <!-- End .row -->
             <div class="row">
                 <!-- Start .row -->
@@ -136,7 +199,11 @@
                                         <td th:text="${record.colorNumber}? ${record.colorNumber} : '---'"></td>
                                         <td th:text="${record.codeNumber}? ${record.codeNumber} : '---'"></td>
                                         <td th:text="${record.batchNumber}? ${record.batchNumber} : '---'"></td>
-                                        <td th:text="${record.material}? ${record.material} : '---'"></td>
+                                        <td>
+                                            <span>
+                                                <span class="btn btn-xs btn-lime" th:text="${record.material}? ${record.material} : '---'"></span>
+                                            </span>
+                                        </td>
                                         <td th:text="${record.number}? ${record.number} : '---'"></td>
                                         <td th:text="${record.customer}? ${record.customer} : '---'"></td>
                                         <td th:text="${record.package2}? ${record.package2} : '---'"></td>
@@ -146,11 +213,12 @@
                                             <a data-toggle="modal" data-target="#myModal"
                                                th:id="${record.id}" th:value="${record.machineNumber}"
                                                class="btn btn-danger btn-delete-recipe">删除</a>
+                                            <a th:href="'/order/edit_order/'+${record.id}" class="btn btn-warning">打印</a>
                                         </td>
                                     </tr>
                                     <tr role="row"
                                         th:style="'display:' +@{(${#lists.isEmpty(recordList)}? '' : 'none')} + ''">
-                                        <td colspan=10" style="text-align: center;">
+                                        <td colspan="11" style="text-align: center;">
                                             <spam>
                                                 很抱歉，没有找到符合您条件的记录
                                             </spam>
@@ -164,11 +232,11 @@
                                 <div class="col-sm-11" style="text-align: right;">
                                     <nav th:if="${recordSize >0}">
                                         <ul class="pagination">
-                                            <li><a th:href="@{${'/order/list'}(pageNum=0,pageSize=10,machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2})}"
+                                            <li><a th:href="@{${'/order/list'}(pageNum=0,pageSize=10,machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
                                                    class="header-page">首页</a></li>
                                             <li>
                                                 <a th:if="${not isFirstPage}"
-                                                   th:href="@{${'/order/list'}(pageNum=${pageNum-1},pageSize=${pageSize},machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2})}"
+                                                   th:href="@{${'/order/list'}(pageNum=${pageNum-1},pageSize=${pageSize},machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
                                                    class="normal-page">上一页</a>
                                                 <a th:if="${isFirstPagee}" href="javascript:void(0);" class="normal-page"></a>
                                             </li>
@@ -177,19 +245,19 @@
                                                     <span th:text="${pageNo}"></span>
                                                 </a>
                                                 <a th:if="${not (pageNum eq pageNo)}"
-                                                   th:href="@{${'/order/list'}(pageNum=${pageNo},size=${pageSize},machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2})}"
+                                                   th:href="@{${'/order/list'}(pageNum=${pageNo},size=${pageSize},machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
                                                    class="normal-page">
                                                     <span th:text="${pageNo}"></span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a th:if="${not isLastPage}"
-                                                   th:href="@{${'/order/list'}(pageNum=${pageNum+1},size=${pageSize},machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2})}"
+                                                   th:href="@{${'/order/list'}(pageNum=${pageNum+1},size=${pageSize},machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
                                                    class="normal-page">下一页</a>
                                                 <a th:if="${isLastPage}" href="javascript:void(0);"
                                                    class="normal-page"></a>
                                             </li>
-                                            <li><a th:href="@{${'/order/list'}(pageNum=${totalPages},size=${pageSize},machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2})}"
+                                            <li><a th:href="@{${'/order/list'}(pageNum=${totalPages},size=${pageSize},machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
                                                    class="footer-page">尾页</a></li>
                                         </ul>
                                     </nav>
@@ -228,7 +296,7 @@
                     <div class="form-group">
                         <label for="inputName" class="col-sm-3 control-label">客户姓名 </label>
                         <div class="col-sm-8">
-                            <input type="text" style="background: lightgray;" class="form-control" id="inputName" name="inputName" placeholder="客户名">
+                            <input type="text" style="" class="form-control" id="inputName" name="inputName" placeholder="客户名">
                         </div>
                     </div>
                     <input type="hidden" name="id" id="id" />
@@ -237,7 +305,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                 </button>
-                <button type="button" class="btn btn-primary btn-confirm-delete">删除</button>
+                <button type="button" class="btn btn-danger btn-confirm-delete">删除</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->

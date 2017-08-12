@@ -65,6 +65,13 @@ public class CustomerService {
         return list;
     }
 
+    public List<Customer> selectAllCustomer(CustomerCondition condition){
+
+        List<Customer> customers = customerMapper.selectAllCustomer(condition);
+        return customers;
+    }
+
+
     public Customer selectByPrimaryKey(Integer id){
         Customer customer = customerMapper.selectByPrimaryKey(id);
         return customer;

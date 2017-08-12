@@ -8,7 +8,7 @@
     <result column="customer" property="customer" jdbcType="VARCHAR" />
     <result column="material" property="material" jdbcType="VARCHAR" />
     <result column="customer_code" property="customerCode" jdbcType="VARCHAR" />
-    <result column="number" property="number" jdbcType="DOUBLE" />
+    <result column="number" property="number" jdbcType="INTEGER" />
     <result column="machine_code" property="machineCode" jdbcType="VARCHAR" />
     <result column="weishu_weight" property="weishuWeight" jdbcType="DOUBLE" />
     <result column="times" property="times" jdbcType="INTEGER" />
@@ -42,7 +42,7 @@
       createtime)
     values (#{id,jdbcType=INTEGER}, #{colorCode,jdbcType=VARCHAR}, #{productBatchNumber,jdbcType=VARCHAR}, 
       #{customer,jdbcType=VARCHAR}, #{material,jdbcType=VARCHAR}, #{customerCode,jdbcType=VARCHAR}, 
-      #{number,jdbcType=DOUBLE}, #{machineCode,jdbcType=VARCHAR}, #{weishuWeight,jdbcType=DOUBLE}, 
+      #{number,jdbcType=INTEGER}, #{machineCode,jdbcType=VARCHAR}, #{weishuWeight,jdbcType=DOUBLE},
       #{times,jdbcType=INTEGER}, #{buzhengWeight,jdbcType=DOUBLE}, #{produceTime,jdbcType=TIMESTAMP}, 
       #{createtime,jdbcType=TIMESTAMP})
   </insert>
@@ -110,7 +110,7 @@
         #{customerCode,jdbcType=VARCHAR},
       </if>
       <if test="number != null" >
-        #{number,jdbcType=DOUBLE},
+        #{number,jdbcType=INTEGER},
       </if>
       <if test="machineCode != null" >
         #{machineCode,jdbcType=VARCHAR},
@@ -152,7 +152,7 @@
         customer_code = #{customerCode,jdbcType=VARCHAR},
       </if>
       <if test="number != null" >
-        number = #{number,jdbcType=DOUBLE},
+        number = #{number,jdbcType=INTEGER},
       </if>
       <if test="machineCode != null" >
         machine_code = #{machineCode,jdbcType=VARCHAR},
@@ -183,7 +183,7 @@
       customer = #{customer,jdbcType=VARCHAR},
       material = #{material,jdbcType=VARCHAR},
       customer_code = #{customerCode,jdbcType=VARCHAR},
-      number = #{number,jdbcType=DOUBLE},
+      number = #{number,jdbcType=INTEGER},
       machine_code = #{machineCode,jdbcType=VARCHAR},
       weishu_weight = #{weishuWeight,jdbcType=DOUBLE},
       times = #{times,jdbcType=INTEGER},
@@ -210,7 +210,30 @@
 	    <if test="material != null and material != ''" >
 	      and material=#{material}
 	    </if>
+        <if test="birthtimeStart !=null"><![CDATA[and createtime >= #{birthtimeStart} ]]> </if>
+        <if test="birthtimeEnd !=null"><![CDATA[and createtime <= #{birthtimeEnd} ]]> </if>
 	</where>
   </select>
-  
+
+  <select id="selectAllMCW" resultMap="BaseResultMap" parameterType="com.wshop.dto.condition.MatchColorWorkCondition" >
+    select
+    <include refid="Base_Column_List" />
+    from match_color_work
+    <where>
+      <if test="color_code != null and color_code != ''" >
+        and color_code=#{color_code}
+      </if>
+      <if test="product_batch_number != null and product_batch_number != ''" >
+        and product_batch_number=#{product_batch_number}
+      </if>
+      <if test="customer != null and customer != ''" >
+        and customer=#{customer}
+      </if>
+      <if test="material != null and material != ''" >
+        and material=#{material}
+      </if>
+      <if test="birthtimeStart !=null"><![CDATA[and createtime >= #{birthtimeStart} ]]> </if>
+      <if test="birthtimeEnd !=null"><![CDATA[and createtime <= #{birthtimeEnd} ]]> </if>
+    </where>
+  </select>
 </mapper>

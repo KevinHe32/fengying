@@ -29,11 +29,15 @@ public class RecipeController {
     @Autowired
     private RecipeService recipeService;
 
-
     @RequestMapping("/list")
     public ModelAndView list(@ModelAttribute RecipeCondition condition, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         ModelAndView mav = new ModelAndView();
+
+        String startTime = condition.getBirthTimeStart2();
+        String endTime = condition.getBirthtimeEnd2();
+        condition.setBirthtimeStart3(startTime);
+        condition.setBirthtimeEnd3(endTime);
 
         PageInfo<Recipe> pageInfo = recipeService.selectAll(condition);
         model.addAttribute("recordList", pageInfo.getList());
@@ -60,17 +64,13 @@ public class RecipeController {
     @RequestMapping(value = "/addRecipe", method = RequestMethod.POST)
     @ResponseBody
     public Result addRecipeToDB(@ModelAttribute RecipeModel model, HttpServletRequest request) {
-        try {
-            Recipe recipe = new Recipe();
-            BeanUtils.copyProperties(model,recipe);
-            Integer result = recipeService.addRecipe(recipe);
-            if(result > 0){
-                return Result.ok(StatusCode.SUCCESS, "添加成功！");
-            }else{
-                return Result.ok(StatusCode.ERROR, "添加失败！");
-            }
-        } catch (Exception e) {
-            return Result.error(StatusCode.ERROR, "添加配方发生异常：" + e.getCause().getMessage());
+        Recipe recipe = new Recipe();
+        BeanUtils.copyProperties(model,recipe);
+        Integer result = recipeService.addRecipe(recipe);
+        if(result > 0){
+            return Result.ok(StatusCode.SUCCESS, "添加成功！");
+        }else{
+            return Result.ok(StatusCode.ERROR, "添加失败！");
         }
     }
 
@@ -98,7 +98,6 @@ public class RecipeController {
         return mav;
     }
 
-
     @RequestMapping(value = "/delete_recipe/{id}", method = RequestMethod.GET)
     public ModelAndView delete_recipe(@PathVariable("id") Integer id, Model model) {
         ModelAndView mav = new ModelAndView();
@@ -108,4 +107,17 @@ public class RecipeController {
         mav.setViewName("redirect:/recipe/list");
         return mav;
     }
+
+    @RequestMapping(value = "/show_recipe/{id}", method = RequestMethod.GET)
+    public ModelAndView show_recipe(@PathVariable("id") Integer id, Model model) {
+        ModelAndView mav = new ModelAndView();
+        Recipe recipe = null;
+        if(id != null){
+            recipe = recipeService.selectByPrimaryKey(id);
+        }
+        mav.addObject("recipe", recipe);
+        mav.setViewName("recipe/recipe_show");
+        return mav;
+    }
+
 }

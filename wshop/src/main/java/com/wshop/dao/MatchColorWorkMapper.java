@@ -1,10 +1,12 @@
 package com.wshop.dao;
 
+import com.github.pagehelper.Page;
 import com.wshop.dto.condition.MatchColorWorkCondition;
 import com.wshop.entity.MatchColorWork;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface MatchColorWorkMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -18,5 +20,7 @@ public interface MatchColorWorkMapper {
 
     int updateByPrimaryKey(MatchColorWork record);
     
-    List<MatchColorWork> selectAll(MatchColorWorkCondition condition);
+    Page<MatchColorWork> selectAll(MatchColorWorkCondition condition);
+
+    List<MatchColorWork> selectAllMCW(MatchColorWorkCondition condition);
 }

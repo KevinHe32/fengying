@@ -30,7 +30,10 @@ public class RecipeService {
         return result;
     }
 
-
+    public List<Recipe> selectAll(RecipeQueryCondition condition){
+        List<Recipe> recipes = recipeMapper.selectByCondition(condition);
+        return recipes;
+    }
     public PageInfo<Recipe> selectAll(RecipeCondition condition){
         PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
 

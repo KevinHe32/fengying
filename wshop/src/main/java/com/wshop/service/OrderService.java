@@ -29,6 +29,11 @@ public class OrderService {
         PageInfo<Order> list = new PageInfo<Order>(orders);
         return list;
     }
+
+    public List<Order> selectAllOrder(OrderCondition condition){
+        List<Order> orders = orderMapper.selectAllOrder(condition);
+        return orders;
+    }
     
     public Order selectByPrimaryKey(Integer id){
     	Order order = orderMapper.selectByPrimaryKey(id);

@@ -5,9 +5,11 @@ import com.github.pagehelper.Page;
 import com.wshop.dto.condition.RecipeCondition;
 import com.wshop.dto.condition.RecipeQueryCondition;
 import com.wshop.entity.Recipe;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface RecipeMapper {
     int deleteByPrimaryKey(Integer id);
 

@@ -16,12 +16,41 @@
     <link th:href="@{/static/assets/css/main.css}" rel="stylesheet"/>
     <link th:href="@{/static/assets/css/custom.css}" rel="stylesheet"/>
     <link th:href="@{/static/assets/css/style.css}" rel="stylesheet"/>
-
+    <link th:href="@{/static/assets/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/assets/pickupdate/bootstrap-datetimepicker.min.css}" rel="stylesheet"/>
     <script th:src="@{/static/assets/js/jquery-2.0.3.min.js}"></script>
-
+    <script th:src="@{/static/assets/pickupdate/bootstrap-datetimepicker.min.js}"></script>
     <script>
         /*<![CDATA[*/
         $(document).ready(function () {
+            $('.birthtimeStartFilter').datetimepicker({
+                linkField:"birthtimeStart",
+                format: 'yyyy-mm-dd',
+                weekStart: 1,
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                pickerPosition:"bottom-left"
+            });
+
+            $('.birthtimeEndFilter').datetimepicker({
+                linkField:"birthtimeEnd",
+                format: 'yyyy-mm-dd',
+                weekStart: 1,
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                pickerPosition:"bottom-left"
+            });
+
             $(".btn-delete-recipe").bind("click",function(){
                 var id = $(this).attr("id");
                 var customerName = $(this).attr("value");
@@ -30,7 +59,7 @@
             });
             $(".btn-confirm-delete").bind("click",function(){
                 var id = $("#id").val();
-                var location = '/customer/delete_customer/'+id;
+                var location = '/match_color_work/delete_match_color_work/'+id;
                 window.location.href= location;
 
             });
@@ -47,45 +76,80 @@
 
 <div id="content">
    <div class="content-wrapper">
-       <h3>配色作业制图管理列表
+       <h3>配色作业制图列表
            <small><ul id="crumb" class="breadcrumb">
                <li><a href="#">首页</a></li>
-               <li class="active">配色作业制管理列表</li>
+               <li class="active">配色作业制图列表</li>
            </ul></small>
        </h3>
 
         <div class="outlet">
-            <div class="row">
-                <div class="col-sm-3">
-                    <a href="/match_color_work/add_mcw/" class="btn btn-success">新增配色作业制</a>-
+            <form class="form-inline" role="form" method="GET" action="/match_color_work/list/">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <a href="/match_color_work/add_mcw/" class="btn btn-success">新增配色作业制图</a>
+                    </div>
+                    <div class="col-sm-9 pull-right" style="text-align:right;">
+                            <div class="form-group">
+                                <input class="form-control" name="color_code" id="color_code" type="text"
+                                       th:value="${condition.color_code}"
+                                       placeholder="请输入色号"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="product_batch_number" id="product_batch_number" type="text"
+                                       th:value="${condition.product_batch_number}"
+                                       placeholder="请输入产品批号"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="customer" id="customer" type="text"
+                                       th:value="${condition.customer}"
+                                       placeholder="请输入顾客姓名"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="material" id="material" type="text"
+                                       th:value="${condition.material}"
+                                       placeholder="请输入使用原料"/>
+                            </div>
+
+                    </div>
                 </div>
-                <div class="col-sm-9 pull-right" style="text-align:right;">
-                    <form class="form-inline" role="form" method="GET" action="/match_color_work/list/">
-                        <div class="form-group">
-                            <input class="form-control" name="color_code" id="color_code" type="text"
-                                   th:value="${condition.color_code}"
-                                   placeholder="请输入色号"/>
+
+                <div class="row" style="padding-top: 10px;">
+                    <div class="col-sm-4 col-sm-offset-8">
+                        <div class="col-sm-5 col-sm-offset-1" style="padding-right: 0px;">
+                            <div class="form-group">
+                                <div class="form-group control-group">
+                                    <div class="input-group date form_datetime birthtimeStartFilter"
+                                         data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                        <input type="text" name="birthtimeStart"
+                                               class="form-control at-date" placeholder="创建开始时间" readonly=""
+                                               id="birthtimeStart" th:value="${condition.birthtimeStart3}">
+                                        <span class="input-group-addon my-input-group-addon" style="padding-left: 15px;"><i class="fa fa-calendar" style="cursor: pointer;"></i></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" name="product_batch_number" id="product_batch_number" type="text"
-                                   th:value="${condition.product_batch_number}"
-                                   placeholder="请输入产品批号"/>
+                        <div class="col-sm-5" >
+                            <div class="form-group">
+                                <div class="form-group control-group">
+                                    <div class="input-group date form_datetime birthtimeEndFilter"
+                                         data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                        <input type="text" name="birthtimeEnd"
+                                               class="form-control at-date" placeholder="创建结束时间" readonly=""
+                                               id="birthtimeEnd" th:value="${condition.birthtimeEnd3}">
+                                        <span class="input-group-addon my-input-group-addon"><i class="fa fa-calendar" style="cursor: pointer;"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-1" style="margin-left: -20px;">
+                            <button type="submit" class="btn btn-primary">查询</button>
                         </div>
 
-                        <div class="form-group">
-                            <input class="form-control" name="customer" id="customer" type="text"
-                                   th:value="${condition.customer}"
-                                   placeholder="请输入顾客姓名"/>
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" name="material" id="material" type="text"
-                                   th:value="${condition.material}"
-                                   placeholder="请输入使用原料"/>
-                        </div>
-                        <button type="submit" class="btn btn-primary">查询</button>
-                    </form>
+                    </div>
+
                 </div>
-            </div>
+            </form>
 
             <!-- End .row -->
             <div class="row">
@@ -93,12 +157,13 @@
                 <div class="col-lg-12 col-md-12 sortable-layout">
                     <div class="panel panel-primary toggle panelMove panelClose panelRefresh">
                         <div class="panel-heading">
-                            <h4 class="panel-title"><i class="im-bars"></i>客户列表</h4>
+                            <h4 class="panel-title"><i class="im-bars"></i>配色作业制图列表</h4>
                         </div>
                         <div class="panel-body">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <td>#</td>
                                         <td>色号</td>
                                         <td>产品批号</td>
                                         <td>顾客姓名</td>
@@ -108,6 +173,7 @@
                                         <td>生产机台</td>
                                         <td>尾数数量（kg）*方次</td>
                                         <td>补正记录</td>
+                                        <td>创建时间</td>
                                         <td>操作</td>
                                     </tr>
                                 </thead>
@@ -117,24 +183,29 @@
                                         <td th:text="${record.colorCode}? ${record.colorCode} : '---'"></td>
                                         <td th:text="${record.productBatchNumber}? ${record.productBatchNumber} : '---'"></td>
                                         <td th:text="${record.customer}? ${record.customer} : '---'"></td>
-                                        <td th:text="${record.material}? ${record.material} : '---'"></td>
+                                        <td>
+                                            <span>
+                                                <span class="btn btn-xs btn-lime" th:text="${record.material}? ${record.material} : '---'"></span>
+                                            </span>
+                                        </td>
                                         <td th:text="${record.customer}? ${record.customer} : '---'"></td>
                                         <td th:text="${record.number}? ${record.number} : '---'"></td>
                                         <td th:text="${record.machineCode}? ${record.machineCode} : '---'"></td>
                                         <td th:text="${record.weishuWeight}? ${record.weishuWeight}* ${record.times} : '---'"></td>
                                         <td th:text="${record.buzhengWeight}? ${record.buzhengWeight}: '---'"></td>
-
+                                        <td th:text="${record.createtime}? ${#dates.format(record.createtime,'yyyy-MM-dd HH:mm:ss')} : '---'"></td>
                                         <td>
                                             <a th:href="'/match_color_work/edit_mcw/'+${record.id}" class="btn btn-success">编辑</a>
                                             <!--<a onclick='deleteCategory(this)' class="btn btn-warning">删除</a>-->
                                             <a data-toggle="modal" data-target="#myModal"
                                                th:id="${record.id}" th:value="${record.colorCode}"
                                                class="btn btn-danger btn-delete-recipe">删除</a>
+                                            <a th:href="'/order/edit_order/'+${record.id}" class="btn btn-warning">打印</a>
                                         </td>
                                     </tr>
                                     <tr role="row"
                                         th:style="'display:' +@{(${#lists.isEmpty(recordList)}? '' : 'none')} + ''">
-                                        <td colspan=10" style="text-align: center;">
+                                        <td colspan="12" style="text-align: center;">
                                             <spam>
                                                 很抱歉，没有找到符合您条件的记录
                                             </spam>
@@ -210,9 +281,9 @@
             <div class="modal-body">
                 <form class="form-horizontal" role="form" id="customerForm" method="post">
                     <div class="form-group">
-                        <label for="inputName" class="col-sm-3 control-label">客户姓名 </label>
+                        <label for="inputName" class="col-sm-3 control-label">色号 </label>
                         <div class="col-sm-8">
-                            <input type="text" style="background: lightgray;" class="form-control" id="inputName" name="inputName" placeholder="客户名">
+                            <input type="text" class="form-control" id="inputName" name="inputName" placeholder="色号">
                         </div>
                     </div>
                     <input type="hidden" name="id" id="id" />
@@ -221,7 +292,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                 </button>
-                <button type="button" class="btn btn-primary btn-confirm-delete">删除</button>
+                <button type="button" class="btn btn-danger btn-confirm-delete">删除</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->

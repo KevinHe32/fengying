@@ -128,5 +128,21 @@
 	      and tel=#{tel}
 	    </if>
 	</where>
+    order by createtime desc
+  </select>
+
+  <select id="selectAllCustomer" resultMap="BaseResultMap" parameterType="com.wshop.dto.condition.CustomerCondition">
+    select
+    <include refid="Base_Column_List" />
+    from customer
+    <where>
+      <if test="name != null and name != ''" >
+        customer_name LIKE CONCAT('%',#{name},'%')
+      </if>
+      <if test="tel != null and tel != ''" >
+        and tel=#{tel}
+      </if>
+    </where>
+    order by createtime desc
   </select>
 </mapper>

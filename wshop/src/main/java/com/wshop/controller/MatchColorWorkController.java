@@ -4,13 +4,17 @@ package com.wshop.controller;
 import com.github.pagehelper.PageInfo;
 import com.wshop.dto.condition.MatchColorWorkCondition;
 import com.wshop.dto.condition.RecipeQueryCondition;
+import com.wshop.dto.model.CategoryModel;
 import com.wshop.dto.model.MatchColorWorkModel;
 import com.wshop.dto.model.RecipeListModel;
 import com.wshop.entity.MatchColorWork;
 import com.wshop.entity.Recipe;
+import com.wshop.rest.Result;
 import com.wshop.rest.ResultList;
+import com.wshop.rest.StatusCode;
 import com.wshop.service.MatchColorWorkService;
 import com.wshop.service.RecipeService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,7 +44,11 @@ public class MatchColorWorkController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list(@ModelAttribute MatchColorWorkCondition condition, Model model, String language, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
+		String startTime = condition.getBirthTimeStart2();
+		String endTime = condition.getBirthtimeEnd2();
+		condition.setBirthtimeStart3(startTime);
+		condition.setBirthtimeEnd3(endTime);
+    	ModelAndView mav = new ModelAndView();
 
 		PageInfo<MatchColorWorkModel> pageInfo = matchColorWorkService.selectAll(condition);
 		model.addAttribute("recordList", pageInfo.getList());
@@ -69,7 +77,7 @@ public class MatchColorWorkController {
 		condition.setColorNumber(model.getColorCode());
 		condition.setMaterial(model.getMaterial());
 
-		List<Recipe> recipes = recipeService.selectAlls(condition);
+		List<Recipe> recipes = recipeService.selectAll(condition);
 
 		List<RecipeListModel> recipeListModels = new ArrayList<>();
 
@@ -191,14 +199,13 @@ public class MatchColorWorkController {
 	}
 
     @RequestMapping(value = "/addMatchColorWork", method = RequestMethod.POST)
-    public ModelAndView addMatchColorWork(@ModelAttribute MatchColorWorkModel model, HttpServletRequest request) {
-    	ModelAndView mav = new ModelAndView();
+	@ResponseBody
+	public Result addMatchColorWork(@ModelAttribute MatchColorWorkModel model, HttpServletRequest request) {
     	MatchColorWork matchColorWork = model.toMatchColorWork(model);
     	Integer result = matchColorWorkService.addMatchColorWork(matchColorWork);
-    	mav.setViewName("redirect:/match_color_work/list");
-		return mav;
+		return Result.ok(StatusCode.SUCCESS, "编辑成功！");
     }
-    
+
     @RequestMapping(value = "/edit_mcw/{id}", method = RequestMethod.GET)
     public ModelAndView edit_mcw(@PathVariable("id") Integer id, Model model) {
 		ModelAndView mav = new ModelAndView();
@@ -231,19 +238,16 @@ public class MatchColorWorkController {
     	if(id != null){
     		matchColorWorkService.deleteMatchColorWorkById(id);
     	}
-    	mav.setViewName("redirect:/recipe/list");
+    	mav.setViewName("redirect:/match_color_work/list");
 		return mav;
     }
     
     @RequestMapping(value = "/editMatchColorWork", method = RequestMethod.POST)
-    public ModelAndView editMatchColorWork(@ModelAttribute MatchColorWorkModel model, HttpServletRequest request) {
-    	ModelAndView mav = new ModelAndView();
-    	
+	@ResponseBody
+    public Result editMatchColorWork(@ModelAttribute MatchColorWorkModel model, HttpServletRequest request) {
     	MatchColorWork matchColorWork = model.toMatchColorWork(model);
     	Integer result = matchColorWorkService.editMatchColorWork(matchColorWork);
-    	
-    	mav.setViewName("redirect:/match_color_work/list");
-		return mav;
+    	return Result.ok();
     }
     
 }

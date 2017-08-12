@@ -99,11 +99,11 @@
                     .success(function (data) {
                         if (data.code == '0') {
                             $('#successModal').modal('show');
-                            $('#successModal').find('.operate-tip').html("新增生产单【" + $("input[name='machineNumber']").val() + "】，操作成功！");
+                            $('#successModal').find('.operate-tip').html("新增生产单成功，色号：" + $("input[name='colorNumber']").val() + "，操作成功！");
                         } else {
                             $("#submit_btn").removeAttr("disabled");
                             $('#failureModal').modal('show');
-                            $('#failureModal').find('.operate-tip').html("新增生产单【" + $("input[name='machineNumber']").val() + "】，操作失败！");
+                            $('#failureModal').find('.operate-tip').html("新增生产单成功，色号" + $("input[name='colorNumber']").val() + "，操作失败！");
                             return false;
                         }
                     })
@@ -156,9 +156,9 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">代号： <span style="color:red;">*</span></label>
+                                            <label class="control-label">色号： <span style="color:red;">*</span></label>
                                             <input type="text" class="form-control" id="colorNumber"
-                                                   name="colorNumber"  placeholder="代号">
+                                                   name="colorNumber"  placeholder="色号">
                                         </div>
                                     </div>
                                 </div>
@@ -166,14 +166,14 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">代号：</label>
+                                            <label class="control-label">代号：<span style="color:red;">*</span></label>
                                             <input type="text" class="form-control" id="codeNumber" name="codeNumber"
                                                    placeholder="代号">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">批号：</label>
+                                            <label class="control-label">批号：<span style="color:red;">*</span></label>
                                             <input type="text" class="form-control" id="batchNumber" name="batchNumber"
                                                    placeholder="批号">
                                         </div>
@@ -183,15 +183,15 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">原料：</label>
+                                            <label class="control-label">原料：<span style="color:red;">*</span></label>
                                             <input type="text" class="form-control" id="material" name="material"
                                                    placeholder="原料">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">数量：</label>
-                                            <input type="text" class="form-control" id="number" name="number"
+                                            <label class="control-label">数量：<span style="color:red;">*</span></label>
+                                            <input type="number" class="form-control" id="number" name="number"
                                                    placeholder="数量">
                                         </div>
                                     </div>
@@ -199,21 +199,19 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">客户：</label>
+                                            <label class="control-label">客户：<span style="color:red;">*</span></label>
                                             <input type="text" class="form-control" id="customer" name="customer"
                                                    placeholder="客户">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">包装：</label>
+                                            <label class="control-label">包装：<span style="color:red;">*</span></label>
                                             <input type="text" class="form-control" id="package2" name="package2"
                                                    placeholder="包装">
                                         </div>
                                     </div>
                                 </div>
-
-
 
                                 <div class="row row-two-col">
                                     <div class="col-lg-12">
@@ -241,7 +239,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="successModal" data-backdrop="static" tabindex="-1" role="dialog"
+        <div class="modal fade" style="padding-left: 35%;" id="successModal" data-backdrop="static" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog-or">
                 <div class="modal-content panel-success">
@@ -259,7 +257,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="failureModal" data-backdrop="static" tabindex="-1" role="dialog"
+        <div class="modal fade" style="padding-left: 35%;" id="failureModal" data-backdrop="static" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog-or">
                 <div class="modal-content panel-success">

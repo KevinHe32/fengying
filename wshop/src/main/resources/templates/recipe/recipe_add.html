@@ -116,11 +116,11 @@
                     .success(function (data) {
                         if (data.code == '0') {
                             $('#successModal').modal('show');
-                            $('#successModal').find('.operate-tip').html("新增【" + $("input[name='inputName']").val() + "】，操作成功！");
+                            $('#successModal').find('.operate-tip').html("新增配方成功，操作成功！");
                         } else {
                             $("#submit_btn").removeAttr("disabled");
                             $('#failureModal').modal('show');
-                            $('#failureModal').find('.operate-tip').html("新增【" + $("input[name='inputName']").val() + "】，操作失败！");
+                            $('#failureModal').find('.operate-tip').html("新增配方失败，操作失败！");
                             return false;
                         }
                     })
@@ -145,7 +145,7 @@
 
 <div id="content">
     <div class="content-wrapper">
-        <h3>会员列表
+        <h3>配方列表
             <small>
                 <ul id="crumb" class="breadcrumb">
                     <li>Home</li>
@@ -217,7 +217,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">基本配方1：<span style="color:red;">*</span></label>
+                                            <label class="control-label">基本配方3：<span style="color:red;">*</span></label>
                                             <input type="text" class="form-control" id="baseRecipe3" name="baseRecipe3" placeholder="基本配方3">
                                         </div>
                                     </div>
@@ -339,7 +339,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="successModal" data-backdrop="static" tabindex="-1" role="dialog"
+        <div class="modal fade" style="padding-left: 35%;" id="successModal" data-backdrop="static" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog-or">
                 <div class="modal-content panel-success">
@@ -357,7 +357,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="failureModal" data-backdrop="static" tabindex="-1" role="dialog"
+        <div class="modal fade" style="padding-left: 35%;" id="failureModal" data-backdrop="static" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog-or">
                 <div class="modal-content panel-success">

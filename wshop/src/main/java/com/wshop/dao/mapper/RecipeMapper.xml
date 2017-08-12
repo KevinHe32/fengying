@@ -329,7 +329,10 @@
       <if test="material != null and material != ''" >
         and material=#{material}
       </if>
+      <if test="birthtimeStart !=null"><![CDATA[and createtime >= #{birthtimeStart} ]]> </if>
+      <if test="birthtimeEnd !=null"><![CDATA[and createtime <= #{birthtimeEnd} ]]> </if>
     </where>
+    order by createtime desc
   </select>
 
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.wshop.dto.condition.RecipeQueryCondition" >
@@ -343,6 +346,8 @@
       <if test="material != null and material != ''">
         AND material LIKE CONCAT('%',#{material},'%')
       </if>
+
     </where>
+    order by createtime desc
   </select>
 </mapper>

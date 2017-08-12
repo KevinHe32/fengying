@@ -111,15 +111,16 @@
                 }
 
                 $("#submit_btn").attr('disabled', "true");
-                $.post("/match_color_work/addMatchColorWork/", $("#mcwForm").serialize())
+                $.post("/match_color_work/editMatchColorWork/", $("#mcwForm").serialize())
                     .success(function (data) {
+                        //alert(data.code)
                         if (data.code == '0') {
                             $('#successModal').modal('show');
-                            $('#successModal').find('.operate-tip').html("新增配色作业制图成功，操作成功！");
+                            $('#successModal').find('.operate-tip').html("编辑配色制图作业成功，操作成功！");
                         } else {
                             $("#submit_btn").removeAttr("disabled");
                             $('#failureModal').modal('show');
-                            $('#failureModal').find('.operate-tip').html("新增配色作业制图失败，操作失败！");
+                            $('#failureModal').find('.operate-tip').html("编辑配色制图作业失败，操作失败！");
                             return false;
                         }
                     })
@@ -129,10 +130,10 @@
                         return false;
                     });
             });
-
             $('#colorCode, #material, #weishuWeight, #times, #buzhengWeight, #number').bind('change',function(){
                 $('.table-row').html("")
             })
+
             $('.btn-yulan').bind('click',function () {
                 $('.table-row').html("")
 
@@ -144,7 +145,6 @@
                 var number = $('#number').val()
                 var material = $('#material').val()
 
-                $('.table-row').append("<hr/>");
                 if(colorCode == undefined || colorCode == ''){
                     $('.table-row').append("<div style='text-align:center;color:red;'>色号不能为空，请检查！</div>");
                     return;
@@ -203,10 +203,9 @@
 
                                 $('.table-row').find('.table').find(".tbody").append(rowItem);
                             }
+
                            var tableFooter = "</tbody></table>";
                            $('.table-row').append(tableFooter);
-                           $('.table-row').append("<div style='text-align:right;'><a href='' class='btn btn-warning'>打印</a></div>");
-
                        }else{
                            $('.table-row').append("<div style='text-align:center;color:red;'>查询无匹配记录</div>");
                        }
@@ -232,7 +231,7 @@
                 <ul id="crumb" class="breadcrumb">
                     <li>Home</li>
                     <li class=""><a href="/match_color_work/list/">配色作业制图列表</a></li>
-                    <li class="active">添加配色作业制图</li>
+                    <li class="active">编辑配色作业制图</li>
                 </ul>
             </small>
         </h3>
@@ -242,27 +241,28 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary toggle panelMove panelClose panelRefresh">
                         <div class="panel-heading">
-                            <h4 class="panel-title"><i class="im-wand"></i> 添加配色作业制图</h4>
+                            <h4 class="panel-title"><i class="im-wand"></i> 编辑配色作业制图</h4>
                         </div>
                         <form id="mcwForm" method="post" class="form-horizontal form-wizard" role="form">
                             <div class="panel-body">
+                                <input type="hidden" name="id" id = "id" th:value="${mcw.id}">
                                 <div class="row row-two-col">
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label class="control-label">色号： <span style="color:red;">*</span></label>
-                                            <input type="text" class="form-control" id="colorCode" name="colorCode" placeholder="色号">
+                                            <input type="text" class="form-control" id="colorCode" name="colorCode" placeholder="色号" th:value="${mcw.colorCode}">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label class="control-label">使用原料： <span style="color:red;">*</span></label>
-                                            <input type="text" class="form-control" id="material" name="material"  placeholder="使用原料">
+                                            <input type="text" class="form-control" id="material" name="material" placeholder="使用原料" th:value="${mcw.material}">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label class="control-label">产品批号：<span style="color:red;">*</span></label>
-                                            <input type="text" class="form-control" id="productBatchNumber" name="productBatchNumber"  placeholder="产品批号">
+                                            <input type="text" class="form-control" id="productBatchNumber" name="productBatchNumber"  placeholder="产品批号" th:value="${mcw.productBatchNumber}">
                                         </div>
                                     </div>
                                 </div>
@@ -271,19 +271,19 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label class="control-label">顾客名称：<span style="color:red;">*</span></label>
-                                            <input type="text" class="form-control" id="customer" name="customer" placeholder="顾客名称">
+                                            <input type="text" class="form-control" id="customer" name="customer" placeholder="顾客名称" th:value="${mcw.customer}">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label class="control-label">顾客代号：</label>
-                                            <input type="text" class="form-control" id="customerCode" name="customerCode" placeholder="顾客代号">
+                                            <input type="text" class="form-control" id="customerCode" name="customerCode" placeholder="顾客代号" th:value="${mcw.customerCode}">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label class="control-label">生产数量：<span style="color:red;">*</span></label>
-                                            <input type="text" class="form-control" id="number" name="number" placeholder="生产数量">
+                                            <input type="text" class="form-control" id="number" name="number" placeholder="生产数量" th:value="${mcw.number}">
                                         </div>
                                     </div>
                                 </div>
@@ -291,35 +291,35 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="control-label">生产机台：</label>
-                                            <input type="text" class="form-control" id="machineCode" name="machineCode" placeholder="生产机台">
+                                            <label class="control-label">生产机台：<span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="machineCode" name="machineCode" placeholder="生产机台" th:value="${mcw.machineCode}">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="col-lg-8" style="padding-left: 0px !important;; padding-right: 0px !important;">
                                             <div class="form-group">
                                                 <label class="control-label">尾数重量：<span style="color:red;">*</span></label>
-                                                <input type="text" class="form-control" id="weishuWeight" name="weishuWeight" placeholder="尾数重量">
+                                                <input type="text" class="form-control" id="weishuWeight" name="weishuWeight" placeholder="尾数重量" th:value="${mcw.weishuWeight}">
                                             </div>
                                         </div>
                                         <div class="col-lg-4" style="padding-right: 0px !important;">
                                             <div class="form-group">
                                                 <label class="control-label">方次：<span style="color:red;">*</span></label>
-                                                <input type="text" class="form-control" id="times" name="times" placeholder="方次">
+                                                <input type="text" class="form-control" id="times" name="times" placeholder="方次" th:value="${mcw.times}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label class="control-label">补正记录：<span style="color:red;">*</span></label>
-                                            <input type="text" class="form-control" id="buzhengWeight" name="buzhengWeight" placeholder="补正记录">
+                                            <input type="text" class="form-control" id="buzhengWeight" name="buzhengWeight" placeholder="补正记录" th:value="${mcw.buzhengWeight}">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row row-two-col" style="text-align: right;">
                                     <div class="col-lg-2 col-lg-offset-10">
-                                        <a class="btn btn-warning btn-yulan">预览并打印</a>
+                                        <a class="btn btn-warning btn-yulan">预览</a>
                                     </div>
                                 </div>
 

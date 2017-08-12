@@ -47,17 +47,17 @@
 
 <div id="content">
    <div class="content-wrapper">
-       <h3>客户管理列表
+       <h3>客户列表
            <small><ul id="crumb" class="breadcrumb">
                <li><a href="#">首页</a></li>
-               <li class="active">客户管理列表</li>
+               <li class="active">客户列表</li>
            </ul></small>
        </h3>
 
         <div class="outlet">
             <div class="row">
                 <div class="col-sm-3">
-                    <a href="/customer/add_customer/" class="btn btn-success">新增客户</a>-
+                    <a href="/customer/add_customer/" class="btn btn-success">新增客户</a>
                 </div>
                 <div class="col-sm-9 pull-right" style="text-align:right;">
                     <form class="form-inline" role="form" method="GET" action="/customer/list/">
@@ -90,7 +90,7 @@
                                     <tr>
                                         <td>#</td>
                                         <td>客户姓名</td>
-                                        <td>客户编号</td>
+                                        <td>客户代号</td>
                                         <td>联系方式</td>
                                         <td>联系邮箱</td>
                                         <td>居住地址</td>
@@ -196,7 +196,7 @@
                     <div class="form-group">
                         <label for="inputName" class="col-sm-3 control-label">客户姓名 </label>
                         <div class="col-sm-8">
-                            <input type="text" style="background: lightgray;" class="form-control" id="inputName" name="inputName" placeholder="客户名">
+                            <input type="text" style="" class="form-control" id="inputName" name="inputName" placeholder="客户名">
                         </div>
                     </div>
                     <input type="hidden" name="id" id="id" />
@@ -205,7 +205,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                 </button>
-                <button type="button" class="btn btn-primary btn-confirm-delete">删除</button>
+                <button type="button" class="btn btn-danger btn-confirm-delete">删除</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->

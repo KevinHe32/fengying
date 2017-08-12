@@ -95,14 +95,17 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/editCustomer", method = RequestMethod.POST)
-    public ModelAndView editCustomerToDB(@ModelAttribute CustomerModel model, HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView();
+    @ResponseBody
+    public Result editCustomerToDB(@ModelAttribute CustomerModel model, HttpServletRequest request) {
 
         Customer customer = model.toCustomer(model);
         Integer result = customerService.editCustomer(customer);
 
-        mav.setViewName("redirect:/customer/list");
-        return mav;
+        if(result > 0){
+            return Result.ok(StatusCode.SUCCESS, "编辑成功！");
+        }else{
+            return Result.ok(StatusCode.ERROR, "编辑失败！");
+        }
     }
 
 

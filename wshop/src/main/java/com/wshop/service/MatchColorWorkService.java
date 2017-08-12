@@ -57,4 +57,17 @@ public class MatchColorWorkService {
             matchColorWorkMapper.deleteByPrimaryKey(id);
     	}
     }
+
+    public List<MatchColorWorkModel> selectAllMCW(MatchColorWorkCondition condition){
+
+        List<MatchColorWork> matchColorWorks = matchColorWorkMapper.selectAllMCW(condition);
+        List<MatchColorWorkModel> list = new ArrayList<>();
+        for(MatchColorWork matchColorWork : matchColorWorks){
+            MatchColorWorkModel matchColorWorkModel = new MatchColorWorkModel();
+            BeanUtils.copyProperties(matchColorWork, matchColorWorkModel);
+            list.add(matchColorWorkModel);
+        }
+        return list;
+    }
+
 }

@@ -62,7 +62,7 @@ public class WordUtil {
             orderModel.setCodeNumber("RTS-001-100"+i);
             orderModel.setBatchNumber("FY-2017-00"+i);
             orderModel.setMaterial("好材料");
-            orderModel.setNumber(Double.valueOf(100*(i+1)));
+            //orderModel.setNumber(Double.valueOf(100*(i+1)));
             orderModel.setCustomer("顾客您好0"+i);
             orderModel.setPackage2("包装好好");
             orderModel.setRemark("这是一个测试使用的备注信息"+i);
