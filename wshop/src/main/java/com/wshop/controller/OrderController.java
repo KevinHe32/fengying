@@ -8,6 +8,7 @@ import com.wshop.entity.Order;
 import com.wshop.rest.Result;
 import com.wshop.rest.StatusCode;
 import com.wshop.service.OrderService;
+import com.wshop.util.WordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +24,8 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/order/")
@@ -103,14 +104,63 @@ public class OrderController {
 	}
 
 	
-	@RequestMapping(value = "/delete_order/{id}", method = RequestMethod.GET)
-    public ModelAndView delete_order(@PathVariable("id") Integer id, Model model) {
+	@RequestMapping(value = "/delete_order", method = RequestMethod.GET)
+    public ModelAndView delete_order(@ModelAttribute OrderModel model) {
     	ModelAndView mav = new ModelAndView();
+    	Integer id = model.getId();
     	if(id != null){
     		orderService.deleteByPrimaryKey(id);
     	}
     	mav.setViewName("redirect:/order/list");
 		return mav;
     }
+
+	@RequestMapping(value = "/printOrder", method = RequestMethod.GET)
+	@ResponseBody
+	public Result printOrder(@ModelAttribute OrderModel model) {
+		ModelAndView mav = new ModelAndView();
+		Integer id = model.getId();
+		Order order = null;
+		if(id != null){
+			order = orderService.selectByPrimaryKey(id);
+		}
+
+		Map dataMap = new HashMap();
+		List<OrderModel> list = new ArrayList<>();
+		OrderModel orderModel = new OrderModel();
+		orderModel.setMachineNumber(order.getMachineNumber());
+		orderModel.setColorNumber(order.getColorNumber());
+		orderModel.setCodeNumber(order.getCodeNumber());
+		orderModel.setBatchNumber(order.getBatchNumber());
+		orderModel.setMaterial(order.getMaterial());
+		orderModel.setNumber(order.getNumber());
+		orderModel.setCustomer(order.getCustomer());
+		orderModel.setPackage2(order.getPackage2());
+		orderModel.setRemark(order.getRemark());
+		list.add(orderModel);
+		dataMap.put("recordList",list);
+
+		/** 文件名称，唯一字符串 */
+		Random r=new Random();
+		SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd_HHmmss");
+		StringBuffer sb=new StringBuffer();
+		sb.append(sdf1.format(new Date()));
+		sb.append("_");
+		sb.append(r.nextInt(100));
+
+		//文件路径
+		//String filePath="e:\\";
+		String filePath = "src/main/resources/static/category_img/";
+
+		//文件唯一名称
+		String fileOnlyName = "生产通知单"+sb+".doc";
+
+		//文件名称
+		String fileName="生产通知单.doc";
+		/** 生成word */
+		WordUtil.createWord(dataMap, "productorder.ftl", filePath, fileOnlyName);
+
+		return Result.one("http://127.0.0.1:8070/static/category_img/"+fileOnlyName);
+	}
 
 }

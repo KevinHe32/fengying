@@ -16,7 +16,7 @@ import java.util.*;
 public class HwpfTest {
     @Test
     public void testWrite() throws Exception {
-        String templatePath = "e:\\test.doc";
+        String templatePath = "d:\\test.doc";
         InputStream is = new FileInputStream(templatePath);
         HWPFDocument doc = new HWPFDocument(is);
 
@@ -30,7 +30,7 @@ public class HwpfTest {
 //        range.replaceText("${bananaAmt}", "200.00");
 //        range.replaceText("${totalAmt}", "300.00");
 
-        OutputStream os = new FileOutputStream("e:\\write.doc");
+        OutputStream os = new FileOutputStream("d:\\write.doc");
         //把doc输出到输出流中
         doc.write(os);
         this.closeStream(os);

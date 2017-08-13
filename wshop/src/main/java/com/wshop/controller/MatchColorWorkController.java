@@ -249,5 +249,18 @@ public class MatchColorWorkController {
     	Integer result = matchColorWorkService.editMatchColorWork(matchColorWork);
     	return Result.ok();
     }
-    
+
+
+	@RequestMapping(value = "/printMCW/{id}", method = RequestMethod.GET)
+	public String printMCW(@PathVariable("id") Integer id, Model model) {
+		MatchColorWorkModel matchColorWorkModel = new MatchColorWorkModel();
+		MatchColorWork matchColorWork = new MatchColorWork();
+		if(id != null){
+			matchColorWork = matchColorWorkService.selectByPrimaryKey(id);
+		}
+		BeanUtils.copyProperties(matchColorWork, matchColorWorkModel);
+		model.addAttribute("matchColorWork", matchColorWorkModel);
+		return "get_match_color_work";
+	}
+
 }

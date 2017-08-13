@@ -63,6 +63,23 @@
                 var id = $("#id").val();
                 var location = '/order/delete_order/'+id;
                 window.location.href= location;
+            });
+            $(".btn-print").bind("click",function(){
+                var id_ = $(this).attr("id");
+                $.ajax({
+                    url: '/order/printOrder',
+                    datatype: 'json',
+                    type: 'get',
+                    data:{
+                        id: id_
+                    },
+                    success: function (data) {
+                        if(data.code == 0) {
+                            alert(data.data)
+                            window.open(data.data);
+                        }
+                    }
+                });
 
             });
         });
@@ -213,7 +230,7 @@
                                             <a data-toggle="modal" data-target="#myModal"
                                                th:id="${record.id}" th:value="${record.machineNumber}"
                                                class="btn btn-danger btn-delete-recipe">删除</a>
-                                            <a th:href="'/order/edit_order/'+${record.id}" class="btn btn-warning">打印</a>
+                                            <a th:id="${record.id}" class="btn btn-warning btn-print">打印</a>
                                         </td>
                                     </tr>
                                     <tr role="row"

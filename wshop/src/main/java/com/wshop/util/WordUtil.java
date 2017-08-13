@@ -62,7 +62,7 @@ public class WordUtil {
             orderModel.setCodeNumber("RTS-001-100"+i);
             orderModel.setBatchNumber("FY-2017-00"+i);
             orderModel.setMaterial("好材料");
-            //orderModel.setNumber(Double.valueOf(100*(i+1)));
+            orderModel.setNumber(i);
             orderModel.setCustomer("顾客您好0"+i);
             orderModel.setPackage2("包装好好");
             orderModel.setRemark("这是一个测试使用的备注信息"+i);
@@ -79,7 +79,7 @@ public class WordUtil {
         sb.append(r.nextInt(100));
 
         //文件路径
-        String filePath="D:\\";
+        String filePath="e:\\";
 
         //文件唯一名称
         String fileOnlyName = "用freemarker导出的Word文档_"+sb+".doc";
@@ -91,4 +91,4 @@ public class WordUtil {
 
     }
 
-    }
+}
