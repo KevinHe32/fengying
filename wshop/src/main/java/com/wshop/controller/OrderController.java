@@ -147,14 +147,10 @@ public class OrderController {
 		sb.append(sdf1.format(new Date()));
 		sb.append("_");
 		sb.append(r.nextInt(100));
-
 		//文件路径
-		//String filePath="e:\\";
-		String filePath = "src/main/resources/static/category_img/";
-
+		String filePath = Class.class.getClass().getResource("/").getPath()+"\\static\\category_img\\";
 		//文件唯一名称
 		String fileOnlyName = "生产通知单"+sb+".doc";
-
 		//文件名称
 		String fileName="生产通知单.doc";
 		/** 生成word */
