@@ -129,7 +129,22 @@
 
                             <!--分页插件开始-->
                             <div class="row">
-                                <div class="col-sm-11" style="text-align: right;">
+                                <div class="col-sm-3">
+                                    <nav th:if="${recordSize >0}">
+                                        <ul class="pagination">
+                                            <span>每页展示</span>
+                                            <div class="example1-length">
+                                                <a th:class="@{(${pageSize == 10}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/customer/list'}(pageNum=0,pageSize=10)}">10</a>
+                                                <a th:class="@{(${pageSize == 20}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/customer/list'}(pageNum=0,pageSize=20)}">20</a>
+                                                <a th:class="@{(${pageSize == 50}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/customer/list'}(pageNum=0,pageSize=50)}">50</a>
+                                                <a th:class="@{(${pageSize == 100}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/customer/list'}(pageNum=0,pageSize=50)}">100</a>
+                                            </div>
+                                            条
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                                <div class="col-sm-8" style="text-align: right;">
                                     <nav th:if="${recordSize >0}">
                                         <ul class="pagination">
                                             <li><a th:href="@{${'/customer/list'}(pageNum=0,pageSize=10,name=${condition.name},tel=${condition.tel})}"
@@ -145,19 +160,19 @@
                                                     <span th:text="${pageNo}"></span>
                                                 </a>
                                                 <a th:if="${not (pageNum eq pageNo)}"
-                                                   th:href="@{${'/customer/list'}(pageNum=${pageNo},size=${pageSize},name=${condition.name},tel=${condition.tel})}"
+                                                   th:href="@{${'/customer/list'}(pageNum=${pageNo},pageSize=${pageSize},name=${condition.name},tel=${condition.tel})}"
                                                    class="normal-page">
                                                     <span th:text="${pageNo}"></span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a th:if="${not isLastPage}"
-                                                   th:href="@{${'/customer/list'}(pageNum=${pageNum+1},size=${pageSize},name=${condition.name},tel=${condition.tel})}"
+                                                   th:href="@{${'/customer/list'}(pageNum=${pageNum+1},pageSize=${pageSize},name=${condition.name},tel=${condition.tel})}"
                                                    class="normal-page">下一页</a>
                                                 <a th:if="${isLastPage}" href="javascript:void(0);"
                                                    class="normal-page"></a>
                                             </li>
-                                            <li><a th:href="@{${'/customer/list'}(pageNum=${totalPages},size=${pageSize},name=${condition.name},tel=${condition.tel})}"
+                                            <li><a th:href="@{${'/customer/list'}(pageNum=${totalPages},pageSize=${pageSize},name=${condition.name},tel=${condition.tel})}"
                                                    class="footer-page">尾页</a></li>
                                         </ul>
                                     </nav>

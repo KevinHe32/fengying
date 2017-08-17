@@ -1,7 +1,9 @@
 package com.wshop.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.wshop.dto.condition.MultiOrderCondition;
 import com.wshop.dto.condition.OrderCondition;
+import com.wshop.dto.model.MultiOrdersModel;
 import com.wshop.dto.model.OrderModel;
 import com.wshop.entity.Customer;
 import com.wshop.entity.Order;
@@ -158,5 +160,63 @@ public class OrderController {
 
 		return Result.one("http://127.0.0.1:8070/static/category_img/"+fileOnlyName);
 	}
+
+	@RequestMapping(value = "/printMultiOrders", method = RequestMethod.GET)
+	@ResponseBody
+	public Result printMultiOrders(@ModelAttribute MultiOrdersModel model){
+		if(StringUtils.isEmpty(model.getPorderIds())){
+			return Result.error();
+		}
+
+		String [] arr = model.getPorderIds().split(",");
+
+		List<Integer> pOrderId = new ArrayList<>();
+		if(arr.length>0){
+			for(int i=0; i< arr.length;i++){
+				pOrderId.add(Integer.parseInt(arr[i]));
+			}
+		}
+
+		MultiOrderCondition condition = new MultiOrderCondition();
+		condition.setOids(pOrderId);
+		List<Order> orderList = orderService.selectAllToPrint(condition);
+
+		Map dataMap = new HashMap();
+		List<OrderModel> list = new ArrayList<>();
+		for(Order order: orderList){
+			OrderModel orderModel = new OrderModel();
+			orderModel.setMachineNumber(order.getMachineNumber());
+			orderModel.setColorNumber(order.getColorNumber());
+			orderModel.setCodeNumber(order.getCodeNumber());
+			orderModel.setBatchNumber(order.getBatchNumber());
+			orderModel.setMaterial(order.getMaterial());
+			orderModel.setNumber(order.getNumber());
+			orderModel.setCustomer(order.getCustomer());
+			orderModel.setPackage2(order.getPackage2());
+			orderModel.setRemark(order.getRemark());
+			list.add(orderModel);
+		}
+		dataMap.put("recordList",list);
+		/** 文件名称，唯一字符串 */
+		Random r=new Random();
+		SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd_HHmmss");
+		StringBuffer sb=new StringBuffer();
+		sb.append(sdf1.format(new Date()));
+		sb.append("_");
+		sb.append(r.nextInt(100));
+		//文件路径
+		String filePath = Class.class.getClass().getResource("/").getPath()+"\\static\\category_img\\";
+		//文件唯一名称
+		String fileOnlyName = "生产通知单"+sb+".doc";
+		//文件名称
+		String fileName="生产通知单.doc";
+		/** 生成word */
+		WordUtil.createWord(dataMap, "productorder.ftl", filePath, fileOnlyName);
+		String fileFinalPath = "http://127.0.0.1:8070/static/category_img/"+fileOnlyName;
+		Result result = new Result();
+		result.setData(fileFinalPath);
+		return result;
+	}
+
 
 }

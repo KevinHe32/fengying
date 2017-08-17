@@ -3,6 +3,7 @@ package com.wshop.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wshop.dao.OrderMapper;
+import com.wshop.dto.condition.MultiOrderCondition;
 import com.wshop.dto.condition.OrderCondition;
 import com.wshop.entity.Customer;
 import com.wshop.entity.Order;
@@ -48,5 +49,10 @@ public class OrderService {
     
     public int deleteByPrimaryKey(Integer id){
     	return orderMapper.deleteByPrimaryKey(id);
+    }
+
+
+    public List<Order> selectAllToPrint(MultiOrderCondition condition){
+        return orderMapper.selectAllToPrint(condition);
     }
 }

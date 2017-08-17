@@ -2,6 +2,7 @@ package com.wshop.dao;
 
 
 import com.github.pagehelper.Page;
+import com.wshop.dto.condition.MultiOrderCondition;
 import com.wshop.dto.condition.OrderCondition;
 import com.wshop.entity.Order;
 import org.springframework.stereotype.Repository;
@@ -29,5 +30,5 @@ public interface OrderMapper {
 
     List<Order> selectAllOrder(OrderCondition condition);
 
-
+    List<Order> selectAllToPrint(MultiOrderCondition condition);
 }

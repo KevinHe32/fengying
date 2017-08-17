@@ -23,6 +23,67 @@
 
     <script>
         /*<![CDATA[*/
+       /* $(document).ready(function () {
+            $('.birthtimeStartFilter').datetimepicker({
+                linkField:"birthtimeStart",
+                format: 'yyyy-mm-dd',
+                weekStart: 1,
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                pickerPosition:"bottom-left"
+            });
+
+            $('.birthtimeEndFilter').datetimepicker({
+                linkField:"birthtimeEnd",
+                format: 'yyyy-mm-dd',
+                weekStart: 1,
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                pickerPosition:"bottom-left"
+            });
+
+            $(".btn-delete-recipe").bind("click",function(){
+                var id = $(this).attr("id");
+                var value = $(this).attr("value");
+                $("#inputName").val(value);
+                $("#id").val(id);
+            });
+            $(".btn-confirm-delete").bind("click",function(){
+                var id = $("#id").val();
+                var location = '/order/delete_order/'+id;
+                window.location.href= location;
+            });
+            $(".btn-print").bind("click",function(){
+                var id_ = $(this).attr("id");
+                $.ajax({
+                    url: '/order/printOrder',
+                    datatype: 'json',
+                    type: 'get',
+                    data:{
+                        id: id_
+                    },
+                    success: function (data) {
+                        if(data.code == 0) {
+                            alert(data.data)
+                            window.open(data.data);
+                        }
+                    }
+                });
+
+            });
+
+        });*/
+
         $(document).ready(function () {
             $('.birthtimeStartFilter').datetimepicker({
                 linkField:"birthtimeStart",
@@ -80,9 +141,104 @@
                         }
                     }
                 });
+            });
 
+            $(".btn-delete-recipe").bind("click",function(){
+                var id = $(this).attr("id");
+                var customerName = $(this).attr("value");
+                $("#inputName").val(customerName);
+                $("#id").val(id);
+            });
+            $(".btn-confirm-delete").bind("click",function(){
+                var id = $("#id").val();
+                var location = '/order/delete_order/'+id;
+                window.location.href= location;
             });
         });
+
+        //--------------------------------
+
+        var ids=new Array()
+
+        function printAllOrder(){
+            $.ajax({
+                url: '/order/printMultiOrders',
+                datatype: 'json',
+                type: 'get',
+                data:{
+                    porderIds: ids.join(",")
+                },
+                success: function (data) {
+                    console.log("file:"+data.data)
+                    window.open(data.data)
+                }
+            });
+        }
+
+        //获取checkbox按钮组
+        var allpro = document.getElementsByName("c1");
+        //全选方法
+        function change() {
+            //获取全选按钮
+            var all = document.getElementById("all");
+            //全选按钮被选中时，遍历所有按钮
+            if (all.checked) {
+                for (var i = 0; i < allpro.length; i++) {
+                    if (allpro[i].type=="checkbox") {
+                        allpro[i].checked=true;
+
+                    }
+                }
+                ids = getTableIds();
+                //全选按钮未被选中时
+            }else{
+                for (var i = 0; i < allpro.length; i++) {
+                    if (allpro[i].type=="checkbox") {
+                        allpro[i].checked=false;
+                    }
+                }
+                ids = [];
+            }
+            console.log("ids:" + ids);
+        }
+
+        function getTableIds(){
+            var data = [];
+            $('#mytable tr').each(function(i){
+                var id = $(this).find("input[name='c1']").val();
+                data.push(id);
+            })
+            return data;
+        }
+
+        function signalChange(obj){
+            var id = $(obj).val();
+            if(contains(ids,id)){
+                removeByValue(ids, id)
+            }else{
+                ids.push(id);
+            }
+            console.log("ids-:" + ids);
+        }
+
+        function contains(arr, obj) {
+            var i = arr.length;
+            while (i--) {
+                if (arr[i] === obj) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function removeByValue(arr, val) {
+            for(var i=0; i<arr.length; i++) {
+                if(arr[i] == val) {
+                    arr.splice(i, 1);
+                    break;
+                }
+            }
+        }
         /*]]>*/
     </script>
 </head>
@@ -196,6 +352,14 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <td>
+                                            <div class="checkbox c-checkbox pull-left mt0"  style="border: 1px solid #ccc;width: 20px;height: 20px;border-radius: 3px;">
+                                                <label>
+                                                    <input type="checkbox" value="" id="all" onclick="change()">
+                                                    <span class="im-bars"></span>
+                                                </label>
+                                            </div>
+                                        </td>
                                         <td>#</td>
                                         <td>机器编号</td>
                                         <td>色号</td>
@@ -209,8 +373,15 @@
                                         <td>操作</td>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="mytable">
                                     <tr th:each="record,status: ${recordList}" role="row">
+                                        <td>
+                                            <div class="checkbox c-checkbox pull-left mt0" style="border: 1px solid #ccc;width: 20px;height: 20px;border-radius: 3px;">
+                                                <label>
+                                                    <input type="checkbox" th:value="${record.id}" onclick="signalChange(this)"  name = "c1">
+                                                    <span class="im-bars"></span></label>
+                                            </div>
+                                        </td>
                                         <td th:text="${status.index + 1}"></td>
                                         <td th:text="${record.machineNumber}? ${record.machineNumber} : '---'"></td>
                                         <td th:text="${record.colorNumber}? ${record.colorNumber} : '---'"></td>
@@ -243,10 +414,25 @@
                                     </tr>
                                 </tbody>
                             </table>
-
+                            <button class="btn btn-success" onclick="printAllOrder();">打印</button>
                             <!--分页插件开始-->
                             <div class="row">
-                                <div class="col-sm-11" style="text-align: right;">
+                                <div class="col-sm-3">
+                                    <nav th:if="${recordSize >0}">
+                                        <ul class="pagination">
+                                            <span>每页展示</span>
+                                            <div class="example1-length">
+                                                <a th:class="@{(${pageSize == 10}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/order/list'}(pageNum=0,pageSize=10)}">10</a>
+                                                <a th:class="@{(${pageSize == 20}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/order/list'}(pageNum=0,pageSize=20)}">20</a>
+                                                <a th:class="@{(${pageSize == 50}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/order/list'}(pageNum=0,pageSize=50)}">50</a>
+                                                <a th:class="@{(${pageSize == 100}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/order/list'}(pageNum=0,pageSize=50)}">100</a>
+                                            </div>
+                                            条
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                                <div class="col-sm-8" style="text-align: right;">
                                     <nav th:if="${recordSize >0}">
                                         <ul class="pagination">
                                             <li><a th:href="@{${'/order/list'}(pageNum=0,pageSize=10,machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
@@ -262,19 +448,19 @@
                                                     <span th:text="${pageNo}"></span>
                                                 </a>
                                                 <a th:if="${not (pageNum eq pageNo)}"
-                                                   th:href="@{${'/order/list'}(pageNum=${pageNo},size=${pageSize},machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
+                                                   th:href="@{${'/order/list'}(pageNum=${pageNo},pageSize=${pageSize},machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
                                                    class="normal-page">
                                                     <span th:text="${pageNo}"></span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a th:if="${not isLastPage}"
-                                                   th:href="@{${'/order/list'}(pageNum=${pageNum+1},size=${pageSize},machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
+                                                   th:href="@{${'/order/list'}(pageNum=${pageNum+1},pageSize=${pageSize},machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
                                                    class="normal-page">下一页</a>
                                                 <a th:if="${isLastPage}" href="javascript:void(0);"
                                                    class="normal-page"></a>
                                             </li>
-                                            <li><a th:href="@{${'/order/list'}(pageNum=${totalPages},size=${pageSize},machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
+                                            <li><a th:href="@{${'/order/list'}(pageNum=${totalPages},pageSize=${pageSize},machineNumber=${condition.machineNumber},colorNumber=${condition.colorNumber},codeNumber=${condition.codeNumber},batchNumber=${condition.batchNumber},customer=${condition.customer},material=${condition.material},package2=${condition.package2},birthtimeEnd=${condition.birthtimeEnd3},birthtimeStart=${condition.birthtimeStart3})}"
                                                    class="footer-page">尾页</a></li>
                                         </ul>
                                     </nav>
