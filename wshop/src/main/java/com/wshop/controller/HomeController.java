@@ -16,6 +16,8 @@ import com.wshop.service.OrderService;
 import com.wshop.service.RecipeService;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -29,6 +31,7 @@ import java.util.Map;
 
 @Controller
 public class HomeController {
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
     @RequestMapping({"/","/index"})
     public String index(){
 
@@ -42,6 +45,7 @@ public class HomeController {
         // 登录失败从request中获取shiro处理的异常信息。
         // shiroLoginFailure:就是shiro异常类的全类名.
         String exception = (String) request.getAttribute("shiroLoginFailure");
+        logger.error("异常信息---->{},",exception);
         System.out.println("exception=" + exception);
         String msg = "";
         if (exception != null) {

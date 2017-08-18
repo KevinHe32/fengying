@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.wshop.dto.condition.MatchColorWorkCondition;
 import com.wshop.dto.condition.RecipeQueryCondition;
 import com.wshop.dto.model.CategoryModel;
+import com.wshop.dto.model.MatchColorWorkFinalModel;
 import com.wshop.dto.model.MatchColorWorkModel;
 import com.wshop.dto.model.RecipeListModel;
 import com.wshop.entity.MatchColorWork;
@@ -28,7 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 /**
  * 配方管理
  * */
@@ -190,6 +194,34 @@ public class MatchColorWorkController {
 					model1.setBuzhengWeight(buzhengWeight);
 					recipeListModels.add(model1);
 				}
+
+				if(!StringUtils.isEmpty(recipe.getColorMaterialName9()) && !StringUtils.isEmpty(model.getWeishuWeight())){
+					RecipeListModel model1 = new RecipeListModel();
+					model1.setColorNumber(recipe.getColorMaterialName9());
+					model1.setMaterial(recipe.getBaseRecipe9().toString());
+
+					String weishuWeight = (recipe.getBaseRecipe9().doubleValue() * model.getWeishuWeight().doubleValue())+" * " + model.getTimes();
+					model1.setWeishuWeight(weishuWeight);
+
+					String buzhengWeight = recipe.getBaseRecipe9().doubleValue() * model.getBuzhengWeight() +"";
+					model1.setBuzhengWeight(buzhengWeight);
+					recipeListModels.add(model1);
+				}
+
+				if(!StringUtils.isEmpty(recipe.getColorMaterialName10()) && !StringUtils.isEmpty(model.getWeishuWeight())){
+					RecipeListModel model1 = new RecipeListModel();
+					model1.setColorNumber(recipe.getColorMaterialName10());
+					model1.setMaterial(recipe.getBaseRecipe10().toString());
+
+					String weishuWeight = (recipe.getBaseRecipe10().doubleValue() * model.getWeishuWeight().doubleValue())+" * " + model.getTimes();
+					model1.setWeishuWeight(weishuWeight);
+
+					String buzhengWeight = recipe.getBaseRecipe10().doubleValue() * model.getBuzhengWeight() +"";
+					model1.setBuzhengWeight(buzhengWeight);
+					recipeListModels.add(model1);
+				}
+
+
 			}
 		}
 		if(recipeListModels.size() ==0){
@@ -197,6 +229,8 @@ public class MatchColorWorkController {
 		}
 		return ResultList.list(recipeListModels);
 	}
+
+
 
     @RequestMapping(value = "/addMatchColorWork", method = RequestMethod.POST)
 	@ResponseBody
@@ -262,5 +296,142 @@ public class MatchColorWorkController {
 		model.addAttribute("matchColorWork", matchColorWorkModel);
 		return "get_match_color_work";
 	}
+
+	@RequestMapping(value = "/generateWorld", method = RequestMethod.GET)
+	public Result generateWorld(@ModelAttribute MatchColorWorkModel model){
+		Result result = new Result();
+		RecipeQueryCondition condition = new RecipeQueryCondition();
+		condition.setColorNumber(model.getColorCode());
+		condition.setMaterial(model.getMaterial());
+
+		List<Recipe> recipes = recipeService.selectAll(condition);
+
+		//打印模板
+		MatchColorWorkFinalModel matchColorWorkFinalModel = new MatchColorWorkFinalModel();
+		Map dataMap = new HashMap();
+
+		//1.填充打印数据
+
+		//1.1填充表格上方的数据
+		dataMap.put("colorCode", null == model.getColorCode() ? "" : model.getColorCode());
+		dataMap.put("productBatchNumber", null == model.getProductBatchNumber() ? "" : model.getProductBatchNumber());
+		dataMap.put("customer", null == model.getCustomer() ? "" : model.getCustomer());
+		dataMap.put("material", null == model.getMaterial() ? "" : model.getMaterial());
+		dataMap.put("customeCode", null == model.getCustomerCode() ? "" : model.getCustomerCode());
+		dataMap.put("number", null == model.getNumber() ? "" : model.getNumber());
+		dataMap.put("machineCode", null == model.getMachineCode() ? "" : model.getMachineCode());
+		dataMap.put("weishuWeight", null == model.getWeishuWeight() ? "" : model.getWeishuWeight());
+		dataMap.put("times", null == model.getTimes() ? "" : model.getTimes());
+		dataMap.put("buzhengWeight", null == model.getBuzhengWeight() ? "" : model.getBuzhengWeight());
+		List<RecipeListModel> recipeListModels = new ArrayList<>();
+		double sumOfRecipe = 0d;
+		double sumOfWeishu = 0d;
+		double sumOfBuzheng = 0d;
+		if(!CollectionUtils.isEmpty(recipes)){
+			//1.2 填充表格下方的数据
+			Recipe recipe = null;
+			if(recipes.size()>0){
+				recipe = recipes.get(0);
+			}
+			if(recipe != null){
+				if(!StringUtils.isEmpty(recipe.getColorMaterialName1()) && !StringUtils.isEmpty(model.getWeishuWeight())){
+					String weishuWeight = String.valueOf(recipe.getBaseRecipe2().doubleValue() * model.getWeishuWeight().doubleValue());
+					String buzhengWeight = String.valueOf(recipe.getBaseRecipe2().doubleValue() * model.getBuzhengWeight());
+					dataMap.put("colorMaterialName1", null == recipe.getColorMaterialName1() ? "" : recipe.getColorMaterialName1());
+					dataMap.put("baseRecipe1", null == recipe.getBaseRecipe1() ? "" : recipe.getBaseRecipe1());
+					dataMap.put("weishuWeight1", weishuWeight);
+					dataMap.put("buzhengWeight1", buzhengWeight);
+				}
+
+				if(!StringUtils.isEmpty(recipe.getColorMaterialName2()) && !StringUtils.isEmpty(model.getWeishuWeight())){
+					String weishuWeight = String.valueOf(recipe.getBaseRecipe2().doubleValue() * model.getWeishuWeight().doubleValue());
+					String buzhengWeight = String.valueOf(recipe.getBaseRecipe2().doubleValue() * model.getBuzhengWeight());
+					dataMap.put("colorMaterialName2", null == recipe.getColorMaterialName2() ? "" : recipe.getColorMaterialName2());
+					dataMap.put("baseRecipe2", null == recipe.getBaseRecipe2() ? "" : recipe.getBaseRecipe2());
+					dataMap.put("weishuWeight2", weishuWeight);
+					dataMap.put("buzhengWeight2", buzhengWeight);
+				}
+
+				if(!StringUtils.isEmpty(recipe.getColorMaterialName3()) && !StringUtils.isEmpty(model.getWeishuWeight())){
+					String weishuWeight = String.valueOf(recipe.getBaseRecipe3().doubleValue() * model.getWeishuWeight().doubleValue());
+					String buzhengWeight = String.valueOf(recipe.getBaseRecipe3().doubleValue() * model.getBuzhengWeight());
+					dataMap.put("colorMaterialName3", null == recipe.getColorMaterialName3() ? "" : recipe.getColorMaterialName3());
+					dataMap.put("baseRecipe3", null == recipe.getBaseRecipe3() ? "" : recipe.getBaseRecipe3());
+					dataMap.put("weishuWeight3", weishuWeight);
+					dataMap.put("buzhengWeight3", buzhengWeight);
+				}
+
+				if(!StringUtils.isEmpty(recipe.getColorMaterialName4()) && !StringUtils.isEmpty(model.getWeishuWeight())){
+					String weishuWeight = String.valueOf(recipe.getBaseRecipe4().doubleValue() * model.getWeishuWeight().doubleValue());
+					String buzhengWeight = String.valueOf(recipe.getBaseRecipe4().doubleValue() * model.getBuzhengWeight());
+					dataMap.put("colorMaterialName4", null == recipe.getColorMaterialName4() ? "" : recipe.getColorMaterialName4());
+					dataMap.put("baseRecipe4", null == recipe.getBaseRecipe4() ? "" : recipe.getBaseRecipe4());
+					dataMap.put("weishuWeight4", weishuWeight);
+					dataMap.put("buzhengWeight4", buzhengWeight);
+				}
+
+				if(!StringUtils.isEmpty(recipe.getColorMaterialName5()) && !StringUtils.isEmpty(model.getWeishuWeight())){
+					String weishuWeight = String.valueOf(recipe.getBaseRecipe5().doubleValue() * model.getWeishuWeight().doubleValue());
+					String buzhengWeight = String.valueOf(recipe.getBaseRecipe5().doubleValue() * model.getBuzhengWeight());
+					dataMap.put("colorMaterialName5", null == recipe.getColorMaterialName5() ? "" : recipe.getColorMaterialName5());
+					dataMap.put("baseRecipe5", null == recipe.getBaseRecipe5() ? "" : recipe.getBaseRecipe5());
+					dataMap.put("weishuWeight5", weishuWeight);
+					dataMap.put("buzhengWeight5", buzhengWeight);
+				}
+
+				if(!StringUtils.isEmpty(recipe.getColorMaterialName6()) && !StringUtils.isEmpty(model.getWeishuWeight())){
+					String weishuWeight = String.valueOf(recipe.getBaseRecipe6().doubleValue() * model.getWeishuWeight().doubleValue());
+					String buzhengWeight = String.valueOf(recipe.getBaseRecipe6().doubleValue() * model.getBuzhengWeight());
+					dataMap.put("colorMaterialName6", null == recipe.getColorMaterialName6() ? "" : recipe.getColorMaterialName6());
+					dataMap.put("baseRecipe6", null == recipe.getBaseRecipe6() ? "" : recipe.getBaseRecipe6());
+					dataMap.put("weishuWeight6", weishuWeight);
+					dataMap.put("buzhengWeight6", buzhengWeight);
+				}
+
+				if(!StringUtils.isEmpty(recipe.getColorMaterialName7()) && !StringUtils.isEmpty(model.getWeishuWeight())){
+					String weishuWeight = String.valueOf(recipe.getBaseRecipe7().doubleValue() * model.getWeishuWeight().doubleValue());
+					String buzhengWeight = String.valueOf(recipe.getBaseRecipe7().doubleValue() * model.getBuzhengWeight());
+					dataMap.put("colorMaterialName7", null == recipe.getColorMaterialName7() ? "" : recipe.getColorMaterialName7());
+					dataMap.put("baseRecipe7", null == recipe.getBaseRecipe7() ? "" : recipe.getBaseRecipe7());
+					dataMap.put("weishuWeight7", weishuWeight);
+					dataMap.put("buzhengWeight7", buzhengWeight);
+				}
+
+				if(!StringUtils.isEmpty(recipe.getColorMaterialName8()) && !StringUtils.isEmpty(model.getWeishuWeight())){
+					String weishuWeight = String.valueOf(recipe.getBaseRecipe8().doubleValue() * model.getWeishuWeight().doubleValue());
+					String buzhengWeight = String.valueOf(recipe.getBaseRecipe8().doubleValue() * model.getBuzhengWeight());
+					dataMap.put("colorMaterialName8", null == recipe.getColorMaterialName8() ? "" : recipe.getColorMaterialName8());
+					dataMap.put("baseRecipe8", null == recipe.getBaseRecipe8() ? "" : recipe.getBaseRecipe8());
+					dataMap.put("weishuWeight8", weishuWeight);
+					dataMap.put("buzhengWeight8", buzhengWeight);
+				}
+
+				if(!StringUtils.isEmpty(recipe.getColorMaterialName9()) && !StringUtils.isEmpty(model.getWeishuWeight())){
+					String weishuWeight = String.valueOf(recipe.getBaseRecipe9().doubleValue() * model.getWeishuWeight().doubleValue());
+					String buzhengWeight = String.valueOf(recipe.getBaseRecipe9().doubleValue() * model.getBuzhengWeight());
+					dataMap.put("colorMaterialName9", null == recipe.getColorMaterialName9() ? "" : recipe.getColorMaterialName9());
+					dataMap.put("baseRecipe9", null == recipe.getBaseRecipe9() ? "" : recipe.getBaseRecipe9());
+					dataMap.put("weishuWeight9", weishuWeight);
+					dataMap.put("buzhengWeight9", buzhengWeight);
+				}
+
+				if(!StringUtils.isEmpty(recipe.getColorMaterialName10()) && !StringUtils.isEmpty(model.getWeishuWeight())){
+					String weishuWeight = String.valueOf(recipe.getBaseRecipe10().doubleValue() * model.getWeishuWeight().doubleValue());
+					String buzhengWeight = String.valueOf(recipe.getBaseRecipe10().doubleValue() * model.getBuzhengWeight());
+					dataMap.put("colorMaterialName10", null == recipe.getColorMaterialName10() ? "" : recipe.getColorMaterialName10());
+					dataMap.put("baseRecipe10", null == recipe.getBaseRecipe10() ? "" : recipe.getBaseRecipe10());
+					dataMap.put("weishuWeight10", weishuWeight);
+					dataMap.put("buzhengWeight10", buzhengWeight);
+				}
+
+
+
+
+			}
+		}
+		return result;
+	}
+
+
 
 }
