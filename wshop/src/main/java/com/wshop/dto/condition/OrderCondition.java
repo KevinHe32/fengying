@@ -138,9 +138,9 @@ public class OrderCondition extends BaseCondition {
 		try{
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = sdf.parse(this.birthtimeEnd);
-			date.setHours(0);
-			date.setMinutes(0);
-			date.setSeconds(0);
+			date.setHours(23);
+			date.setMinutes(59);
+			date.setSeconds(59);
 			return  date;
 		}catch (Exception e){
 

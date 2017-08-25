@@ -213,6 +213,7 @@
         <if test="birthtimeStart !=null"><![CDATA[and createtime >= #{birthtimeStart} ]]> </if>
         <if test="birthtimeEnd !=null"><![CDATA[and createtime <= #{birthtimeEnd} ]]> </if>
 	</where>
+    order by createtime desc
   </select>
 
   <select id="selectAllMCW" resultMap="BaseResultMap" parameterType="com.wshop.dto.condition.MatchColorWorkCondition" >
@@ -235,5 +236,6 @@
       <if test="birthtimeStart !=null"><![CDATA[and createtime >= #{birthtimeStart} ]]> </if>
       <if test="birthtimeEnd !=null"><![CDATA[and createtime <= #{birthtimeEnd} ]]> </if>
     </where>
+    order by createtime desc
   </select>
 </mapper>
