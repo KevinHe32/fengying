@@ -112,15 +112,20 @@
                 }
             }).on('success.form.bv', function (e) { //点击提交之后
                 $("#submit_btn").attr('disabled', "true");
-                $.post("/recipe/addRecipe/", $("#customerForm").serialize())
+                $.post("/recipe/editRecipe/", $("#customerForm").serialize())
                     .success(function (data) {
                         if (data.code == '0') {
                             $('#successModal').modal('show');
-                            $('#successModal').find('.operate-tip').html("新增配方成功，操作成功！");
+                            $('#successModal').find('.operate-tip').html("编辑配方成功，操作成功！");
+                        }else if(data.code =='2001'){
+                            $("#submit_btn").removeAttr("disabled");
+                            $('#failureModal').modal('show');
+                            $('#failureModal').find('.operate-tip').html("色号名称与使用原料已存在，操作失败！");
+                            return false;
                         } else {
                             $("#submit_btn").removeAttr("disabled");
                             $('#failureModal').modal('show');
-                            $('#failureModal').find('.operate-tip').html("新增配方失败，操作失败！");
+                            $('#failureModal').find('.operate-tip').html("编辑配方失败，操作失败！");
                             return false;
                         }
                     })

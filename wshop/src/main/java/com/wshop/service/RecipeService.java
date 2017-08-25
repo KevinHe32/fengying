@@ -58,6 +58,7 @@ public class RecipeService {
         return result;
     }
 
+
     public int deleteByPrimaryKey(Integer id){
         return recipeMapper.deleteByPrimaryKey(id);
     }

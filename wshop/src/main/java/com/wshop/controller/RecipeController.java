@@ -2,6 +2,7 @@ package com.wshop.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.wshop.dto.condition.RecipeCondition;
+import com.wshop.dto.condition.RecipeQueryCondition;
 import com.wshop.dto.model.RecipeModel;
 import com.wshop.entity.Recipe;
 import com.wshop.rest.Result;
@@ -11,11 +12,13 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by kevin on 2017/08/06.
@@ -66,6 +69,12 @@ public class RecipeController {
     public Result addRecipeToDB(@ModelAttribute RecipeModel model, HttpServletRequest request) {
         Recipe recipe = new Recipe();
         BeanUtils.copyProperties(model,recipe);
+
+        boolean validateresult = isExist(model.getColorNumber(), model.getMaterial(), null);
+        if(!validateresult){
+            return Result.ok(StatusCode.ERROR_APPKEY_INVALID, "添加失败！");
+        }
+
         Integer result = recipeService.addRecipe(recipe);
         if(result > 0){
             return Result.ok(StatusCode.SUCCESS, "添加成功！");
@@ -86,17 +95,66 @@ public class RecipeController {
         return mav;
     }
 
+    public boolean isExist(String colorNumber, String material, Integer id){
+        RecipeQueryCondition condition = new RecipeQueryCondition();
+        condition.setColorNumber(colorNumber);
+        condition.setMaterial(material);
+        List<Recipe> recipes = recipeService.selectAlls(condition);
+        if(CollectionUtils.isEmpty(recipes)){
+            return true;
+        }
+
+        boolean result = false;
+        if(id != null){
+            for(Recipe recipe: recipes){
+                if(recipe.getId() == id){
+                    result = true;
+                }
+            }
+        }else{
+            result = false;
+        }
+        return result;
+    }
+
     @RequestMapping(value = "/editRecipe", method = RequestMethod.POST)
+    @ResponseBody
+    public Result editRecipeToDB(@ModelAttribute Recipe model, HttpServletRequest request) {
+        Recipe recipe = new Recipe();
+        BeanUtils.copyProperties(model,recipe);
+
+        boolean validateresult = isExist(model.getColorNumber(), model.getMaterial(), null);
+        if(!validateresult) {
+            return Result.ok(StatusCode.ERROR_APPKEY_INVALID, "编辑失败！");
+
+        }
+        Integer result = recipeService.addRecipe(model);
+
+       // Integer result = recipeService.addRecipe(recipe);
+        if(result > 0){
+            return Result.ok(StatusCode.SUCCESS, "编辑成功！");
+        }else{
+            return Result.ok(StatusCode.ERROR, "编辑失败！");
+        }
+    }
+
+
+  /*  @RequestMapping(value = "/editRecipe", method = RequestMethod.POST)
     public ModelAndView editRecipeToDB(@ModelAttribute Recipe model) {
         ModelAndView mav = new ModelAndView();
 
-        Recipe recipe = new Recipe();
-        BeanUtils.copyProperties(model,recipe);
-        recipeService.editRecipe(recipe);
+        boolean validateresult = isExist(model.getColorNumber(), model.getMaterial(), model.getId());
+        if(validateresult){
+            Recipe recipe = new Recipe();
+            BeanUtils.copyProperties(model,recipe);
+            recipeService.editRecipe(recipe);
+        }
+
+
         mav.setViewName("redirect:/recipe/list");
         return mav;
     }
-
+*/
     @RequestMapping(value = "/delete_recipe/{id}", method = RequestMethod.GET)
     public ModelAndView delete_recipe(@PathVariable("id") Integer id) {
         ModelAndView mav = new ModelAndView();
