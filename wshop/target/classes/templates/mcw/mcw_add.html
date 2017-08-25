@@ -205,7 +205,7 @@
                             }
                            var tableFooter = "</tbody></table>";
                            $('.table-row').append(tableFooter);
-                           $('.table-row').append("<div style='text-align:right;'><a href='' class='btn btn-warning'>打印</a></div>");
+                           $('.table-row').append("<div style='text-align:right;'><a href='' class='btn btn-warning btn-print-final'>打印</a></div>");
 
                        }else{
                            $('.table-row').append("<div style='text-align:center;color:red;'>查询无匹配记录</div>");
@@ -213,6 +213,30 @@
                     }
                 });
             })
+
+            $('.print-world').bind('click',function () {
+                alert("aasd");
+
+                $.ajax({
+                    url: '/match_color_work/generateWorld',
+                    datatype: 'json',
+                    type: 'get',
+                    data:{
+                        colorCode: $('#colorCode').val(),
+                        material:$('#material').val(),
+                        productBatchNumber: $('#productBatchNumber').val(),
+                        weishuWeight: $('#weishuWeight').val(),
+                        times: $('#times').val(),
+                        buzhengWeight: $('#buzhengWeight').val()
+                    },
+                    success: function (data) {
+                        console.log("dataResult:",data.data);
+                        window.open(data.data);
+                    }
+                });
+            })
+
+
 
         });
         /*]]>*/
@@ -332,7 +356,8 @@
                                     <div class="form-group">
                                         <div class="col-lg-12" style="text-align: center;">
                                             <button class="btn btn-primary submit_btn">保存</button> &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a class="btn btn-default" href="/match_color_work/list">取消</a>
+                                            <a class="btn btn-default" href="/match_color_work/list">取消</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button class="btn btn-primary print-world">打印</button>
                                         </div>
                                     </div>
                                 </div>

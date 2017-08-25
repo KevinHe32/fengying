@@ -75,7 +75,7 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/edit_recipe/{id}", method = RequestMethod.GET)
-    public ModelAndView edit_recipe(@PathVariable("id") Integer id, Model model) {
+    public ModelAndView edit_recipe(@PathVariable("id") Integer id) {
         ModelAndView mav = new ModelAndView();
         Recipe recipe = null;
         if(id != null){
@@ -87,19 +87,18 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/editRecipe", method = RequestMethod.POST)
-    public ModelAndView editRecipeToDB(@ModelAttribute Recipe model, HttpServletRequest request) {
+    public ModelAndView editRecipeToDB(@ModelAttribute Recipe model) {
         ModelAndView mav = new ModelAndView();
 
         Recipe recipe = new Recipe();
         BeanUtils.copyProperties(model,recipe);
-        Integer result = recipeService.editRecipe(recipe);
-
+        recipeService.editRecipe(recipe);
         mav.setViewName("redirect:/recipe/list");
         return mav;
     }
 
     @RequestMapping(value = "/delete_recipe/{id}", method = RequestMethod.GET)
-    public ModelAndView delete_recipe(@PathVariable("id") Integer id, Model model) {
+    public ModelAndView delete_recipe(@PathVariable("id") Integer id) {
         ModelAndView mav = new ModelAndView();
         if(id != null){
             recipeService.deleteByPrimaryKey(id);
@@ -109,7 +108,7 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/show_recipe/{id}", method = RequestMethod.GET)
-    public ModelAndView show_recipe(@PathVariable("id") Integer id, Model model) {
+    public ModelAndView show_recipe(@PathVariable("id") Integer id) {
         ModelAndView mav = new ModelAndView();
         Recipe recipe = null;
         if(id != null){
