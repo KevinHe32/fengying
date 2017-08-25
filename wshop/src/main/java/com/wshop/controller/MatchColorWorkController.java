@@ -57,7 +57,7 @@ public class MatchColorWorkController {
 		model.addAttribute("recordList", pageInfo.getList());
 		model.addAttribute("condition", condition);
 		mav.addObject("pageNum", pageInfo.getPageNum());
-		mav.addObject("pageSize", pageInfo.getPageSize());
+		mav.addObject("pageSize", condition.getPageSize());
 		mav.addObject("isFirstPage", pageInfo.isIsFirstPage());
 		mav.addObject("totalPages", pageInfo.getPages());
 		mav.addObject("isLastPage", pageInfo.isIsLastPage());
