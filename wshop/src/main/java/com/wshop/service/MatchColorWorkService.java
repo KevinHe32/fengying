@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wshop.dao.MatchColorWorkMapper;
 import com.wshop.dto.condition.MatchColorWorkCondition;
+import com.wshop.dto.condition.OrderCondition;
 import com.wshop.dto.model.MatchColorWorkModel;
 import com.wshop.entity.MatchColorWork;
 import com.wshop.entity.Order;
@@ -27,20 +28,24 @@ public class MatchColorWorkService {
     }
 
     
-    public PageInfo<MatchColorWorkModel> selectAll(MatchColorWorkCondition condition){
+    public PageInfo<MatchColorWork>     selectAll(MatchColorWorkCondition condition){
     	PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
     	
     	List<MatchColorWork> matchColorWorks = matchColorWorkMapper.selectAll(condition);
-        List<MatchColorWorkModel> list = new ArrayList<>();
-        for(MatchColorWork matchColorWork : matchColorWorks){
-            MatchColorWorkModel matchColorWorkModel = new MatchColorWorkModel();
-            BeanUtils.copyProperties(matchColorWork, matchColorWorkModel);
-            list.add(matchColorWorkModel);
-        }
-        PageInfo<MatchColorWorkModel> results = new PageInfo<MatchColorWorkModel>(list);
+//        List<MatchColorWorkModel> list = new ArrayList<>();
+//        for(MatchColorWork matchColorWork : matchColorWorks){
+//            MatchColorWorkModel matchColorWorkModel = new MatchColorWorkModel();
+//            BeanUtils.copyProperties(matchColorWork, matchColorWorkModel);
+//            list.add(matchColorWorkModel);
+//        }
+//        PageInfo<MatchColorWorkModel> results = new PageInfo<MatchColorWorkModel>(list);
+        PageInfo<MatchColorWork> results = new PageInfo<MatchColorWork>(matchColorWorks);
+
         return results;
     }
-    
+
+
+
     public MatchColorWork selectByPrimaryKey(Integer id){
         MatchColorWork matchColorWork = matchColorWorkMapper.selectByPrimaryKey(id);
         return matchColorWork;

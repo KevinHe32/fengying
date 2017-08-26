@@ -3,7 +3,6 @@ package com.wshop.dto.model;
 import com.wshop.entity.MatchColorWork;
 import org.springframework.beans.BeanUtils;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class MatchColorWorkModel {

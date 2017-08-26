@@ -53,11 +53,12 @@ public class MatchColorWorkController {
 		condition.setBirthtimeEnd3(endTime);
     	ModelAndView mav = new ModelAndView();
 
-		PageInfo<MatchColorWorkModel> pageInfo = matchColorWorkService.selectAll(condition);
+		PageInfo<MatchColorWork> pageInfo = matchColorWorkService.selectAll(condition);
+
 		model.addAttribute("recordList", pageInfo.getList());
 		model.addAttribute("condition", condition);
 		mav.addObject("pageNum", pageInfo.getPageNum());
-		mav.addObject("pageSize", condition.getPageSize());
+		mav.addObject("pageSize", pageInfo.getPageSize());
 		mav.addObject("isFirstPage", pageInfo.isIsFirstPage());
 		mav.addObject("totalPages", pageInfo.getPages());
 		mav.addObject("isLastPage", pageInfo.isIsLastPage());
@@ -296,6 +297,21 @@ public class MatchColorWorkController {
 		return "get_match_color_work";
 	}
 
+
+	@RequestMapping(value = "/print_word/{id}", method = RequestMethod.GET)
+	public ModelAndView printWord(@PathVariable("id") Integer id, Model model) {
+		Result result = new Result();
+		MatchColorWorkModel matchColorWorkModel = new MatchColorWorkModel();
+		MatchColorWork matchColorWork = new MatchColorWork();
+		if(id != null){
+			matchColorWork = matchColorWorkService.selectByPrimaryKey(id);
+		}
+		BeanUtils.copyProperties(matchColorWork, matchColorWorkModel);
+		result = this.generateWorld(matchColorWorkModel);
+		String filePath = (String)result.getData();
+		return new ModelAndView("redirect:" + filePath);
+	}
+
 	@RequestMapping(value = "/generateWorld", method = RequestMethod.GET)
 	public Result generateWorld(@ModelAttribute MatchColorWorkModel model){
 		Result result = new Result();
@@ -312,6 +328,10 @@ public class MatchColorWorkController {
 		//1.填充打印数据
 
 		//1.1填充表格上方的数据
+		Date currentTime = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy 年 MM 月 dd 日");
+		String dateString = formatter.format(currentTime);
+		dataMap.put("createDate", dateString);
 		dataMap.put("colorCode", null == model.getColorCode() ? "" : model.getColorCode());
 		dataMap.put("productBatchNumber", null == model.getProductBatchNumber() ? "" : model.getProductBatchNumber());
 		dataMap.put("customer", null == model.getCustomer() ? "" : model.getCustomer());
@@ -319,8 +339,9 @@ public class MatchColorWorkController {
 		dataMap.put("customeCode", null == model.getCustomerCode() ? "" : model.getCustomerCode());
 		dataMap.put("number", null == model.getNumber() ? "" : model.getNumber());
 		dataMap.put("machineCode", null == model.getMachineCode() ? "" : model.getMachineCode());
-		dataMap.put("weishuWeight", null == model.getWeishuWeight() ? "" : model.getWeishuWeight());
-		dataMap.put("times", null == model.getTimes() ? "" : model.getTimes());
+		dataMap.put("weishuWeight",model.getWeishuWeight());
+		dataMap.put("times",model.getTimes());
+		dataMap.put("weishuWeightAndtimes",model.getWeishuWeight()+"X"+model.getTimes());
 		dataMap.put("buzhengWeight", null == model.getBuzhengWeight() ? "" : model.getBuzhengWeight());
 		List<RecipeListModel> recipeListModels = new ArrayList<>();
 		Double sumOfRecipe = 0d;
@@ -342,7 +363,7 @@ public class MatchColorWorkController {
 
 					dataMap.put("colorMaterialName1", null == recipe.getColorMaterialName1() ? "" : recipe.getColorMaterialName1());
 					dataMap.put("baseRecipe1", null == recipe.getBaseRecipe1() ? "" : recipe.getBaseRecipe1());
-					dataMap.put("weishuWeight1", weishuWeight);
+					dataMap.put("weishuWeight1", weishuWeight+" X "+model.getTimes());
 					dataMap.put("buzhengWeight1", buzhengWeight);
 				}
 
@@ -354,8 +375,13 @@ public class MatchColorWorkController {
 					sumOfBuzheng = sumOfBuzheng + Double.parseDouble(buzhengWeight);
 					dataMap.put("colorMaterialName2", null == recipe.getColorMaterialName2() ? "" : recipe.getColorMaterialName2());
 					dataMap.put("baseRecipe2", null == recipe.getBaseRecipe2() ? "" : recipe.getBaseRecipe2());
-					dataMap.put("weishuWeight2", weishuWeight);
+					dataMap.put("weishuWeight2", weishuWeight+" X "+model.getTimes());
 					dataMap.put("buzhengWeight2", buzhengWeight);
+				} else{
+					dataMap.put("colorMaterialName2", "");
+					dataMap.put("baseRecipe2", "");
+					dataMap.put("weishuWeight2", "");
+					dataMap.put("buzhengWeight2", "");
 				}
 
 				if(!StringUtils.isEmpty(recipe.getColorMaterialName3()) && !StringUtils.isEmpty(model.getWeishuWeight())){
@@ -366,8 +392,13 @@ public class MatchColorWorkController {
 					sumOfBuzheng = sumOfBuzheng + Double.parseDouble(buzhengWeight);
 					dataMap.put("colorMaterialName3", null == recipe.getColorMaterialName3() ? "" : recipe.getColorMaterialName3());
 					dataMap.put("baseRecipe3", null == recipe.getBaseRecipe3() ? "" : recipe.getBaseRecipe3());
-					dataMap.put("weishuWeight3", weishuWeight);
+					dataMap.put("weishuWeight3", weishuWeight+" X "+model.getTimes());
 					dataMap.put("buzhengWeight3", buzhengWeight);
+				}else{
+					dataMap.put("colorMaterialName3", "");
+					dataMap.put("baseRecipe3", "");
+					dataMap.put("weishuWeight3", "");
+					dataMap.put("buzhengWeight3", "");
 				}
 
 				if(!StringUtils.isEmpty(recipe.getColorMaterialName4()) && !StringUtils.isEmpty(model.getWeishuWeight())){
@@ -378,8 +409,13 @@ public class MatchColorWorkController {
 					sumOfBuzheng = sumOfBuzheng + Double.parseDouble(buzhengWeight);
 					dataMap.put("colorMaterialName4", null == recipe.getColorMaterialName4() ? "" : recipe.getColorMaterialName4());
 					dataMap.put("baseRecipe4", null == recipe.getBaseRecipe4() ? "" : recipe.getBaseRecipe4());
-					dataMap.put("weishuWeight4", weishuWeight);
+					dataMap.put("weishuWeight4", weishuWeight+" X "+model.getTimes());
 					dataMap.put("buzhengWeight4", buzhengWeight);
+				}else{
+					dataMap.put("colorMaterialName4", "");
+					dataMap.put("baseRecipe4", "");
+					dataMap.put("weishuWeight4", "");
+					dataMap.put("buzhengWeight4", "");
 				}
 
 				if(!StringUtils.isEmpty(recipe.getColorMaterialName5()) && !StringUtils.isEmpty(model.getWeishuWeight())){
@@ -390,7 +426,7 @@ public class MatchColorWorkController {
 					sumOfBuzheng = sumOfBuzheng + Double.parseDouble(buzhengWeight);
 					dataMap.put("colorMaterialName5", null == recipe.getColorMaterialName5() ? "" : recipe.getColorMaterialName5());
 					dataMap.put("baseRecipe5", null == recipe.getBaseRecipe5() ? "" : recipe.getBaseRecipe5());
-					dataMap.put("weishuWeight5", weishuWeight);
+					dataMap.put("weishuWeight5", weishuWeight+" X "+model.getTimes());
 					dataMap.put("buzhengWeight5", buzhengWeight);
 				} else{
 					dataMap.put("colorMaterialName5", "");
@@ -407,7 +443,7 @@ public class MatchColorWorkController {
 					sumOfBuzheng = sumOfBuzheng + Double.parseDouble(buzhengWeight);
 					dataMap.put("colorMaterialName6", null == recipe.getColorMaterialName6() ? "" : recipe.getColorMaterialName6());
 					dataMap.put("baseRecipe6", null == recipe.getBaseRecipe6() ? "" : recipe.getBaseRecipe6());
-					dataMap.put("weishuWeight6", weishuWeight);
+					dataMap.put("weishuWeight6", weishuWeight+" X "+model.getTimes());
 					dataMap.put("buzhengWeight6", buzhengWeight);
 				} else{
 					dataMap.put("colorMaterialName6", "");
@@ -424,7 +460,7 @@ public class MatchColorWorkController {
 					sumOfBuzheng = sumOfBuzheng + Double.parseDouble(buzhengWeight);
 					dataMap.put("colorMaterialName7", null == recipe.getColorMaterialName7() ? "" : recipe.getColorMaterialName7());
 					dataMap.put("baseRecipe7", null == recipe.getBaseRecipe7() ? "" : recipe.getBaseRecipe7());
-					dataMap.put("weishuWeight7", weishuWeight);
+					dataMap.put("weishuWeight7", weishuWeight+" X "+model.getTimes());
 					dataMap.put("buzhengWeight7", buzhengWeight);
 				} else{
 					dataMap.put("colorMaterialName7", "");
@@ -441,7 +477,7 @@ public class MatchColorWorkController {
 					sumOfBuzheng = sumOfBuzheng + Double.parseDouble(buzhengWeight);
 					dataMap.put("colorMaterialName8", null == recipe.getColorMaterialName8() ? "" : recipe.getColorMaterialName8());
 					dataMap.put("baseRecipe8", null == recipe.getBaseRecipe8() ? "" : recipe.getBaseRecipe8());
-					dataMap.put("weishuWeight8", weishuWeight);
+					dataMap.put("weishuWeight8", weishuWeight+" X "+model.getTimes());
 					dataMap.put("buzhengWeight8", buzhengWeight);
 				} else{
 					dataMap.put("colorMaterialName8", "");
@@ -458,7 +494,7 @@ public class MatchColorWorkController {
 					sumOfBuzheng = sumOfBuzheng + Double.parseDouble(buzhengWeight);
 					dataMap.put("colorMaterialName9", null == recipe.getColorMaterialName9() ? "" : recipe.getColorMaterialName9());
 					dataMap.put("baseRecipe9", null == recipe.getBaseRecipe9() ? "" : recipe.getBaseRecipe9());
-					dataMap.put("weishuWeight9", weishuWeight);
+					dataMap.put("weishuWeight9", weishuWeight+" X "+model.getTimes());
 					dataMap.put("buzhengWeight9", buzhengWeight);
 				} else{
 					dataMap.put("colorMaterialName9", "");
@@ -475,7 +511,7 @@ public class MatchColorWorkController {
 					sumOfBuzheng = sumOfBuzheng + Double.parseDouble(buzhengWeight);
 					dataMap.put("colorMaterialName10", null == recipe.getColorMaterialName10() ? "" : recipe.getColorMaterialName10());
 					dataMap.put("baseRecipe10", null == recipe.getBaseRecipe10() ? "" : recipe.getBaseRecipe10());
-					dataMap.put("weishuWeight10", weishuWeight);
+					dataMap.put("weishuWeight10", weishuWeight+" X "+model.getTimes());
 					dataMap.put("buzhengWeight10", buzhengWeight);
 				} else{
 					dataMap.put("colorMaterialName10", "");
@@ -484,7 +520,7 @@ public class MatchColorWorkController {
 					dataMap.put("buzhengWeight10", "");
 				}
 				dataMap.put("sumOfRecipe", null == sumOfRecipe ? "" : sumOfRecipe);
-				dataMap.put("sumOfWeishu", null == sumOfWeishu ? "" : sumOfWeishu);
+				dataMap.put("sumOfWeishu", null == sumOfWeishu ? "" : sumOfWeishu+" x "+ model.getTimes());
 				dataMap.put("sumOfBuzheng", null == sumOfBuzheng ? "" : sumOfBuzheng);
 
 			}
@@ -499,7 +535,7 @@ public class MatchColorWorkController {
 		//文件路径
 		String filePath = Class.class.getClass().getResource("/").getPath()+"\\static\\category_img\\";
 		//文件唯一名称
-		String fileOnlyName = "配色作业制图表"+sb+".doc";
+		String fileOnlyName = "matchcolorwork"+sb+".doc";
 		//文件名称
 		/** 生成word */
 		WordUtil.createWord(dataMap, "matchColorWork.ftl", filePath, fileOnlyName);
