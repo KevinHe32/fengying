@@ -215,7 +215,6 @@
             })
 
             $('.print-world').bind('click',function () {
-                alert("aasd");
 
                 $.ajax({
                     url: '/match_color_work/generateWorld',
@@ -223,15 +222,19 @@
                     type: 'get',
                     data:{
                         colorCode: $('#colorCode').val(),
+                        customer : $('#customer').val(),
                         material:$('#material').val(),
                         productBatchNumber: $('#productBatchNumber').val(),
+                        customerCode : $('#customerCode').val(),
+                        number : $('#number').val(),
+                        machineCode : $('#machineCode').val(),
                         weishuWeight: $('#weishuWeight').val(),
                         times: $('#times').val(),
                         buzhengWeight: $('#buzhengWeight').val()
                     },
                     success: function (data) {
                         console.log("dataResult:",data.data);
-                        window.open(data.data);
+                        window.location.href = data.data;
                     }
                 });
             })
