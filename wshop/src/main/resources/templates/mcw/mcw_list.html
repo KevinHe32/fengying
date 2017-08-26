@@ -216,21 +216,8 @@
 
                             <!--分页插件开始-->
                             <div class="row">
-                                <!--<div class="col-sm-3">
-                                    <nav th:if="${recordSize >0}">
-                                        <ul class="pagination">
-                                            <span>每页展示</span>
-                                            <div class="example1-length">
-                                                <a th:class="@{(${pageSize == 10}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/match_color_work/list'}(pageNum=0,pageSize=10)}">10</a>
-                                                <a th:class="@{(${pageSize == 20}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/match_color_work/list'}(pageNum=0,pageSize=20)}">20</a>
-                                                <a th:class="@{(${pageSize == 50}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/match_color_work/list'}(pageNum=0,pageSize=50)}">50</a>
-                                                <a th:class="@{(${pageSize == 100}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/match_color_work/list'}(pageNum=0,pageSize=100)}">100</a>
-                                            </div>
-                                            条
-                                        </ul>
-                                    </nav>
-                                </div>-->
-                                <span th:text="@{pageSize}"></span>
+
+
                                 <div class="col-sm-3">
                                     <nav th:if="${recordSize >0}">
                                         <ul class="pagination">
@@ -266,7 +253,17 @@
                                                    class="normal-page">
                                                     <span th:text="${pageNo}"></span>
                                                 </a>
-                                            </li>
+                                            </li><!--&ndash;&gt;
+                                            <li th:each="pageNo : ${#numbers.sequence(1, totalPages)}">
+                                                <a th:if="${pageNum eq pageNo}" class="active-page" href="javascript:void(0);">
+                                                    <span th:text="${pageNo}"></span>
+                                                </a>
+                                                <a th:if="${not (pageNum eq pageNo)}"
+                                                   th:href="@{${'/match_color_work/list'}(pageNum=${pageNo},pageSize=${pageSize})}"
+                                                   class="normal-page">
+                                                    <span th:text="${pageNo}"></span>
+                                                </a>
+                                            </li>-->
                                             <li>
                                                 <a th:if="${not isLastPage}"
                                                    th:href="@{${'/match_color_work/list'}(pageNum=${pageNum+1},pageSize=${pageSize},color_code=${condition.color_code},product_batch_number=${condition.product_batch_number}, customer =${condition.customer},material=${condition.material})}"
