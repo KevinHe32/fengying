@@ -44,7 +44,7 @@
                             }
                         }
                     },
-                    codeNumber: {
+                    /*codeNumber: {
                         message: '代号不能为空',
                         validators: {
                             notEmpty: {
@@ -59,7 +59,7 @@
                                 message: '批号不能为空'
                             }
                         }
-                    },
+                    },*/
                     material: {
                         message: '原料不能为空',
                         validators: {
@@ -75,7 +75,7 @@
                                 message: '数量不能为空'
                             }
                         }
-                    },
+                    }/*,
                     customer: {
                         message: '客户不能为空',
                         validators: {
@@ -91,7 +91,7 @@
                                 message: '包装不能为空'
                             }
                         }
-                    }
+                    }*/
                 }
             }).on('success.form.bv', function (e) { //点击提交之后
                 $("#submit_btn").attr('disabled', "true");
@@ -169,14 +169,14 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">代号： <span style="color:red;">*</span></label>
+                                            <label class="control-label">代号： <span style="color:red;"></span></label>
                                             <input type="text" class="form-control" id="codeNumber" name="codeNumber"
                                                    th:value="${record.codeNumber}" placeholder="代号">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">批号： <span style="color:red;">*</span></label>
+                                            <label class="control-label">批号： <span style="color:red;"></span></label>
                                             <input type="text" class="form-control" id="batchNumber" name="batchNumber"
                                                    th:value="${record.batchNumber}" placeholder="批号">
                                         </div>
@@ -202,14 +202,14 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">客户： <span style="color:red;">*</span></label>
+                                            <label class="control-label">客户： <span style="color:red;"></span></label>
                                             <input type="text" class="form-control" id="customer" name="customer"
                                                    th:value="${record.customer}" placeholder="客户">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">包装： <span style="color:red;">*</span></label>
+                                            <label class="control-label">包装： <span style="color:red;"></span></label>
                                             <input type="text" class="form-control" id="package2" name="package2"
                                                    th:value="${record.package2}" placeholder="包装">
                                         </div>

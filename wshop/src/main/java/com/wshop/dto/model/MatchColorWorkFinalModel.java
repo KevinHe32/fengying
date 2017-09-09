@@ -35,7 +35,7 @@ public class MatchColorWorkFinalModel {
 
     private Date createtime;
 
-    @ApiModelProperty(value = "色料名称1")
+    @ApiModelProperty(value = "色粉名称1")
     private String colorMaterialName1;
 
     @ApiModelProperty(value = "基本配方1")

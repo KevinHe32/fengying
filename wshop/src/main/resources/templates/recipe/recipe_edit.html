@@ -43,12 +43,12 @@
                                 message: '使用原料不能为空'
                             }
                         }
-                    },
+                    }/*,
                     colorMaterialName1: {
-                        message: '色料名称1不能为空',
+                        message: '色粉名称1不能为空',
                         validators: {
                             notEmpty: {
-                                message: '色料名称1不能为空'
+                                message: '色粉名称1不能为空'
                             }
                         }
                     },
@@ -61,10 +61,10 @@
                         }
                     },
                     colorMaterialName2: {
-                        message: '色料名称2不能为空',
+                        message: '色粉名称2不能为空',
                         validators: {
                             notEmpty: {
-                                message: '色料名称2不能为空'
+                                message: '色粉名称2不能为空'
                             }
                         }
                     },
@@ -77,10 +77,10 @@
                         }
                     },
                     colorMaterialName3: {
-                        message: '色料名称3不能为空',
+                        message: '色粉名称3不能为空',
                         validators: {
                             notEmpty: {
-                                message: '色料名称3不能为空'
+                                message: '色粉名称3不能为空'
                             }
                         }
                     },
@@ -93,10 +93,10 @@
                         }
                     },
                     colorMaterialName4: {
-                        message: '色料名称4不能为空',
+                        message: '色粉名称4不能为空',
                         validators: {
                             notEmpty: {
-                                message: '色料名称4不能为空'
+                                message: '色粉名称4不能为空'
                             }
                         }
                     },
@@ -108,7 +108,7 @@
                             }
                         }
                     }
-
+*/
                 }
             }).on('success.form.bv', function (e) { //点击提交之后
                 $("#submit_btn").attr('disabled', "true");
@@ -173,6 +173,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="control-label">色号名称： <span style="color:red;">*</span></label>
+                                            <input type="hidden" name="id" th:value="${recipe.id}">
                                             <input type="text" class="form-control" id="colorNumber" name="colorNumber"
                                                    th:value="${recipe.colorNumber}" placeholder="色号名称">
                                         </div>
@@ -189,14 +190,14 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">色料名称1：<span style="color:red;">*</span></label>
+                                            <label class="control-label">色粉名称1：<span style="color:red;"></span></label>
                                             <input type="text" class="form-control" id="colorMaterialName1" name="colorMaterialName1"
-                                                   th:value="${recipe.colorMaterialName1}" placeholder="色料名称1">
+                                                   th:value="${recipe.colorMaterialName1}" placeholder="色粉名称1">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">基本配方1：<span style="color:red;">*</span></label>
+                                            <label class="control-label">基本配方1：<span style="color:red;"></span></label>
                                             <input type="text" class="form-control" id="baseRecipe1" name="baseRecipe1"
                                                    th:value="${recipe.baseRecipe1}" placeholder="基本配方1">
                                         </div>
@@ -206,14 +207,14 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">色料名称2：<span style="color:red;">*</span></label>
+                                            <label class="control-label">色粉名称2：<span style="color:red;"></span></label>
                                             <input type="text" class="form-control" id="colorMaterialName2" name="colorMaterialName2"
-                                                   th:value="${recipe.colorMaterialName2}" placeholder="色料名称2">
+                                                   th:value="${recipe.colorMaterialName2}" placeholder="色粉名称2">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">基本配方2：<span style="color:red;">*</span></label>
+                                            <label class="control-label">基本配方2：<span style="color:red;"></span></label>
                                             <input type="text" class="form-control" id="baseRecipe2" name="baseRecipe2"
                                                    th:value="${recipe.baseRecipe2}" placeholder="基本配方2">
                                         </div>
@@ -222,14 +223,14 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">色料名称3：<span style="color:red;">*</span></label>
+                                            <label class="control-label">色粉名称3：<span style="color:red;"></span></label>
                                             <input type="text" class="form-control" id="colorMaterialName3" name="colorMaterialName3"
-                                                   th:value="${recipe.colorMaterialName3}" placeholder="色料名称3">
+                                                   th:value="${recipe.colorMaterialName3}" placeholder="色粉名称3">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">基本配方3：<span style="color:red;">*</span></label>
+                                            <label class="control-label">基本配方3：<span style="color:red;"></span></label>
                                             <input type="text" class="form-control" id="baseRecipe3" name="baseRecipe3"
                                                    th:value="${recipe.baseRecipe3}" placeholder="基本配方3">
                                         </div>
@@ -238,14 +239,14 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">色料名称4：<span style="color:red;">*</span></label>
+                                            <label class="control-label">色粉名称4：<span style="color:red;"></span></label>
                                             <input type="text" class="form-control" id="colorMaterialName4" name="colorMaterialName4"
-                                                   th:value="${recipe.colorMaterialName4}" placeholder="色料名称4">
+                                                   th:value="${recipe.colorMaterialName4}" placeholder="色粉名称4">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">基本配方4：<span style="color:red;">*</span></label>
+                                            <label class="control-label">基本配方4：<span style="color:red;"></span></label>
                                             <input type="text" class="form-control" id="baseRecipe4" name="baseRecipe4"
                                                    th:value="${recipe.baseRecipe4}" placeholder="基本配方4">
                                         </div>
@@ -254,9 +255,9 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">色料名称5：</label>
+                                            <label class="control-label">色粉名称5：</label>
                                             <input type="text" class="form-control" id="colorMaterialName5" name="colorMaterialName5"
-                                                   th:value="${recipe.colorMaterialName5}" placeholder="色料名称5">
+                                                   th:value="${recipe.colorMaterialName5}" placeholder="色粉名称5">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -270,9 +271,9 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">色料名称6：</label>
+                                            <label class="control-label">色粉名称6：</label>
                                             <input type="text" class="form-control" id="colorMaterialName6" name="colorMaterialName6"
-                                                   th:value="${recipe.colorMaterialName6}" placeholder="色料名称6">
+                                                   th:value="${recipe.colorMaterialName6}" placeholder="色粉名称6">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -286,9 +287,9 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">色料名称7：</label>
+                                            <label class="control-label">色粉名称7：</label>
                                             <input type="text" class="form-control" id="colorMaterialName7" name="colorMaterialName7"
-                                                   th:value="${recipe.colorMaterialName7}" placeholder="色料名称7">
+                                                   th:value="${recipe.colorMaterialName7}" placeholder="色粉名称7">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -302,9 +303,9 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">色料名称8：</label>
+                                            <label class="control-label">色粉名称8：</label>
                                             <input type="text" class="form-control" id="colorMaterialName8" name="colorMaterialName8"
-                                                   th:value="${recipe.colorMaterialName8}" placeholder="色料名称8">
+                                                   th:value="${recipe.colorMaterialName8}" placeholder="色粉名称8">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -318,9 +319,9 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">色料名称9：</label>
+                                            <label class="control-label">色粉名称9：</label>
                                             <input type="text" class="form-control" id="colorMaterialName9" name="colorMaterialName9"
-                                                   th:value="${recipe.colorMaterialName9}" placeholder="色料名称9">
+                                                   th:value="${recipe.colorMaterialName9}" placeholder="色粉名称9">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -334,9 +335,9 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label">色料名称10：</label>
+                                            <label class="control-label">色粉名称10：</label>
                                             <input type="text" class="form-control" id="colorMaterialName10" name="colorMaterialName10"
-                                                   th:value="${recipe.colorMaterialName10}" placeholder="色料名称10">
+                                                   th:value="${recipe.colorMaterialName10}" placeholder="色粉名称10">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">

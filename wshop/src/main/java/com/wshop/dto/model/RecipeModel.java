@@ -16,7 +16,7 @@ public class RecipeModel {
     @ApiModelProperty(value = "使用原料")
     private String material;
 
-    @ApiModelProperty(value = "色料名称1")
+    @ApiModelProperty(value = "色粉名称1")
     private String colorMaterialName1;
 
     @ApiModelProperty(value = "基本配方1")

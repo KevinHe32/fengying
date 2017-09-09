@@ -44,7 +44,7 @@
                             }
                         }
                     },
-                    productBatchNumber: {
+                    /*productBatchNumber: {
                         message: '产品批号不能为空',
                         validators: {
                             notEmpty: {
@@ -59,7 +59,7 @@
                                 message: '顾客名称不能为空'
                             }
                         }
-                    },
+                    },*/
                     number: {
                         message: '生产数量不能为空',
                         validators: {
@@ -186,7 +186,7 @@
                     success: function (data) {
                        if(data.code == 0){
                            var tableHeader = "<table class='table table-striped'>" +
-                               "<thead><tr><td>色料名称</td><td>基本配方</td>" +
+                               "<thead><tr><td>色粉名称</td><td>基本配方</td>" +
                                "<td>尾数重量（kg）* 方次</td>" +
                                " <td>补正记录重量（kg）* 方次</td>" +
                                "</tr>" +
@@ -261,7 +261,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="control-label">产品批号：<span style="color:red;">*</span></label>
+                                            <label class="control-label">产品批号：<span style="color:red;"></span></label>
                                             <input type="text" class="form-control" id="productBatchNumber" name="productBatchNumber"  placeholder="产品批号" th:value="${mcw.productBatchNumber}">
                                         </div>
                                     </div>
@@ -270,7 +270,7 @@
                                 <div class="row row-two-col">
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="control-label">顾客名称：<span style="color:red;">*</span></label>
+                                            <label class="control-label">顾客名称：<span style="color:red;"></span></label>
                                             <input type="text" class="form-control" id="customer" name="customer" placeholder="顾客名称" th:value="${mcw.customer}">
                                         </div>
                                     </div>
@@ -333,6 +333,7 @@
                                         <div class="col-lg-12" style="text-align: center;">
                                             <button class="btn btn-primary submit_btn">保存</button> &nbsp;&nbsp;&nbsp;&nbsp;
                                             <a class="btn btn-default" href="/match_color_work/list">取消</a>
+
                                         </div>
                                     </div>
                                 </div>
