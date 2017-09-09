@@ -769,10 +769,13 @@ img {
     color: #ffffff;
     border-color: #cfdbe2;
 }
-
 body {
     font-family: "Source Sans Pro", sans-serif !important;
-    color: #656565 !important;
+    color: #0c0c0c !important;
+}
+
+input:hover{
+    box-shadow: inset 0 -2px 2px #a4f397,inset 2px 0 2px #a4f397,inset -2px 0 2px #a4f397 !important;
 }
 
 .panel.panel-primary {
