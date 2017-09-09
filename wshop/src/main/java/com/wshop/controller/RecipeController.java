@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -123,12 +124,16 @@ public class RecipeController {
         Recipe recipe = new Recipe();
         BeanUtils.copyProperties(model,recipe);
 
-        boolean validateresult = isExist(model.getColorNumber(), model.getMaterial(), null);
+        boolean validateresult = isExist(model.getColorNumber(), model.getMaterial(), model.getId());
         if(!validateresult) {
             return Result.ok(StatusCode.ERROR_APPKEY_INVALID, "编辑失败！");
 
         }
-        Integer result = recipeService.addRecipe(model);
+        model.setCreatetime(new Date());
+        Recipe recipe1 = new Recipe();
+        BeanUtils.copyProperties(model,recipe1);
+        recipe1.setId(null);
+        Integer result = recipeService.addRecipe(recipe1);
 
        // Integer result = recipeService.addRecipe(recipe);
         if(result > 0){
