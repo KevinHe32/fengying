@@ -26,13 +26,14 @@
     <result column="color_material_name10" property="colorMaterialName10" jdbcType="VARCHAR" />
     <result column="base_recipe10" property="baseRecipe10" jdbcType="DECIMAL" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, color_number, material, color_material_name1, base_recipe1, color_material_name2, 
     base_recipe2, color_material_name3, base_recipe3, color_material_name4, base_recipe4, 
     color_material_name5, base_recipe5, color_material_name6, base_recipe6, color_material_name7, 
     base_recipe7, color_material_name8, base_recipe8, color_material_name9, base_recipe9, 
-    color_material_name10, base_recipe10, createtime
+    color_material_name10, base_recipe10, createtime, customer_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -52,7 +53,7 @@
       base_recipe5, color_material_name6, base_recipe6, 
       color_material_name7, base_recipe7, color_material_name8, 
       base_recipe8, color_material_name9, base_recipe9, 
-      color_material_name10, base_recipe10, createtime
+      color_material_name10, base_recipe10, createtime,customer_name
       )
     values (#{id,jdbcType=INTEGER}, #{colorNumber,jdbcType=VARCHAR}, #{material,jdbcType=VARCHAR}, 
       #{colorMaterialName1,jdbcType=VARCHAR}, #{baseRecipe1,jdbcType=DECIMAL}, #{colorMaterialName2,jdbcType=VARCHAR}, 
@@ -61,7 +62,8 @@
       #{baseRecipe5,jdbcType=DECIMAL}, #{colorMaterialName6,jdbcType=VARCHAR}, #{baseRecipe6,jdbcType=DECIMAL}, 
       #{colorMaterialName7,jdbcType=VARCHAR}, #{baseRecipe7,jdbcType=DECIMAL}, #{colorMaterialName8,jdbcType=VARCHAR}, 
       #{baseRecipe8,jdbcType=DECIMAL}, #{colorMaterialName9,jdbcType=VARCHAR}, #{baseRecipe9,jdbcType=DECIMAL}, 
-      #{colorMaterialName10,jdbcType=VARCHAR}, #{baseRecipe10,jdbcType=DECIMAL}, #{createtime,jdbcType=TIMESTAMP}
+      #{colorMaterialName10,jdbcType=VARCHAR}, #{baseRecipe10,jdbcType=DECIMAL}, #{createtime,jdbcType=TIMESTAMP},
+      #{customerName,jdbcType=VARCHAR},
       )
   </insert>
   <insert id="insertSelective" parameterType="com.wshop.entity.Recipe" >
@@ -139,6 +141,9 @@
       <if test="createtime != null" >
         createtime,
       </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -212,6 +217,9 @@
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -287,6 +295,9 @@
       <if test="createtime != null" >
         createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -314,7 +325,8 @@
       base_recipe9 = #{baseRecipe9,jdbcType=DECIMAL},
       color_material_name10 = #{colorMaterialName10,jdbcType=VARCHAR},
       base_recipe10 = #{baseRecipe10,jdbcType=DECIMAL},
-      createtime = #{createtime,jdbcType=TIMESTAMP}
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      customer_name = #{customerName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -328,6 +340,9 @@
       </if>
       <if test="material != null and material != ''" >
         and material=#{material}
+      </if>
+      <if test="customerName != null and customerName != ''" >
+        and customer_name = #{customerName}
       </if>
       <if test="birthtimeStart !=null"><![CDATA[and createtime >= #{birthtimeStart} ]]> </if>
       <if test="birthtimeEnd !=null"><![CDATA[and createtime <= #{birthtimeEnd} ]]> </if>

@@ -12,6 +12,8 @@ public class RecipeCondition extends BaseCondition{
 
     private String material;
 
+    private String customerName;
+
     private String birthtimeStart;
 
     private String birthtimeEnd;
@@ -19,6 +21,14 @@ public class RecipeCondition extends BaseCondition{
     private String birthtimeStart3;
 
     private String birthtimeEnd3;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
     public String getColor_number() {
         return color_number;

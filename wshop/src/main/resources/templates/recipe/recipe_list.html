@@ -93,7 +93,7 @@
 
                     <div class="col-sm-8 pull-right" style="text-align:right;">
                         <div class="row">
-                            <div class="col-sm-2 col-sm-offset-3">
+                            <div class="col-sm-2 col-sm-offset-1">
                                 <div class="form-group">
                                     <input class="form-control" name="color_number" id="color_number" type="text"
                                            th:value="${condition.color_number}"
@@ -105,6 +105,13 @@
                                     <input class="form-control" name="material" id="material" type="text"
                                            th:value="${condition.material}"
                                            placeholder="请输入使用原料"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <input class="form-control" name="customerName" id="customerName" type="text"
+                                           th:value="${condition.customerName}"
+                                           placeholder="请输入客户名称"/>
                                 </div>
                             </div>
                             <div class="col-sm-2" style="padding-right: 0px;">
@@ -152,6 +159,7 @@
                                         <td>#</td>
                                         <td>色号名称</td>
                                         <td>使用原料</td>
+                                        <td>客户名称</td>
                                         <td>色粉名称1</td>
                                         <td>基本配方1</td>
                                         <td>色粉名称2</td>
@@ -169,6 +177,7 @@
                                         <td th:text="${status.index + 1}"></td>
                                         <td th:text="${record.colorNumber}? ${record.colorNumber} : '---'"></td>
                                         <td th:text="${record.material}? ${record.material} : '---'"></td>
+                                        <td th:text="${record.customerName}? ${record.customerName} : '---'"></td>
                                         <td th:text="${record.colorMaterialName1}? ${record.colorMaterialName1} : '---'"></td>
                                         <td th:text="${record.baseRecipe1}? ${record.baseRecipe1} : '---'"></td>
                                         <td th:text="${record.colorMaterialName2}? ${record.colorMaterialName2} : '---'"></td>
