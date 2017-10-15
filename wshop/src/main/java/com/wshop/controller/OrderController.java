@@ -10,6 +10,7 @@ import com.wshop.entity.Order;
 import com.wshop.rest.Result;
 import com.wshop.rest.StatusCode;
 import com.wshop.service.OrderService;
+import com.wshop.util.GenerateOrders;
 import com.wshop.util.WordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -196,6 +197,29 @@ public class OrderController {
 			orderModel.setRemark(order.getRemark());
 			list.add(orderModel);
 		}
+
+		 /*2、分组算法**/
+		Map<String, List<OrderModel>> orderMap = new HashMap<>();
+		for (OrderModel orderModel : list) {
+			List<OrderModel> tempList = orderMap.get(orderModel.getMachineNumber());
+            /*如果取不到数据,那么直接new一个空的ArrayList**/
+			if (tempList == null) {
+				tempList = new ArrayList<>();
+				tempList.add(orderModel);
+				orderMap.put(orderModel.getMachineNumber(), tempList);
+			}
+			else {
+                /*某个sku之前已经存放过了,则直接追加数据到原来的List里**/
+				tempList.add(orderModel);
+			}
+		}
+		/*3、遍历map,验证结果**/
+		for(String machineNumber : orderMap.keySet()){
+			System.out.println("****************************"+orderMap.get(machineNumber).toString());
+		}
+
+		GenerateOrders.generateOrders(orderMap,"E:\\fy_new\\wshop\\src\\main\\resources\\static\\"+ UUID.randomUUID()+".pdf");
+
 		dataMap.put("recordList",list);
 		/** 文件名称，唯一字符串 */
 		Random r=new Random();

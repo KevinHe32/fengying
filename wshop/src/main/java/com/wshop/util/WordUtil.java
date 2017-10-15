@@ -53,7 +53,7 @@ public class WordUtil {
     }
 
     public static  void  main(String[] args){
-        Map dataMap = new HashMap();
+        /*Map dataMap = new HashMap();
         List<OrderModel> list = new ArrayList<>();
         for(int i =0; i<10;i++){
             OrderModel orderModel = new OrderModel();
@@ -70,7 +70,7 @@ public class WordUtil {
         }
         dataMap.put("recordList",list);
 
-        /** 文件名称，唯一字符串 */
+        *//** 文件名称，唯一字符串 *//*
         Random r=new Random();
         SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd_HHmmss");
         StringBuffer sb=new StringBuffer();
@@ -86,9 +86,9 @@ public class WordUtil {
 
         //文件名称
        String fileName="用freemarker导出的Word文档.doc";
-        /** 生成word */
+        *//** 生成word *//*
         WordUtil.createWord(dataMap, "productorder.ftl", filePath, fileOnlyName);
-
+*/
     }
 
 }

@@ -15,6 +15,7 @@ import com.wshop.rest.ResultList;
 import com.wshop.rest.StatusCode;
 import com.wshop.service.MatchColorWorkService;
 import com.wshop.service.RecipeService;
+import com.wshop.util.GenerateMawbDRSPDF;
 import com.wshop.util.WordUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
@@ -298,8 +299,9 @@ public class MatchColorWorkController {
 	}
 
 
-	@RequestMapping(value = "/print_word/{id}", method = RequestMethod.GET)
-	public ModelAndView printWord(@PathVariable("id") Integer id, Model model) {
+	@RequestMapping(value = "/print_word", method = RequestMethod.GET)
+	public Result printWord(@ModelAttribute MatchColorWorkModel model) {
+		Integer id = model.getId();
 		Result result = new Result();
 		MatchColorWorkModel matchColorWorkModel = new MatchColorWorkModel();
 		MatchColorWork matchColorWork = new MatchColorWork();
@@ -309,7 +311,7 @@ public class MatchColorWorkController {
 		BeanUtils.copyProperties(matchColorWork, matchColorWorkModel);
 		result = this.generateWorld(matchColorWorkModel);
 		String filePath = (String)result.getData();
-		return new ModelAndView("redirect:" + filePath);
+		return Result.one(filePath);
 	}
 
 	@RequestMapping(value = "/generateWorld", method = RequestMethod.GET)
@@ -538,10 +540,16 @@ public class MatchColorWorkController {
 		String fileOnlyName = "matchcolorwork"+sb+".doc";
 		//文件名称
 		/** 生成word */
-		WordUtil.createWord(dataMap, "matchColorWork.ftl", filePath, fileOnlyName);
+		/*WordUtil.createWord(dataMap, "matchColorWork.ftl", filePath, fileOnlyName);
 		String fileFinalPath = "http://127.0.0.1:8070/static/category_img/"+fileOnlyName;
-		result.setData(fileFinalPath);
-		return result;
+		result.setData(fileFinalPath);*/
+
+		String fileName = "E:\\fy_new\\wshop\\src\\main\\resources\\static\\"+ UUID.randomUUID()+".pdf";
+				//"I:\\"+UUID.randomUUID()+".pdf";
+		GenerateMawbDRSPDF.generateMWBS(dataMap, fileName);
+
+		System.out.print("--------------------------------------" + fileName);
+		return Result.one("static\\" + UUID.randomUUID() + ".pdf");
 	}
 
 

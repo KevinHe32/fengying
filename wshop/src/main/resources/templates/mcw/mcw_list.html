@@ -63,6 +63,27 @@
                 window.location.href= location;
 
             });
+
+            $(".btn-print").bind("click",function(){
+                var id = $(this).attr("id");
+              /*
+                alert(id);
+                var location = '/match_color_work/print_word/'+id;
+                window.location.href= location;*/
+                $.ajax({
+                    url: '/match_color_work/print_word',
+                    datatype: 'json',
+                    type: 'get',
+                    data:{
+                        id: id
+                    },
+                    success: function (data) {
+                        console.log("dataResult:",data.data);
+                        window.open(data.data);
+                    }
+                });
+
+            });
         });
         /*]]>*/
     </script>
@@ -200,7 +221,7 @@
                                             <a data-toggle="modal" data-target="#myModal"
                                                th:id="${record.id}" th:value="${record.colorCode}"
                                                class="btn btn-danger btn-delete-recipe">删除</a>
-                                            <a th:href="'/match_color_work/print_word/'+${record.id}" class="btn btn-warning">打印</a>
+                                            <a th:value="'/match_color_work/print_word/'+${record.id}"  th:id="${record.id}" class="btn btn-warning btn-print">打印</a>
                                         </td>
                                     </tr>
                                     <tr role="row"
