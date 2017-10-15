@@ -168,8 +168,10 @@
                     porderIds: ids.join(",")
                 },
                 success: function (data) {
-                    console.log("file:"+data.data)
-                    window.open(data.data)
+                    console.log("file:"+data.data);
+                    var file = data.data.split("/");
+                    var fileName = file[file.length-1];
+                    window.open("http://localhost:8070/"+fileName);
                 }
             });
         }

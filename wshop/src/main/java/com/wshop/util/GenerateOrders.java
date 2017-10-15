@@ -20,7 +20,7 @@ public class GenerateOrders {
 		BaseFont bf = null;
 		Font fontChinese = null;
 		try {
-			bf = BaseFont.createFont("I:\\SIMYOU.TTF",
+			bf = BaseFont.createFont("D:\\SIMYOU.TTF",
 					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
 			fontChinese = new Font(bf, 28, Font.NORMAL);
@@ -38,7 +38,7 @@ public class GenerateOrders {
 		BaseFont bf = null;
 		Font fontChinese = null;
 		try {
-			bf = BaseFont.createFont("I:\\SIMYOU.TTF",
+			bf = BaseFont.createFont("D:\\SIMYOU.TTF",
 					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
 			fontChinese = new Font(bf, 20, Font.NORMAL);
@@ -56,7 +56,8 @@ public class GenerateOrders {
 		BaseFont bf = null;
 		Font fontChinese = null;
 		try {
-			bf = BaseFont.createFont("I:\\SIMYOU.TTF",
+			bf = BaseFont.createFont("" +
+							"D:\\SIMYOU.TTF",
 					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
 			fontChinese = new Font(bf, 12, Font.NORMAL);

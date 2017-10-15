@@ -218,7 +218,6 @@ public class OrderController {
 			System.out.println("****************************"+orderMap.get(machineNumber).toString());
 		}
 
-		GenerateOrders.generateOrders(orderMap,"E:\\fy_new\\wshop\\src\\main\\resources\\static\\"+ UUID.randomUUID()+".pdf");
 
 		dataMap.put("recordList",list);
 		/** 文件名称，唯一字符串 */
@@ -229,16 +228,18 @@ public class OrderController {
 		sb.append("_");
 		sb.append(r.nextInt(100));
 		//文件路径
-		String filePath = Class.class.getClass().getResource("/").getPath()+"\\static\\category_img\\";
+		String filePath = Class.class.getClass().getResource("/").getPath()+"static\\category_img\\";
 		//文件唯一名称
 		String fileOnlyName = "生产通知单"+sb+".doc";
 		//文件名称
 		String fileName="生产通知单.doc";
 		/** 生成word */
-		WordUtil.createWord(dataMap, "productorder.ftl", filePath, fileOnlyName);
-		String fileFinalPath = "http://127.0.0.1:8070/static/category_img/"+fileOnlyName;
+//		WordUtil.createWord(dataMap, "productorder.ftl", filePath, fileOnlyName);
+		fileOnlyName = filePath+UUID.randomUUID()+".pdf";
+		System.out.print("fileOnlyName:"+fileOnlyName);
+		GenerateOrders.generateOrders(orderMap,fileOnlyName);
 		Result result = new Result();
-		result.setData(fileFinalPath);
+		result.setData(fileOnlyName);
 		return result;
 	}
 
