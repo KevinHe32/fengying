@@ -15,11 +15,13 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class GenerateMawbDRSPDF {
 
+	final static String fontPath = Thread.currentThread().getContextClassLoader().getResource("/").getPath()+"\\SIMYOU.TTF";
+
 	public static Font setChineseFont28() {
 		BaseFont bf = null;
 		Font fontChinese = null;
 		try {
-			bf = BaseFont.createFont("I:\\SIMYOU.TTF",
+			bf = BaseFont.createFont(fontPath,
 					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
 			fontChinese = new Font(bf, 28, Font.NORMAL);
@@ -37,10 +39,10 @@ public class GenerateMawbDRSPDF {
 		BaseFont bf = null;
 		Font fontChinese = null;
 		try {
-			bf = BaseFont.createFont("I:\\SIMYOU.TTF",
+			bf = BaseFont.createFont(fontPath,
 					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
-			fontChinese = new Font(bf, 20, Font.NORMAL);
+			fontChinese = new Font(bf, 22, Font.NORMAL);
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,7 +57,7 @@ public class GenerateMawbDRSPDF {
 		BaseFont bf = null;
 		Font fontChinese = null;
 		try {
-			bf = BaseFont.createFont("I:\\SIMYOU.TTF",
+			bf = BaseFont.createFont(fontPath,
 					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
 			fontChinese = new Font(bf, 14, Font.NORMAL);
@@ -76,16 +78,16 @@ public class GenerateMawbDRSPDF {
 	public static void generateMWBS(Map dataMap,String fileName){
 
 		Document document = new Document();
-		document.setMargins(20, 20, 30, 40);
+		document.setMargins(25, 25, 30, 40);
 		try {
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
 			document.open();
 
 			Paragraph title = new Paragraph("苏州丰盈工程塑胶有限公司",setChineseFont28());
 			title.setAlignment(1);
-			title.setSpacingBefore(10);
+			title.setSpacingBefore(15);
 			title.setAlignment(Element.ALIGN_CENTER);
-			title.setSpacingAfter(5);
+			title.setSpacingAfter(6);
 
 			document.add(title);
 
@@ -93,15 +95,15 @@ public class GenerateMawbDRSPDF {
 
 			Paragraph title2 = new Paragraph("配色作业制图表",setChineseFont20());
 			title2.setAlignment(1);
-			title2.setSpacingBefore(10);
+			title2.setSpacingBefore(6);
 			title2.setAlignment(Element.ALIGN_CENTER);
 			title2.setSpacingAfter(10);
 			document.add(title2);
 
-			Paragraph titleDate = new Paragraph("生产日期:"+ dataMap.get("createDate"),setChineseFont18());
+			Paragraph titleDate = new Paragraph("生产日期: "+ dataMap.get("createDate"),setChineseFont18());
 			titleDate.setAlignment(1);
 			titleDate.setAlignment(Element.ALIGN_LEFT);
-			titleDate.setSpacingAfter(5);
+			titleDate.setSpacingAfter(8);
 			document.add(titleDate);
 
 
@@ -110,8 +112,8 @@ public class GenerateMawbDRSPDF {
 			//ct.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
 			ct.setWidthPercentage(100);
 
-			PdfPCell row_1_1 = new PdfPCell(new Phrase("色 号",setChineseFont18()));
-			row_1_1.setMinimumHeight(30);
+			PdfPCell row_1_1 = new PdfPCell(new Phrase("色   号",setChineseFont18()));
+			row_1_1.setMinimumHeight(35);
 			//row_1_1.setBorder(PdfPCell.NO_BORDER);
 			row_1_1.setHorizontalAlignment(1);
 			row_1_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -120,13 +122,13 @@ public class GenerateMawbDRSPDF {
 			Object colorCode = dataMap.get("colorCode").toString();
 			if(colorCode == null) colorCode = "";
 			PdfPCell row_1_2 = new PdfPCell(new Phrase(colorCode.toString(),setChineseFont18()));
-			row_1_2.setMinimumHeight(30);
+			row_1_2.setMinimumHeight(35);
 			row_1_2.setHorizontalAlignment(1);
 			row_1_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_1_2);
 
 			PdfPCell row_1_3 = new PdfPCell(new Phrase("产品批号",setChineseFont18()));
-			row_1_3.setMinimumHeight(30);
+			row_1_3.setMinimumHeight(35);
 			row_1_3.setHorizontalAlignment(1);
 			row_1_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_1_3);
@@ -134,13 +136,13 @@ public class GenerateMawbDRSPDF {
 			Object productBatchNumber = dataMap.get("productBatchNumber");
 			if(productBatchNumber == null) productBatchNumber = "";
 			PdfPCell row_1_4 = new PdfPCell(new Phrase(productBatchNumber.toString(),setChineseFont18()));
-			row_1_4.setMinimumHeight(30);
+			row_1_4.setMinimumHeight(35);
 			row_1_4.setHorizontalAlignment(1);
 			row_1_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_1_4);
 
 			PdfPCell row_1_5 = new PdfPCell(new Phrase("顾客名称",setChineseFont18()));
-			row_1_5.setMinimumHeight(30);
+			row_1_5.setMinimumHeight(35);
 			row_1_5.setHorizontalAlignment(1);
 			row_1_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_1_5);
@@ -148,7 +150,7 @@ public class GenerateMawbDRSPDF {
 			Object customer = dataMap.get("customer");
 			if(customer == null) customer = "";
 			PdfPCell row_1_6 = new PdfPCell(new Phrase(customer.toString(),setChineseFont18()));
-			row_1_6.setMinimumHeight(30);
+			row_1_6.setMinimumHeight(35);
 			row_1_6.setHorizontalAlignment(1);
 			row_1_6.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_1_6);
@@ -156,7 +158,7 @@ public class GenerateMawbDRSPDF {
 
 			//---------------------
 			PdfPCell row_2_1 = new PdfPCell(new Phrase("使用原料",setChineseFont18()));
-			row_2_1.setMinimumHeight(30);
+			row_2_1.setMinimumHeight(35);
 			row_2_1.setHorizontalAlignment(1);
 			row_2_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_2_1);
@@ -164,13 +166,13 @@ public class GenerateMawbDRSPDF {
 			Object material = dataMap.get("material");
 			if(material == null) material = "";
 			PdfPCell row_2_2 = new PdfPCell(new Phrase(material.toString(),setChineseFont18()));
-			row_2_2.setMinimumHeight(30);
+			row_2_2.setMinimumHeight(35);
 			row_2_2.setHorizontalAlignment(1);
 			row_2_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_2_2);
 
 			PdfPCell row_2_3 = new PdfPCell(new Phrase("顾客代号",setChineseFont18()));
-			row_2_3.setMinimumHeight(30);
+			row_2_3.setMinimumHeight(35);
 			row_2_3.setHorizontalAlignment(1);
 			row_2_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_2_3);
@@ -178,13 +180,13 @@ public class GenerateMawbDRSPDF {
 			Object customeCode = dataMap.get("customeCode");
 			if(customeCode == null) customeCode = "";
 			PdfPCell row_2_4 = new PdfPCell(new Phrase(customeCode.toString(),setChineseFont18()));
-			row_2_4.setMinimumHeight(30);
+			row_2_4.setMinimumHeight(35);
 			row_2_4.setHorizontalAlignment(1);
 			row_2_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_2_4);
 
 			PdfPCell row_2_5 = new PdfPCell(new Phrase("生产数量",setChineseFont18()));
-			row_2_5.setMinimumHeight(30);
+			row_2_5.setMinimumHeight(35);
 			row_2_5.setHorizontalAlignment(1);
 			row_2_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_2_5);
@@ -192,14 +194,14 @@ public class GenerateMawbDRSPDF {
 			Object number = dataMap.get("number");
 			if(number == null) number = "";
 			PdfPCell row_2_6 = new PdfPCell(new Phrase(number.toString(),setChineseFont18()));
-			row_2_6.setMinimumHeight(30);
+			row_2_6.setMinimumHeight(35);
 			row_2_6.setHorizontalAlignment(1);
 			row_2_6.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_2_6);
 
 			//-----------------
 			PdfPCell row_3_1 = new PdfPCell(new Phrase("生产机台",setChineseFont18()));
-			row_3_1.setMinimumHeight(30);
+			row_3_1.setMinimumHeight(35);
 			row_3_1.setHorizontalAlignment(1);
 			row_3_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_3_1);
@@ -207,25 +209,25 @@ public class GenerateMawbDRSPDF {
 			Object machineCode = dataMap.get("machineCode");
 			if(machineCode == null) machineCode = "";
 			PdfPCell row_3_2 = new PdfPCell(new Phrase(machineCode.toString(),setChineseFont18()));
-			row_3_2.setMinimumHeight(30);
+			row_3_2.setMinimumHeight(35);
 			row_3_2.setHorizontalAlignment(1);
 			row_3_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_3_2);
 
 			PdfPCell row_3_3 = new PdfPCell(new Phrase("尾数重量（KG）X 方次",setChineseFont18()));
-			row_3_3.setMinimumHeight(30);
+			row_3_3.setMinimumHeight(35);
 			row_3_3.setHorizontalAlignment(1);
 			row_3_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_3_3);
 
 			PdfPCell row_3_4 = new PdfPCell(new Phrase("补正记录",setChineseFont18()));
-			row_3_4.setMinimumHeight(30);
+			row_3_4.setMinimumHeight(35);
 			row_3_4.setHorizontalAlignment(1);
 			row_3_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_3_4);
 
 			PdfPCell row_3_5 = new PdfPCell(new Phrase("重量(KG)X方次",setChineseFont18()));
-			row_3_5.setMinimumHeight(30);
+			row_3_5.setMinimumHeight(35);
 			row_3_5.setColspan(2);
 			row_3_5.setHorizontalAlignment(1);
 			row_3_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -233,13 +235,13 @@ public class GenerateMawbDRSPDF {
 
 			//-----------------
 			PdfPCell row_4_1 = new PdfPCell(new Phrase("色料名称",setChineseFont18()));
-			row_4_1.setMinimumHeight(30);
+			row_4_1.setMinimumHeight(35);
 			row_4_1.setHorizontalAlignment(1);
 			row_4_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_4_1);
 
 			PdfPCell row_4_2 = new PdfPCell(new Phrase("基本配方",setChineseFont18()));
-			row_4_2.setMinimumHeight(30);
+			row_4_2.setMinimumHeight(35);
 			row_4_2.setHorizontalAlignment(1);
 			row_4_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_4_2);
@@ -247,13 +249,13 @@ public class GenerateMawbDRSPDF {
 			Object weishuWeight = dataMap.get("weishuWeight");
 			if(weishuWeight == null) weishuWeight = "";
 			PdfPCell row_4_3 = new PdfPCell(new Phrase(weishuWeight.toString(),setChineseFont18()));
-			row_4_3.setMinimumHeight(30);
+			row_4_3.setMinimumHeight(35);
 			row_4_3.setHorizontalAlignment(1);
 			row_4_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_4_3);
 
 			PdfPCell row_4_4 = new PdfPCell(new Phrase("",setChineseFont18()));
-			row_4_4.setMinimumHeight(30);
+			row_4_4.setMinimumHeight(35);
 			row_4_4.setHorizontalAlignment(1);
 			row_4_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_4_4);
@@ -261,7 +263,7 @@ public class GenerateMawbDRSPDF {
 			Object buzhengWeight = dataMap.get("buzhengWeight");
 			if(buzhengWeight == null) buzhengWeight = "";
 			PdfPCell row_4_5 = new PdfPCell(new Phrase(buzhengWeight.toString(),setChineseFont18()));
-			row_4_5.setMinimumHeight(30);
+			row_4_5.setMinimumHeight(35);
 			row_4_5.setColspan(2);
 			row_4_5.setHorizontalAlignment(1);
 			row_4_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -272,7 +274,7 @@ public class GenerateMawbDRSPDF {
 			Object colorMaterialName1 = dataMap.get("colorMaterialName1");
 			if(colorMaterialName1 == null) colorMaterialName1 = "";
 			PdfPCell row_c_1_1 = new PdfPCell(new Phrase(colorMaterialName1.toString(),setChineseFont18()));
-			row_c_1_1.setMinimumHeight(30);
+			row_c_1_1.setMinimumHeight(35);
 			row_c_1_1.setHorizontalAlignment(1);
 			row_c_1_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_1_1);
@@ -280,7 +282,7 @@ public class GenerateMawbDRSPDF {
 			Object baseRecipe1 = dataMap.get("baseRecipe1");
 			if(baseRecipe1 == null) baseRecipe1 = "";
 			PdfPCell row_c_1_2 = new PdfPCell(new Phrase(baseRecipe1.toString(),setChineseFont18()));
-			row_c_1_2.setMinimumHeight(30);
+			row_c_1_2.setMinimumHeight(35);
 			row_c_1_2.setHorizontalAlignment(1);
 			row_c_1_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_1_2);
@@ -288,13 +290,13 @@ public class GenerateMawbDRSPDF {
 			Object weishuWeight1 = dataMap.get("weishuWeight1");
 			if(weishuWeight1 == null) weishuWeight1 = "";
 			PdfPCell row_c_1_3 = new PdfPCell(new Phrase(weishuWeight1.toString(),setChineseFont18()));
-			row_c_1_3.setMinimumHeight(30);
+			row_c_1_3.setMinimumHeight(35);
 			row_c_1_3.setHorizontalAlignment(1);
 			row_c_1_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_1_3);
 
 			PdfPCell row_c_1_4 = new PdfPCell(new Phrase("",setChineseFont18()));
-			row_c_1_4.setMinimumHeight(30);
+			row_c_1_4.setMinimumHeight(35);
 			row_c_1_4.setHorizontalAlignment(1);
 			row_c_1_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_1_4);
@@ -302,7 +304,7 @@ public class GenerateMawbDRSPDF {
 			Object buzhengWeight1 = dataMap.get("buzhengWeight1");
 			if(buzhengWeight1 == null) buzhengWeight1 = "";
 			PdfPCell row_c_1_5 = new PdfPCell(new Phrase(buzhengWeight1.toString(),setChineseFont18()));
-			row_c_1_5.setMinimumHeight(30);
+			row_c_1_5.setMinimumHeight(35);
 			row_c_1_5.setColspan(2);
 			row_c_1_5.setHorizontalAlignment(1);
 			row_c_1_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -313,7 +315,7 @@ public class GenerateMawbDRSPDF {
 			Object colorMaterialName2 = dataMap.get("colorMaterialName2");
 			if(colorMaterialName2 == null) colorMaterialName2 = "";
 			PdfPCell row_c_2_1 = new PdfPCell(new Phrase(colorMaterialName2.toString(),setChineseFont18()));
-			row_c_2_1.setMinimumHeight(30);
+			row_c_2_1.setMinimumHeight(35);
 			row_c_2_1.setHorizontalAlignment(1);
 			row_c_2_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_2_1);
@@ -321,7 +323,7 @@ public class GenerateMawbDRSPDF {
 			Object baseRecipe2 = dataMap.get("baseRecipe2");
 			if(baseRecipe2 == null) baseRecipe2 = "";
 			PdfPCell row_c_2_2 = new PdfPCell(new Phrase(baseRecipe2.toString(),setChineseFont18()));
-			row_c_2_2.setMinimumHeight(30);
+			row_c_2_2.setMinimumHeight(35);
 			row_c_2_2.setHorizontalAlignment(1);
 			row_c_2_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_2_2);
@@ -329,13 +331,13 @@ public class GenerateMawbDRSPDF {
 			Object weishuWeight2 = dataMap.get("weishuWeight2");
 			if(weishuWeight2 == null) weishuWeight2 = "";
 			PdfPCell row_c_2_3 = new PdfPCell(new Phrase(weishuWeight2.toString(),setChineseFont18()));
-			row_c_2_3.setMinimumHeight(30);
+			row_c_2_3.setMinimumHeight(35);
 			row_c_2_3.setHorizontalAlignment(1);
 			row_c_2_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_2_3);
 
 			PdfPCell row_c_2_4 = new PdfPCell(new Phrase("",setChineseFont18()));
-			row_c_2_4.setMinimumHeight(30);
+			row_c_2_4.setMinimumHeight(35);
 			row_c_2_4.setHorizontalAlignment(1);
 			row_c_2_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_2_4);
@@ -343,7 +345,7 @@ public class GenerateMawbDRSPDF {
 			Object buzhengWeight2 = dataMap.get("buzhengWeight2");
 			if(buzhengWeight2 == null) buzhengWeight2 = "";
 			PdfPCell row_c_2_5 = new PdfPCell(new Phrase(buzhengWeight2.toString(),setChineseFont18()));
-			row_c_2_5.setMinimumHeight(30);
+			row_c_2_5.setMinimumHeight(35);
 			row_c_2_5.setColspan(2);
 			row_c_2_5.setHorizontalAlignment(1);
 			row_c_2_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -354,7 +356,7 @@ public class GenerateMawbDRSPDF {
 			Object colorMaterialName3 = dataMap.get("colorMaterialName3");
 			if(colorMaterialName3 == null) colorMaterialName3 = "";
 			PdfPCell row_c_3_1 = new PdfPCell(new Phrase(colorMaterialName3.toString(),setChineseFont18()));
-			row_c_3_1.setMinimumHeight(30);
+			row_c_3_1.setMinimumHeight(35);
 			row_c_3_1.setHorizontalAlignment(1);
 			row_c_3_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_3_1);
@@ -362,7 +364,7 @@ public class GenerateMawbDRSPDF {
 			Object baseRecipe3 = dataMap.get("baseRecipe3");
 			if(baseRecipe3 == null) baseRecipe3 = "";
 			PdfPCell row_c_3_2 = new PdfPCell(new Phrase(baseRecipe3.toString(),setChineseFont18()));
-			row_c_3_2.setMinimumHeight(30);
+			row_c_3_2.setMinimumHeight(35);
 			row_c_3_2.setHorizontalAlignment(1);
 			row_c_3_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_3_2);
@@ -370,13 +372,13 @@ public class GenerateMawbDRSPDF {
 			Object weishuWeight3 = dataMap.get("weishuWeight3");
 			if(weishuWeight3 == null) weishuWeight3 = "";
 			PdfPCell row_c_3_3 = new PdfPCell(new Phrase(weishuWeight3.toString(),setChineseFont18()));
-			row_c_3_3.setMinimumHeight(30);
+			row_c_3_3.setMinimumHeight(35);
 			row_c_3_3.setHorizontalAlignment(1);
 			row_c_3_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_3_3);
 
 			PdfPCell row_c_3_4 = new PdfPCell(new Phrase("",setChineseFont18()));
-			row_c_3_4.setMinimumHeight(30);
+			row_c_3_4.setMinimumHeight(35);
 			row_c_3_4.setHorizontalAlignment(1);
 			row_c_3_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_3_4);
@@ -384,7 +386,7 @@ public class GenerateMawbDRSPDF {
 			Object buzhengWeight3 = dataMap.get("buzhengWeight3");
 			if(buzhengWeight3 == null) buzhengWeight3 = "";
 			PdfPCell row_c_3_5 = new PdfPCell(new Phrase(buzhengWeight3.toString(),setChineseFont18()));
-			row_c_3_5.setMinimumHeight(30);
+			row_c_3_5.setMinimumHeight(35);
 			row_c_3_5.setColspan(2);
 			row_c_3_5.setHorizontalAlignment(1);
 			row_c_3_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -395,7 +397,7 @@ public class GenerateMawbDRSPDF {
 			Object colorMaterialName4= dataMap.get("colorMaterialName4");
 			if(colorMaterialName4 == null) colorMaterialName4 = "";
 			PdfPCell row_c_4_1 = new PdfPCell(new Phrase(colorMaterialName4.toString(),setChineseFont18()));
-			row_c_4_1.setMinimumHeight(30);
+			row_c_4_1.setMinimumHeight(35);
 			row_c_4_1.setHorizontalAlignment(1);
 			row_c_4_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_4_1);
@@ -403,7 +405,7 @@ public class GenerateMawbDRSPDF {
 			Object baseRecipe4 = dataMap.get("baseRecipe4");
 			if(baseRecipe4 == null) baseRecipe4 = "";
 			PdfPCell row_c_4_2 = new PdfPCell(new Phrase(baseRecipe4.toString(),setChineseFont18()));
-			row_c_4_2.setMinimumHeight(30);
+			row_c_4_2.setMinimumHeight(35);
 			row_c_4_2.setHorizontalAlignment(1);
 			row_c_4_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_4_2);
@@ -411,13 +413,13 @@ public class GenerateMawbDRSPDF {
 			Object weishuWeight4 = dataMap.get("weishuWeight4");
 			if(weishuWeight4 == null) weishuWeight4 = "";
 			PdfPCell row_c_4_3 = new PdfPCell(new Phrase(weishuWeight4.toString(),setChineseFont18()));
-			row_c_4_3.setMinimumHeight(30);
+			row_c_4_3.setMinimumHeight(35);
 			row_c_4_3.setHorizontalAlignment(1);
 			row_c_4_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_4_3);
 
 			PdfPCell row_c_4_4 = new PdfPCell(new Phrase("",setChineseFont18()));
-			row_c_4_4.setMinimumHeight(30);
+			row_c_4_4.setMinimumHeight(35);
 			row_c_4_4.setHorizontalAlignment(1);
 			row_c_4_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_4_4);
@@ -425,7 +427,7 @@ public class GenerateMawbDRSPDF {
 			Object buzhengWeight4 = dataMap.get("buzhengWeight4");
 			if(buzhengWeight4 == null) buzhengWeight4 = "";
 			PdfPCell row_c_4_5 = new PdfPCell(new Phrase(buzhengWeight4.toString(),setChineseFont18()));
-			row_c_4_5.setMinimumHeight(30);
+			row_c_4_5.setMinimumHeight(35);
 			row_c_4_5.setColspan(2);
 			row_c_4_5.setHorizontalAlignment(1);
 			row_c_4_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -436,7 +438,7 @@ public class GenerateMawbDRSPDF {
 			Object colorMaterialName5= dataMap.get("colorMaterialName5");
 			if(colorMaterialName5 == null) colorMaterialName5 = "";
 			PdfPCell row_c_5_1 = new PdfPCell(new Phrase(colorMaterialName5.toString(),setChineseFont18()));
-			row_c_5_1.setMinimumHeight(30);
+			row_c_5_1.setMinimumHeight(35);
 			row_c_5_1.setHorizontalAlignment(1);
 			row_c_5_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_5_1);
@@ -444,7 +446,7 @@ public class GenerateMawbDRSPDF {
 			Object baseRecipe5 = dataMap.get("baseRecipe5");
 			if(baseRecipe5 == null) baseRecipe5 = "";
 			PdfPCell row_c_5_2 = new PdfPCell(new Phrase(baseRecipe5.toString(),setChineseFont18()));
-			row_c_5_2.setMinimumHeight(30);
+			row_c_5_2.setMinimumHeight(35);
 			row_c_5_2.setHorizontalAlignment(1);
 			row_c_5_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_5_2);
@@ -452,13 +454,13 @@ public class GenerateMawbDRSPDF {
 			Object weishuWeight5 = dataMap.get("weishuWeight5");
 			if(weishuWeight5 == null) weishuWeight5 = "";
 			PdfPCell row_c_5_3 = new PdfPCell(new Phrase(weishuWeight5.toString(),setChineseFont18()));
-			row_c_5_3.setMinimumHeight(30);
+			row_c_5_3.setMinimumHeight(35);
 			row_c_5_3.setHorizontalAlignment(1);
 			row_c_5_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_5_3);
 
 			PdfPCell row_c_5_4 = new PdfPCell(new Phrase("",setChineseFont18()));
-			row_c_5_4.setMinimumHeight(30);
+			row_c_5_4.setMinimumHeight(35);
 			row_c_5_4.setHorizontalAlignment(1);
 			row_c_5_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_5_4);
@@ -466,7 +468,7 @@ public class GenerateMawbDRSPDF {
 			Object buzhengWeight5 = dataMap.get("buzhengWeight5");
 			if(buzhengWeight5 == null) buzhengWeight5 = "";
 			PdfPCell row_c_5_5 = new PdfPCell(new Phrase(buzhengWeight5.toString(),setChineseFont18()));
-			row_c_5_5.setMinimumHeight(30);
+			row_c_5_5.setMinimumHeight(35);
 			row_c_5_5.setColspan(2);
 			row_c_5_5.setHorizontalAlignment(1);
 			row_c_5_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -477,7 +479,7 @@ public class GenerateMawbDRSPDF {
 			Object colorMaterialName6= dataMap.get("colorMaterialName6");
 			if(colorMaterialName6 == null) colorMaterialName6 = "";
 			PdfPCell row_c_6_1 = new PdfPCell(new Phrase(colorMaterialName6.toString(),setChineseFont18()));
-			row_c_6_1.setMinimumHeight(30);
+			row_c_6_1.setMinimumHeight(35);
 			row_c_6_1.setHorizontalAlignment(1);
 			row_c_6_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_6_1);
@@ -485,7 +487,7 @@ public class GenerateMawbDRSPDF {
 			Object baseRecipe6 = dataMap.get("baseRecipe6");
 			if(baseRecipe6 == null) baseRecipe6 = "";
 			PdfPCell row_c_6_2 = new PdfPCell(new Phrase(baseRecipe6.toString(),setChineseFont18()));
-			row_c_6_2.setMinimumHeight(30);
+			row_c_6_2.setMinimumHeight(35);
 			row_c_6_2.setHorizontalAlignment(1);
 			row_c_6_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_6_2);
@@ -493,13 +495,13 @@ public class GenerateMawbDRSPDF {
 			Object weishuWeight6 = dataMap.get("weishuWeight6");
 			if(weishuWeight6 == null) weishuWeight6 = "";
 			PdfPCell row_c_6_3 = new PdfPCell(new Phrase(weishuWeight6.toString(),setChineseFont18()));
-			row_c_6_3.setMinimumHeight(30);
+			row_c_6_3.setMinimumHeight(35);
 			row_c_6_3.setHorizontalAlignment(1);
 			row_c_6_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_6_3);
 
 			PdfPCell row_c_6_4 = new PdfPCell(new Phrase("",setChineseFont18()));
-			row_c_6_4.setMinimumHeight(30);
+			row_c_6_4.setMinimumHeight(35);
 			row_c_6_4.setHorizontalAlignment(1);
 			row_c_6_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_6_4);
@@ -507,7 +509,7 @@ public class GenerateMawbDRSPDF {
 			Object buzhengWeight6 = dataMap.get("buzhengWeight6");
 			if(buzhengWeight6 == null) buzhengWeight6 = "";
 			PdfPCell row_c_6_5 = new PdfPCell(new Phrase(buzhengWeight6.toString(),setChineseFont18()));
-			row_c_6_5.setMinimumHeight(30);
+			row_c_6_5.setMinimumHeight(35);
 			row_c_6_5.setColspan(2);
 			row_c_6_5.setHorizontalAlignment(1);
 			row_c_6_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -518,7 +520,7 @@ public class GenerateMawbDRSPDF {
 			Object colorMaterialName7= dataMap.get("colorMaterialName7");
 			if(colorMaterialName7 == null) colorMaterialName7 = "";
 			PdfPCell row_c_7_1 = new PdfPCell(new Phrase(colorMaterialName7.toString(),setChineseFont18()));
-			row_c_7_1.setMinimumHeight(30);
+			row_c_7_1.setMinimumHeight(35);
 			row_c_7_1.setHorizontalAlignment(1);
 			row_c_7_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_7_1);
@@ -526,7 +528,7 @@ public class GenerateMawbDRSPDF {
 			Object baseRecipe7 = dataMap.get("baseRecipe7");
 			if(baseRecipe7 == null) baseRecipe7 = "";
 			PdfPCell row_c_7_2 = new PdfPCell(new Phrase(baseRecipe7.toString(),setChineseFont18()));
-			row_c_7_2.setMinimumHeight(30);
+			row_c_7_2.setMinimumHeight(35);
 			row_c_7_2.setHorizontalAlignment(1);
 			row_c_7_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_7_2);
@@ -534,13 +536,13 @@ public class GenerateMawbDRSPDF {
 			Object weishuWeight7 = dataMap.get("weishuWeight7");
 			if(weishuWeight7 == null) weishuWeight7 = "";
 			PdfPCell row_c_7_3 = new PdfPCell(new Phrase(weishuWeight7.toString(),setChineseFont18()));
-			row_c_7_3.setMinimumHeight(30);
+			row_c_7_3.setMinimumHeight(35);
 			row_c_7_3.setHorizontalAlignment(1);
 			row_c_7_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_7_3);
 
 			PdfPCell row_c_7_4 = new PdfPCell(new Phrase("",setChineseFont18()));
-			row_c_7_4.setMinimumHeight(30);
+			row_c_7_4.setMinimumHeight(35);
 			row_c_7_4.setHorizontalAlignment(1);
 			row_c_7_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_7_4);
@@ -548,7 +550,7 @@ public class GenerateMawbDRSPDF {
 			Object buzhengWeight7 = dataMap.get("buzhengWeight7");
 			if(buzhengWeight7 == null) buzhengWeight7 = "";
 			PdfPCell row_c_7_5 = new PdfPCell(new Phrase(buzhengWeight7.toString(),setChineseFont18()));
-			row_c_7_5.setMinimumHeight(30);
+			row_c_7_5.setMinimumHeight(35);
 			row_c_7_5.setColspan(2);
 			row_c_7_5.setHorizontalAlignment(1);
 			row_c_7_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -560,7 +562,7 @@ public class GenerateMawbDRSPDF {
 			Object colorMaterialName8= dataMap.get("colorMaterialName8");
 			if(colorMaterialName8 == null) colorMaterialName8 = "";
 			PdfPCell row_c_8_1 = new PdfPCell(new Phrase(colorMaterialName8.toString(),setChineseFont18()));
-			row_c_8_1.setMinimumHeight(30);
+			row_c_8_1.setMinimumHeight(35);
 			row_c_8_1.setHorizontalAlignment(1);
 			row_c_8_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_8_1);
@@ -568,7 +570,7 @@ public class GenerateMawbDRSPDF {
 			Object baseRecipe8 = dataMap.get("baseRecipe8");
 			if(baseRecipe8 == null) baseRecipe8 = "";
 			PdfPCell row_c_8_2 = new PdfPCell(new Phrase(baseRecipe8.toString(),setChineseFont18()));
-			row_c_8_2.setMinimumHeight(30);
+			row_c_8_2.setMinimumHeight(35);
 			row_c_8_2.setHorizontalAlignment(1);
 			row_c_8_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_8_2);
@@ -576,13 +578,13 @@ public class GenerateMawbDRSPDF {
 			Object weishuWeight8 = dataMap.get("weishuWeight8");
 			if(weishuWeight8 == null) weishuWeight8 = "";
 			PdfPCell row_c_8_3 = new PdfPCell(new Phrase(weishuWeight8.toString(),setChineseFont18()));
-			row_c_8_3.setMinimumHeight(30);
+			row_c_8_3.setMinimumHeight(35);
 			row_c_8_3.setHorizontalAlignment(1);
 			row_c_8_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_8_3);
 
 			PdfPCell row_c_8_4 = new PdfPCell(new Phrase("",setChineseFont18()));
-			row_c_8_4.setMinimumHeight(30);
+			row_c_8_4.setMinimumHeight(35);
 			row_c_8_4.setHorizontalAlignment(1);
 			row_c_8_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_8_4);
@@ -590,7 +592,7 @@ public class GenerateMawbDRSPDF {
 			Object buzhengWeight8 = dataMap.get("buzhengWeight8");
 			if(buzhengWeight8 == null) buzhengWeight8 = "";
 			PdfPCell row_c_8_5 = new PdfPCell(new Phrase(buzhengWeight8.toString(),setChineseFont18()));
-			row_c_8_5.setMinimumHeight(30);
+			row_c_8_5.setMinimumHeight(35);
 			row_c_8_5.setColspan(2);
 			row_c_8_5.setHorizontalAlignment(1);
 			row_c_8_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -601,7 +603,7 @@ public class GenerateMawbDRSPDF {
 			Object colorMaterialName9 =  dataMap.get("colorMaterialName9");
 			if(colorMaterialName9 == null) colorMaterialName9 = "";
 			PdfPCell row_c_9_1 = new PdfPCell(new Phrase(colorMaterialName9.toString(),setChineseFont18()));
-			row_c_9_1.setMinimumHeight(30);
+			row_c_9_1.setMinimumHeight(35);
 			row_c_9_1.setHorizontalAlignment(1);
 			row_c_9_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_9_1);
@@ -609,7 +611,7 @@ public class GenerateMawbDRSPDF {
 			Object baseRecipe9 = dataMap.get("baseRecipe9");
 			if(baseRecipe9 == null) baseRecipe9 = "";
 			PdfPCell row_c_9_2 = new PdfPCell(new Phrase(baseRecipe9.toString(),setChineseFont18()));
-			row_c_9_2.setMinimumHeight(30);
+			row_c_9_2.setMinimumHeight(35);
 			row_c_9_2.setHorizontalAlignment(1);
 			row_c_9_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_9_2);
@@ -617,13 +619,13 @@ public class GenerateMawbDRSPDF {
 			Object weishuWeight9 = dataMap.get("weishuWeight9");
 			if(weishuWeight9 == null) weishuWeight9 = "";
 			PdfPCell row_c_9_3 = new PdfPCell(new Phrase(weishuWeight9.toString(),setChineseFont18()));
-			row_c_9_3.setMinimumHeight(30);
+			row_c_9_3.setMinimumHeight(35);
 			row_c_9_3.setHorizontalAlignment(1);
 			row_c_9_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_9_3);
 
 			PdfPCell row_c_9_4 = new PdfPCell(new Phrase("",setChineseFont18()));
-			row_c_9_4.setMinimumHeight(30);
+			row_c_9_4.setMinimumHeight(35);
 			row_c_9_4.setHorizontalAlignment(1);
 			row_c_9_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_9_4);
@@ -631,7 +633,7 @@ public class GenerateMawbDRSPDF {
 			Object buzhengWeight9 = dataMap.get("buzhengWeight9");
 			if(buzhengWeight9 == null) buzhengWeight9 = "";
 			PdfPCell row_c_9_5 = new PdfPCell(new Phrase(buzhengWeight9.toString(),setChineseFont18()));
-			row_c_9_5.setMinimumHeight(30);
+			row_c_9_5.setMinimumHeight(35);
 			row_c_9_5.setColspan(2);
 			row_c_9_5.setHorizontalAlignment(1);
 			row_c_9_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -642,7 +644,7 @@ public class GenerateMawbDRSPDF {
 			Object colorMaterialName10 =  dataMap.get("colorMaterialName10");
 			if(colorMaterialName10 == null) colorMaterialName10 = "";
 			PdfPCell row_c_10_1 = new PdfPCell(new Phrase(colorMaterialName10.toString(),setChineseFont18()));
-			row_c_10_1.setMinimumHeight(30);
+			row_c_10_1.setMinimumHeight(35);
 			row_c_10_1.setHorizontalAlignment(1);
 			row_c_10_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_10_1);
@@ -650,7 +652,7 @@ public class GenerateMawbDRSPDF {
 			Object baseRecipe10 = dataMap.get("baseRecipe10");
 			if(baseRecipe10 == null) baseRecipe10 = "";
 			PdfPCell row_c_10_2 = new PdfPCell(new Phrase(baseRecipe10.toString(),setChineseFont18()));
-			row_c_10_2.setMinimumHeight(30);
+			row_c_10_2.setMinimumHeight(35);
 			row_c_10_2.setHorizontalAlignment(1);
 			row_c_10_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_10_2);
@@ -658,13 +660,13 @@ public class GenerateMawbDRSPDF {
 			Object weishuWeight10 = dataMap.get("weishuWeight10");
 			if(weishuWeight10 == null) weishuWeight10 = "";
 			PdfPCell row_c_10_3 = new PdfPCell(new Phrase(weishuWeight10.toString(),setChineseFont18()));
-			row_c_10_3.setMinimumHeight(30);
+			row_c_10_3.setMinimumHeight(35);
 			row_c_10_3.setHorizontalAlignment(1);
 			row_c_10_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_10_3);
 
 			PdfPCell row_c_10_4 = new PdfPCell(new Phrase("",setChineseFont18()));
-			row_c_10_4.setMinimumHeight(30);
+			row_c_10_4.setMinimumHeight(35);
 			row_c_10_4.setHorizontalAlignment(1);
 			row_c_10_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_c_10_4);
@@ -672,7 +674,7 @@ public class GenerateMawbDRSPDF {
 			Object buzhengWeight10 = dataMap.get("buzhengWeight10");
 			if(buzhengWeight10 == null) buzhengWeight10 = "";
 			PdfPCell row_c_10_5 = new PdfPCell(new Phrase(buzhengWeight10.toString(),setChineseFont18()));
-			row_c_10_5.setMinimumHeight(30);
+			row_c_10_5.setMinimumHeight(35);
 			row_c_10_5.setColspan(2);
 			row_c_10_5.setHorizontalAlignment(1);
 			row_c_10_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -681,37 +683,37 @@ public class GenerateMawbDRSPDF {
 
 			//---------
 			PdfPCell row_s_1 = new PdfPCell(new Phrase("小计",setChineseFont18()));
-			row_s_1.setMinimumHeight(30);
+			row_s_1.setMinimumHeight(35);
 			row_s_1.setHorizontalAlignment(1);
 			row_s_1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_s_1);
 
 			Object sumOfRecipe = dataMap.get("sumOfRecipe");
 			if(sumOfRecipe == null) sumOfRecipe = "";
-			PdfPCell row_s_2 = new PdfPCell(new Phrase(sumOfRecipe.toString(),setChineseFont18()));
-			row_s_2.setMinimumHeight(30);
+			PdfPCell row_s_2 = new PdfPCell(new Phrase("",setChineseFont18()));
+			row_s_2.setMinimumHeight(35);
 			row_s_2.setHorizontalAlignment(1);
 			row_s_2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_s_2);
 
 			Object sumOfWeishu = dataMap.get("sumOfWeishu");
 			if(sumOfWeishu == null) sumOfWeishu = "";
-			PdfPCell row_s_3 = new PdfPCell(new Phrase("小计"+sumOfWeishu.toString(),setChineseFont18()));
-			row_s_3.setMinimumHeight(30);
+			PdfPCell row_s_3 = new PdfPCell(new Phrase("小计",setChineseFont18()));
+			row_s_3.setMinimumHeight(35);
 			row_s_3.setHorizontalAlignment(1);
 			row_s_3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_s_3);
 
 			PdfPCell row_s_4 = new PdfPCell(new Phrase("小计",setChineseFont18()));
-			row_s_4.setMinimumHeight(30);
+			row_s_4.setMinimumHeight(35);
 			row_s_4.setHorizontalAlignment(1);
 			row_s_4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ct.addCell(row_s_4);
 
 			Object sumOfBuzheng = dataMap.get("sumOfBuzheng");
 			if(sumOfBuzheng == null) sumOfBuzheng = "";
-			PdfPCell row_s_5 = new PdfPCell(new Phrase(sumOfBuzheng.toString(),setChineseFont18()));
-			row_s_5.setMinimumHeight(30);
+			PdfPCell row_s_5 = new PdfPCell(new Phrase("",setChineseFont18()));
+			row_s_5.setMinimumHeight(35);
 			row_s_5.setColspan(2);
 			row_s_5.setHorizontalAlignment(1);
 			row_s_5.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -720,26 +722,14 @@ public class GenerateMawbDRSPDF {
 
 
 			//---------
-			PdfPCell row_m_1 = new PdfPCell(new Phrase("备注：",setChineseFont18()));
+			PdfPCell row_m_1 = new PdfPCell(new Phrase("备  注：",setChineseFont18()));
 			row_m_1.setPaddingLeft(10);
-			row_m_1.setMinimumHeight(50);
+			row_m_1.setMinimumHeight(65);
 			row_m_1.setRowspan(2);
 			row_m_1.setColspan(6);
 			ct.addCell(row_m_1);
 
 			document.add(ct);
-
-			/*Paragraph bottomleft = new Paragraph("编制: ",setChineseFont18());
-			bottomleft.setAlignment(1);
-			bottomleft.setAlignment(Element.ALIGN_LEFT);
-			bottomleft.setSpacingAfter(5);
-			document.add(bottomleft);
-
-			Paragraph bottomright = new Paragraph("日期：",setChineseFont18());
-			bottomright.setAlignment(1);
-			bottomright.setAlignment(Element.ALIGN_RIGHT);
-			bottomright.setSpacingAfter(5);
-			document.add(bottomright);*/
 
 			float[] widths2 = { 0.1f,0.55f,0.35f };
 			PdfPTable ct2 = new PdfPTable(widths2);
@@ -747,14 +737,14 @@ public class GenerateMawbDRSPDF {
 			ct2.setWidthPercentage(100);
 			ct2.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
 			PdfPCell row2_1_1 = new PdfPCell(new Phrase("编制:",setChineseFont18()));
-			row2_1_1.setMinimumHeight(30);
+			row2_1_1.setMinimumHeight(35);
 			row2_1_1.setHorizontalAlignment(1);
 			row2_1_1.setVerticalAlignment(Element.ALIGN_LEFT);
 			row2_1_1.setBorder(PdfPCell.NO_BORDER);
 			ct2.addCell(row2_1_1);
 
 			PdfPCell row2_1_2 = new PdfPCell(new Phrase("",setChineseFont18()));
-			row2_1_2.setMinimumHeight(30);
+			row2_1_2.setMinimumHeight(35);
 			row2_1_2.setHorizontalAlignment(1);
 			row2_1_2.setVerticalAlignment(Element.ALIGN_LEFT);
 			row2_1_2.setBorder(PdfPCell.NO_BORDER);
@@ -762,8 +752,8 @@ public class GenerateMawbDRSPDF {
 
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-			PdfPCell row2_1_3 = new PdfPCell(new Phrase("日期:" + df.format(new Date()),setChineseFont18()));
-			row2_1_3.setMinimumHeight(30);
+			PdfPCell row2_1_3 = new PdfPCell(new Phrase("日期 : " + df.format(new Date()),setChineseFont18()));
+			row2_1_3.setMinimumHeight(35);
 			row2_1_3.setHorizontalAlignment(1);
 			row2_1_3.setVerticalAlignment(Element.ALIGN_LEFT);
 			row2_1_3.setBorder(PdfPCell.NO_BORDER);

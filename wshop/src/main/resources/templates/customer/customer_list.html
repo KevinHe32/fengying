@@ -30,7 +30,7 @@
             });
             $(".btn-confirm-delete").bind("click",function(){
                 var id = $("#id").val();
-                var location = '/customer/delete_customer/'+id;
+                var location = '/wshop/customer/delete_customer/'+id;
                 window.location.href= location;
 
             });
@@ -57,10 +57,10 @@
         <div class="outlet">
             <div class="row">
                 <div class="col-sm-3">
-                    <a href="/customer/add_customer/" class="btn btn-success">新增客户</a>
+                    <a href="/wshop/customer/add_customer/" class="btn btn-success">新增客户</a>
                 </div>
                 <div class="col-sm-9 pull-right" style="text-align:right;">
-                    <form class="form-inline" role="form" method="GET" action="/customer/list/">
+                    <form class="form-inline" role="form" method="GET" action="/wshop/customer/list/">
                         <div class="form-group">
                             <input class="form-control" name="name" id="name" type="text"
                                    th:value="${condition.name}"
@@ -109,7 +109,7 @@
                                         <td th:text="${record.createtime}? ${#dates.format(record.createtime,'yyyy-MM-dd HH:mm:ss')} : '---'"></td>
 
                                         <td>
-                                            <a th:href="'/customer/edit_customer/'+${record.id}" class="btn btn-success">编辑</a>
+                                            <a th:href="'/wshop/customer/edit_customer/'+${record.id}" class="btn btn-success">编辑</a>
                                             <!--<a onclick='deleteCategory(this)' class="btn btn-warning">删除</a>-->
                                             <a data-toggle="modal" data-target="#myModal"
                                                th:id="${record.id}" th:value="${record.customerName}"

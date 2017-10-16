@@ -61,7 +61,7 @@
             });
             $(".btn-confirm-delete").bind("click",function(){
                 var id = $("#id").val();
-                var location = '/recipe/delete_recipe/'+id;
+                var location = '/wshop/recipe/delete_recipe/'+id;
                 window.location.href= location;
             });
         });
@@ -86,9 +86,9 @@
 
         <div class="outlet">
             <div class="row">
-                <form class="form-inline" role="form" method="GET" action="/recipe/list/">
+                <form class="form-inline" role="form" method="GET" action="/wshop/recipe/list/">
                     <div class="col-sm-4">
-                        <a href="/recipe/add_recipe/" class="btn btn-success">新增配方</a>
+                        <a href="/wshop/recipe/add_recipe/" class="btn btn-success">新增配方</a>
                     </div>
 
                     <div class="col-sm-8 pull-right" style="text-align:right;">
@@ -189,11 +189,11 @@
                                         <td th:text="${record.createtime}? ${#dates.format(record.createtime,'yyyy-MM-dd HH:mm:ss')} : '---'"></td>
 
                                         <td>
-                                            <a th:href="'/recipe/edit_recipe/'+${record.id}" class="btn btn-success">编辑</a>
+                                            <a th:href="'/wshop/recipe/edit_recipe/'+${record.id}" class="btn btn-success">编辑</a>
                                             <a data-toggle="modal" data-target="#myModal"
                                                th:id="${record.id}" th:value="${record.colorNumber}"
                                                class="btn btn-danger btn-delete-recipe">删除</a>
-                                            <a th:href="'/recipe/show_recipe/'+${record.id}" class="btn btn-warning">详情</a>
+                                            <a th:href="'/wshop/recipe/show_recipe/'+${record.id}" class="btn btn-warning">详情</a>
                                         </td>
                                     </tr>
                                     <tr role="row"
@@ -217,7 +217,7 @@
                                                 <a th:class="@{(${pageSize == 10}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/recipe/list'}(pageNum=0,pageSize=10)}">10</a>
                                                 <a th:class="@{(${pageSize == 20}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/recipe/list'}(pageNum=0,pageSize=20)}">20</a>
                                                 <a th:class="@{(${pageSize == 50}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/recipe/list'}(pageNum=0,pageSize=50)}">50</a>
-                                                <a th:class="@{(${pageSize == 100}? 'active pageSizeInfo' : 'pageSizeInfo')}"  th:href="@{${'/recipe/list'}(pageNum=0,pageSize=100)}">100</a>
+                                                <a th:class="@{(${pageSize == 100}? 'active pageSizeInfo' : 'pageSizeInfo')}" th:href="@{${'/recipe/list'}(pageNum=0,pageSize=100)}">100</a>
                                             </div>
                                             条
                                         </ul>

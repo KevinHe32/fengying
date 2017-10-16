@@ -112,7 +112,7 @@
                 }
             }).on('success.form.bv', function (e) { //点击提交之后
                 $("#submit_btn").attr('disabled', "true");
-                $.post("/recipe/editRecipe/", $("#customerForm").serialize())
+                $.post("/wshop/recipe/editRecipe/", $("#customerForm").serialize())
                     .success(function (data) {
                         if (data.code == '0') {
                             $('#successModal').modal('show');
@@ -154,7 +154,7 @@
             <small>
                 <ul id="crumb" class="breadcrumb">
                     <li>Home</li>
-                    <li class=""><a href="/recipe/list/">配方列表</a></li>
+                    <li class=""><a href="/wshop/recipe/list/">配方列表</a></li>
                     <li class="active">编辑配方</li>
                 </ul>
             </small>
@@ -366,7 +366,7 @@
                                     <div class="form-group">
                                         <div class="col-lg-12" style="text-align: center;">
                                             <button class="btn btn-primary submit_btn">保存</button> &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a class="btn btn-default" href="/recipe/list">取消</a>
+                                            <a class="btn btn-default" href="/wshop/recipe/list">取消</a>
                                         </div>
                                     </div>
                                 </div>
@@ -389,7 +389,7 @@
                         &nbsp;<span class="operate-tip"></span>
                     </div>
                     <div class="modal-footer">
-                        <a href="/recipe/list" class="btn btn-primary">确定</a>
+                        <a href="/wshop/recipe/list" class="btn btn-primary">确定</a>
                     </div>
                 </div>
             </div>
@@ -407,7 +407,7 @@
                         &nbsp;<span class="operate-tip"></span>
                     </div>
                     <div class="modal-footer">
-                        <a href="/recipe/list" class="btn btn-primary">确定</a>
+                        <a href="/wshop/recipe/list" class="btn btn-primary">确定</a>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->

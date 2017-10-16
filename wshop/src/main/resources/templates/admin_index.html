@@ -22,7 +22,7 @@
         /*<![CDATA[*/
         $(document).ready(function () {
             $.ajax({
-                url: '/getIndexData',
+                url: '/wshop/getIndexData',
                 datatype: 'json',
                 type: 'get',
                 data:{
@@ -64,7 +64,7 @@
                                         <i class="br-cart s64"></i>
                                     </div>
                                     <div class="tile-content">
-                                        <div class="number recipe-size"></div>
+                                        <a href="/wshop/recipe/list"><div class="number recipe-size"></div></a>
                                         <h3>配方</h3>
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@
                                         <i class="st-chat s64"></i>
                                     </div>
                                     <div class="tile-content">
-                                        <div class="number mcw-size"></div>
+                                        <a href="/wshop/match_color_work/list/"><div class="number mcw-size"></div></a>
                                         <h3>配色作业制图</h3>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                                         <i class="ec-users s64"></i>
                                     </div>
                                     <div class="tile-content">
-                                        <div class="number customer-size"></div>
+                                        <a href="/wshop/customer/list"><div class="number customer-size"></div></a>
                                         <h3>客户</h3>
                                     </div>
                                 </div>
@@ -155,7 +155,7 @@
                                         <i class="ec-images s64"></i>
                                     </div>
                                     <div class="tile-content">
-                                        <div class="number order-size"></div>
+                                        <a href="/wshop/order/list"><div class="number order-size"></div></a>
                                         <h3>生产通知单</h3>
                                     </div>
                                 </div>

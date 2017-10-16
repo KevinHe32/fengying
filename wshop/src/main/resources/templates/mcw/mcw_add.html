@@ -44,22 +44,6 @@
                             }
                         }
                     },
-                   /* productBatchNumber: {
-                        message: '产品批号不能为空',
-                        validators: {
-                            notEmpty: {
-                                message: '产品批号不能为空'
-                            }
-                        }
-                    },
-                    customer: {
-                        message: '顾客名称不能为空',
-                        validators: {
-                            notEmpty: {
-                                message: '顾客名称不能为空'
-                            }
-                        }
-                    },*/
                     number: {
                         message: '生产数量不能为空',
                         validators: {
@@ -111,7 +95,7 @@
                 }
 
                 $("#submit_btn").attr('disabled', "true");
-                $.post("/match_color_work/addMatchColorWork/", $("#mcwForm").serialize())
+                $.post("/wshop/match_color_work/addMatchColorWork/", $("#mcwForm").serialize())
                     .success(function (data) {
                         if (data.code == '0') {
                             $('#successModal').modal('show');
@@ -172,7 +156,7 @@
                 }
 
                 $.ajax({
-                    url: '/match_color_work/yulan',
+                    url: '/wshop/match_color_work/yulan',
                     datatype: 'json',
                     type: 'get',
                     data:{
@@ -217,7 +201,7 @@
             $('.print-world').bind('click',function () {
 
                 $.ajax({
-                    url: '/match_color_work/generateWorld',
+                    url: '/wshop/match_color_work/generateWorld',
                     datatype: 'json',
                     type: 'get',
                     data:{
@@ -233,8 +217,12 @@
                         buzhengWeight: $('#buzhengWeight').val()
                     },
                     success: function (data) {
-                        console.log("dataResult:",data.data);
-                        window.location.href = data.data;
+                       /* console.log("dataResult:",data.data);
+                        window.location.href = data.data;*/
+                        console.log("file:"+data.data);
+                        var file = data.data.split("/");
+                        var fileName = file[file.length-1];
+                        window.open("http://localhost:8080/wshop"+fileName);
                     }
                 });
             })
@@ -258,7 +246,7 @@
             <small>
                 <ul id="crumb" class="breadcrumb">
                     <li>Home</li>
-                    <li class=""><a href="/match_color_work/list/">配色作业制图列表</a></li>
+                    <li class=""><a href="/wshop/match_color_work/list/">配色作业制图列表</a></li>
                     <li class="active">添加配色作业制图</li>
                 </ul>
             </small>
@@ -346,7 +334,7 @@
 
                                 <div class="row row-two-col" style="text-align: right;">
                                     <div class="col-lg-2 col-lg-offset-10">
-                                        <a class="btn btn-warning btn-yulan">预览并打印</a>
+                                        <a class="btn btn-warning btn-yulan">预览</a>
                                     </div>
                                 </div>
 
@@ -359,8 +347,8 @@
                                     <div class="form-group">
                                         <div class="col-lg-12" style="text-align: center;">
                                             <button class="btn btn-primary submit_btn">保存</button> &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a class="btn btn-default" href="/match_color_work/list">取消</a> &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <button class="btn btn-primary print-world">打印</button>
+                                            <a class="btn btn-default" href="/wshop/match_color_work/list">取消</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                         <!--   <button class="btn btn-primary print-world">打印</button>-->
                                         </div>
                                     </div>
                                 </div>
@@ -383,7 +371,7 @@
                         &nbsp;<span class="operate-tip"></span>
                     </div>
                     <div class="modal-footer">
-                        <a href="/match_color_work/list" class="btn btn-primary">确定</a>
+                        <a href="/wshop/match_color_work/list" class="btn btn-primary">确定</a>
                     </div>
                 </div>
             </div>
@@ -401,7 +389,7 @@
                         &nbsp;<span class="operate-tip"></span>
                     </div>
                     <div class="modal-footer">
-                        <a href="/match_color_work/list" class="btn btn-primary">确定</a>
+                        <a href="/wshop/match_color_work/list" class="btn btn-primary">确定</a>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->

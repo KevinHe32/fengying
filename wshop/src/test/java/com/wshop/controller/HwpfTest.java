@@ -14,7 +14,7 @@ import java.util.*;
  * Created by kevin on 2017/8/9.
  */
 public class HwpfTest {
-    @Test
+    /*@Test
     public void testWrite() throws Exception {
         String templatePath = "d:\\test.doc";
         InputStream is = new FileInputStream(templatePath);
@@ -57,10 +57,10 @@ public class HwpfTest {
         return  map;
     }
 
-    /**
+    *//**
      * 关闭输入流
      * @param is
-     */
+     *//*
     private void closeStream(InputStream is) {
         if (is != null) {
             try {
@@ -71,10 +71,10 @@ public class HwpfTest {
         }
     }
 
-    /**
+    *//**
      * 关闭输出流
      * @param os
-     */
+     *//*
     private void closeStream(OutputStream os) {
         if (os != null) {
             try {
@@ -83,5 +83,5 @@ public class HwpfTest {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 }

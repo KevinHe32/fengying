@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.wshop.dto.model.OrderModel;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import org.apache.catalina.connector.Request;
 
 import java.io.*;
 import java.text.SimpleDateFormat;

@@ -16,6 +16,7 @@ import com.wshop.rest.StatusCode;
 import com.wshop.service.MatchColorWorkService;
 import com.wshop.service.RecipeService;
 import com.wshop.util.GenerateMawbDRSPDF;
+import com.wshop.util.GenerateOrders;
 import com.wshop.util.WordUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
@@ -527,7 +528,7 @@ public class MatchColorWorkController {
 
 			}
 		}
-		/** 文件名称，唯一字符串 */
+		/** 文件名称，唯一字符串 *//*
 		Random r=new Random();
 		SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd_HHmmss");
 		StringBuffer sb=new StringBuffer();
@@ -539,17 +540,36 @@ public class MatchColorWorkController {
 		//文件唯一名称
 		String fileOnlyName = "matchcolorwork"+sb+".doc";
 		//文件名称
-		/** 生成word */
-		/*WordUtil.createWord(dataMap, "matchColorWork.ftl", filePath, fileOnlyName);
+		*//** 生成word *//*
+		*//*WordUtil.createWord(dataMap, "matchColorWork.ftl", filePath, fileOnlyName);
 		String fileFinalPath = "http://127.0.0.1:8070/static/category_img/"+fileOnlyName;
-		result.setData(fileFinalPath);*/
+		result.setData(fileFinalPath);*//*
 
 		String fileName = "E:\\fy_new\\wshop\\src\\main\\resources\\static\\"+ UUID.randomUUID()+".pdf";
 				//"I:\\"+UUID.randomUUID()+".pdf";
 		GenerateMawbDRSPDF.generateMWBS(dataMap, fileName);
 
 		System.out.print("--------------------------------------" + fileName);
-		return Result.one("static\\" + UUID.randomUUID() + ".pdf");
+		return Result.one("static\\" + UUID.randomUUID() + ".pdf");*/
+
+		System.out.print("-------------------------1111");
+		String filePath =
+				//PathKit.class.getResource("\\static\\category_img\\48.jpg").getPath() ;
+				Thread.currentThread().getContextClassLoader().getResource("/").getPath()+"\\static\\category_img\\";
+		System.out.print("-------------------------2222:"+filePath);
+		//文件唯一名称
+		String fileOnlyName = "";
+		//"生产通知单"+sb+".doc";
+		//文件名称
+		//String fileName="生产通知单.doc";
+		/** 生成word */
+//		WordUtil.createWord(dataMap, "productorder.ftl", filePath, fileOnlyName);
+
+		fileOnlyName = filePath+"配色作业制图表"+".pdf";
+		System.out.print("fileOnlyName:"+fileOnlyName);
+		GenerateMawbDRSPDF.generateMWBS(dataMap,fileOnlyName);
+		result.setData(fileOnlyName);
+		return result;
 	}
 
 

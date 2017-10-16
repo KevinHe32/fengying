@@ -1,6 +1,7 @@
 package com.wshop.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.jfinal.kit.PathKit;
 import com.wshop.dto.condition.MultiOrderCondition;
 import com.wshop.dto.condition.OrderCondition;
 import com.wshop.dto.model.MultiOrdersModel;
@@ -107,10 +108,9 @@ public class OrderController {
 	}
 
 	
-	@RequestMapping(value = "/delete_order", method = RequestMethod.GET)
-    public ModelAndView delete_order(@ModelAttribute OrderModel model) {
+	@RequestMapping(value = "/delete_order/{id}", method = RequestMethod.GET)
+    public ModelAndView delete_order(@PathVariable("id") Integer id, Model model) {
     	ModelAndView mav = new ModelAndView();
-    	Integer id = model.getId();
     	if(id != null){
     		orderService.deleteByPrimaryKey(id);
     	}
@@ -143,7 +143,7 @@ public class OrderController {
 		list.add(orderModel);
 		dataMap.put("recordList",list);
 
-		/** 文件名称，唯一字符串 */
+		/** 文件名称，唯一字符串 *//*
 		Random r=new Random();
 		SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd_HHmmss");
 		StringBuffer sb=new StringBuffer();
@@ -156,10 +156,29 @@ public class OrderController {
 		String fileOnlyName = "生产通知单"+sb+".doc";
 		//文件名称
 		String fileName="生产通知单.doc";
-		/** 生成word */
+		*//** 生成word *//*
 		WordUtil.createWord(dataMap, "productorder.ftl", filePath, fileOnlyName);
 
-		return Result.one("http://127.0.0.1:8070/static/category_img/"+fileOnlyName);
+		return Result.one("http://127.0.0.1:8070/static/category_img/"+fileOnlyName);*/
+
+		System.out.print("-------------------------1111");
+		String filePath =
+				//PathKit.class.getResource("\\static\\category_img\\48.jpg").getPath() ;
+				Thread.currentThread().getContextClassLoader().getResource("/").getPath()+"\\static\\category_img\\";
+		System.out.print("-------------------------2222:"+filePath);
+		//文件唯一名称
+		String fileOnlyName = "";
+		//"生产通知单"+sb+".doc";
+		//文件名称
+		//String fileName="生产通知单.doc";
+		/** 生成word */
+//		WordUtil.createWord(dataMap, "productorder.ftl", filePath, fileOnlyName);
+		fileOnlyName = filePath+UUID.randomUUID()+".pdf";
+		System.out.print("fileOnlyName:"+fileOnlyName);
+		GenerateOrders.generateOrders(dataMap,fileOnlyName);
+		Result result = new Result();
+		result.setData(fileOnlyName);
+		return result;
 	}
 
 	@RequestMapping(value = "/printMultiOrders", method = RequestMethod.GET)
@@ -221,21 +240,26 @@ public class OrderController {
 
 		dataMap.put("recordList",list);
 		/** 文件名称，唯一字符串 */
-		Random r=new Random();
+		/*Random r=new Random();
 		SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd_HHmmss");
 		StringBuffer sb=new StringBuffer();
 		sb.append(sdf1.format(new Date()));
 		sb.append("_");
-		sb.append(r.nextInt(100));
+		sb.append(r.nextInt(100));*/
 		//文件路径
-		String filePath = Class.class.getClass().getResource("/").getPath()+"static\\category_img\\";
+		System.out.print("-------------------------1111");
+		String filePath =
+				//PathKit.class.getResource("\\static\\category_img\\48.jpg").getPath() ;
+				Thread.currentThread().getContextClassLoader().getResource("/").getPath()+"\\static\\category_img\\";
+		System.out.print("-------------------------2222:"+filePath);
 		//文件唯一名称
-		String fileOnlyName = "生产通知单"+sb+".doc";
+		String fileOnlyName = "";
+		//"生产通知单"+sb+".doc";
 		//文件名称
-		String fileName="生产通知单.doc";
+		//String fileName="生产通知单.doc";
 		/** 生成word */
 //		WordUtil.createWord(dataMap, "productorder.ftl", filePath, fileOnlyName);
-		fileOnlyName = filePath+UUID.randomUUID()+".pdf";
+		fileOnlyName = filePath+"生产通知单"+".pdf";
 		System.out.print("fileOnlyName:"+fileOnlyName);
 		GenerateOrders.generateOrders(orderMap,fileOnlyName);
 		Result result = new Result();

@@ -23,67 +23,6 @@
 
     <script>
         /*<![CDATA[*/
-       /* $(document).ready(function () {
-            $('.birthtimeStartFilter').datetimepicker({
-                linkField:"birthtimeStart",
-                format: 'yyyy-mm-dd',
-                weekStart: 1,
-                todayBtn:  1,
-                autoclose: 1,
-                todayHighlight: 1,
-                startView: 2,
-                minView: 2,
-                forceParse: 0,
-                showMeridian: 1,
-                pickerPosition:"bottom-left"
-            });
-
-            $('.birthtimeEndFilter').datetimepicker({
-                linkField:"birthtimeEnd",
-                format: 'yyyy-mm-dd',
-                weekStart: 1,
-                todayBtn:  1,
-                autoclose: 1,
-                todayHighlight: 1,
-                startView: 2,
-                minView: 2,
-                forceParse: 0,
-                showMeridian: 1,
-                pickerPosition:"bottom-left"
-            });
-
-            $(".btn-delete-recipe").bind("click",function(){
-                var id = $(this).attr("id");
-                var value = $(this).attr("value");
-                $("#inputName").val(value);
-                $("#id").val(id);
-            });
-            $(".btn-confirm-delete").bind("click",function(){
-                var id = $("#id").val();
-                var location = '/order/delete_order/'+id;
-                window.location.href= location;
-            });
-            $(".btn-print").bind("click",function(){
-                var id_ = $(this).attr("id");
-                $.ajax({
-                    url: '/order/printOrder',
-                    datatype: 'json',
-                    type: 'get',
-                    data:{
-                        id: id_
-                    },
-                    success: function (data) {
-                        if(data.code == 0) {
-                            alert(data.data)
-                            window.open(data.data);
-                        }
-                    }
-                });
-
-            });
-
-        });*/
-
         $(document).ready(function () {
             $('.birthtimeStartFilter').datetimepicker({
                 linkField:"birthtimeStart",
@@ -122,22 +61,23 @@
             });
             $(".btn-confirm-delete").bind("click",function(){
                 var id = $("#id").val();
-                var location = '/order/delete_order/'+id;
+                var location = '/wshop/order/delete_order/'+id;
                 window.location.href= location;
             });
             $(".btn-print").bind("click",function(){
                 var id_ = $(this).attr("id");
                 $.ajax({
-                    url: '/order/printOrder',
+                    url: '/wshop/order/printOrder',
                     datatype: 'json',
                     type: 'get',
                     data:{
                         id: id_
                     },
                     success: function (data) {
-                        if(data.code == 0) {
-                            window.open(data.data);
-                        }
+                        console.log("file:"+data.data);
+                        var file = data.data.split("/");
+                        var fileName = file[file.length-1];
+                        window.open("http://localhost:8080/wshop"+fileName);
                     }
                 });
             });
@@ -150,7 +90,7 @@
             });
             $(".btn-confirm-delete").bind("click",function(){
                 var id = $("#id").val();
-                var location = '/order/delete_order/'+id;
+                var location = '/wshop/order/delete_order/'+id;
                 window.location.href= location;
             });
         });
@@ -161,7 +101,7 @@
 
         function printAllOrder(){
             $.ajax({
-                url: '/order/printMultiOrders',
+                url: '/wshop/order/printMultiOrders',
                 datatype: 'json',
                 type: 'get',
                 data:{
@@ -171,7 +111,7 @@
                     console.log("file:"+data.data);
                     var file = data.data.split("/");
                     var fileName = file[file.length-1];
-                    window.open("http://localhost:8070/"+fileName);
+                    window.open("http://localhost:8080/wshop"+fileName);
                 }
             });
         }
@@ -187,7 +127,6 @@
                 for (var i = 0; i < allpro.length; i++) {
                     if (allpro[i].type=="checkbox") {
                         allpro[i].checked=true;
-
                     }
                 }
                 ids = getTableIds();
@@ -260,10 +199,10 @@
        </h3>
 
         <div class="outlet">
-            <form class="form-inline" role="form" method="GET" action="/order/list/">
+            <form class="form-inline" role="form" method="GET" action="/wshop/order/list/">
                 <div class="row">
                     <div class="col-sm-2">
-                        <a href="/order/add_order/" class="btn btn-success">新增生产通知单</a>
+                        <a href="/wshop/order/add_order/" class="btn btn-success">新增生产通知单</a>
                     </div>
                     <div class="col-sm-10 pull-right" style="text-align:right;">
                             <div class="form-group">
@@ -398,7 +337,7 @@
                                         <td th:text="${record.package2}? ${record.package2} : '---'"></td>
                                         <td th:text="${record.createtime}? ${#dates.format(record.createtime,'yyyy-MM-dd HH:mm:ss')} : '---'"></td>
                                         <td>
-                                            <a th:href="'/order/edit_order/'+${record.id}" class="btn btn-success">编辑</a>
+                                            <a th:href="'/wshop/order/edit_order/'+${record.id}" class="btn btn-success">编辑</a>
                                             <a data-toggle="modal" data-target="#myModal"
                                                th:id="${record.id}" th:value="${record.machineNumber}"
                                                class="btn btn-danger btn-delete-recipe">删除</a>

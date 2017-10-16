@@ -44,22 +44,6 @@
                             }
                         }
                     },
-                    /*codeNumber: {
-                        message: '代号不能为空',
-                        validators: {
-                            notEmpty: {
-                                message: '代号不能为空'
-                            }
-                        }
-                    },
-                    batchNumber: {
-                        message: '批号不能为空',
-                        validators: {
-                            notEmpty: {
-                                message: '批号不能为空'
-                            }
-                        }
-                    },*/
                     material: {
                         message: '原料不能为空',
                         validators: {
@@ -75,35 +59,19 @@
                                 message: '数量不能为空'
                             }
                         }
-                    }/*,
-                    customer: {
-                        message: '客户不能为空',
-                        validators: {
-                            notEmpty: {
-                                message: '客户不能为空'
-                            }
-                        }
-                    },
-                    package2: {
-                        message: '包装不能为空',
-                        validators: {
-                            notEmpty: {
-                                message: '包装不能为空'
-                            }
-                        }
-                    }*/
+                    }
                 }
             }).on('success.form.bv', function (e) { //点击提交之后
                 $("#submit_btn").attr('disabled', "true");
-                $.post("/order/addOrder/", $("#orderForm").serialize())
+                $.post("/wshop/order/addOrder/", $("#orderForm").serialize())
                     .success(function (data) {
                         if (data.code == '0') {
                             $('#successModal').modal('show');
-                            $('#successModal').find('.operate-tip').html("新增生产单成功，色号：" + $("input[name='colorNumber']").val() + "，操作成功！");
+                            $('#successModal').find('.operate-tip').html("新增生产单成功，操作成功！");
                         } else {
                             $("#submit_btn").removeAttr("disabled");
                             $('#failureModal').modal('show');
-                            $('#failureModal').find('.operate-tip').html("新增生产单成功，色号" + $("input[name='colorNumber']").val() + "，操作失败！");
+                            $('#failureModal').find('.operate-tip').html("新增生产单成功, 操作失败！");
                             return false;
                         }
                     })
@@ -132,7 +100,7 @@
             <small>
                 <ul id="crumb" class="breadcrumb">
                     <li>Home</li>
-                    <li class=""><a href="/order/list/">生产通知单列表</a></li>
+                    <li class=""><a href="/wshop/order/list/">生产通知单列表</a></li>
                     <li class="active">添加生产通知单</li>
                 </ul>
             </small>
@@ -228,7 +196,7 @@
                                     <div class="form-group">
                                         <div class="col-lg-12" style="text-align: center;">
                                             <button class="btn btn-primary submit_btn">保存</button> &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a class="btn btn-default" href="/order/list">取消</a>
+                                            <a class="btn btn-default" href="/wshop/order/list">取消</a>
                                         </div>
                                     </div>
                                 </div>
@@ -251,7 +219,7 @@
                         &nbsp;<span class="operate-tip"></span>
                     </div>
                     <div class="modal-footer">
-                        <a href="/order/list" class="btn btn-primary">确定</a>
+                        <a href="/wshop/order/list" class="btn btn-primary">确定</a>
                     </div>
                 </div>
             </div>
@@ -269,7 +237,7 @@
                         &nbsp;<span class="operate-tip"></span>
                     </div>
                     <div class="modal-footer">
-                        <a href="/order/list" class="btn btn-primary">确定</a>
+                        <a href="/wshop/order/list" class="btn btn-primary">确定</a>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->

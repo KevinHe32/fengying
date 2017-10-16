@@ -16,11 +16,13 @@ import java.util.List;
 
 public class GenerateOrders {
 
+	final static String fontPath = Thread.currentThread().getContextClassLoader().getResource("/").getPath()+"\\SIMYOU.TTF";
+
 	public static Font setChineseFont28() {
 		BaseFont bf = null;
 		Font fontChinese = null;
 		try {
-			bf = BaseFont.createFont("D:\\SIMYOU.TTF",
+			bf = BaseFont.createFont(fontPath,
 					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
 			fontChinese = new Font(bf, 28, Font.NORMAL);
@@ -38,10 +40,10 @@ public class GenerateOrders {
 		BaseFont bf = null;
 		Font fontChinese = null;
 		try {
-			bf = BaseFont.createFont("D:\\SIMYOU.TTF",
+			bf = BaseFont.createFont(fontPath,
 					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
-			fontChinese = new Font(bf, 20, Font.NORMAL);
+			fontChinese = new Font(bf, 22, Font.NORMAL);
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,8 +58,7 @@ public class GenerateOrders {
 		BaseFont bf = null;
 		Font fontChinese = null;
 		try {
-			bf = BaseFont.createFont("" +
-							"D:\\SIMYOU.TTF",
+			bf = BaseFont.createFont(fontPath,
 					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
 			fontChinese = new Font(bf, 12, Font.NORMAL);
@@ -337,7 +338,7 @@ public class GenerateOrders {
 			row2_1_2.setBorder(PdfPCell.NO_BORDER);
 			ct2.addCell(row2_1_2);
 
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			PdfPCell row2_1_3 = new PdfPCell(new Phrase("日期:" + df.format(new Date()),setChineseFont18()));
 			row2_1_3.setMinimumHeight(30);
